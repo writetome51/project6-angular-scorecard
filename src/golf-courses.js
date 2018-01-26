@@ -288,10 +288,9 @@ function loadPlayerStrokes(player){
 
 function loadEvents(){
 
-	$('.strokes-input').keyup(function(){
-		var value = $(this).val();
-		if (isNaN(value)) {
-			$(this).val(0);
+	$('.strokes-input').keyup(function validateCellAndUpdateRow(input){
+		if (isNaN(input.value)) {
+			input.value = 0;
 		}
 
 		var player = getPlayer($(this));

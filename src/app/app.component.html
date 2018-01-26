@@ -55,7 +55,7 @@
             <div class="column-cell par-row" id="par-cell-1"></div>
             <div class="column-cell hcp-row" id="hcp-cell-1"></div>
             <div class="column-cell player1-row  strokes-input-cell" id="player1-strokes-1">
-                <input type="text" class="strokes-input">
+                <input type="text" class="strokes-input" (keyup)="validateCellAndUpdateRow([value])">
             </div>
             <div class="column-cell  player2-row  strokes-input-cell" id="player2-strokes-1">
                 <input type="text" class="strokes-input">
@@ -439,6 +439,13 @@
 			</div>
 			------------------>
 
+    </div>
+
+    <div>
+        <span>
+            <button (click)="addPlayer()">Add Player</button>
+            <span  *ngIf="playerLimitReached">You've reached the maximum number of players</span>
+        </span>
     </div>
 
 
