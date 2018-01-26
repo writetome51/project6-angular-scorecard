@@ -1,16 +1,18 @@
 import {Component, OnInit} from '@angular/core';
+import {CourseService} from '../course.service';
 
 @Component({
     selector: 'choose-course',
-    templateUrl: './choose-course.component.html',
-    styleUrls: ['./choose-course.component.css']
+    templateUrl: './choose-course.component.html'
 })
+
 export class ChooseCourseComponent implements OnInit {
 
     selectedCourse = '';
     courses = [];
 
-    constructor() {
+    constructor(private _courseService: CourseService) {
+        this.courses = this._courseService.getCourses();
     }
 
     ngOnInit() {
