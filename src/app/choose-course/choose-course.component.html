@@ -1,0 +1,16 @@
+<div class="form-container">
+    <form>
+        <div class="form-control">
+            <label>Choose a course</label>
+            <select id="course-name-options" name="course-name"
+                    ([ngModel])="selectedCourse"
+                    (change)="updateTeesAndCells()">
+                <option  *ngFor="let course of courses" [value]="course">
+                    {{course}}
+                </option>
+            </select>
+        </div>
+
+
+    </form>
+</div>

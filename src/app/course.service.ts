@@ -1,12 +1,19 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 
 export class CourseService {
 
-  constructor(private _http: HttpClient) {
+    constructor(private _http: HttpClient) {
+    }
 
-  }
+    getCourses(): object[] {
+        return [];
+    }
+
+    getCourse(url): object {
+        return {};
+    }
 
 }

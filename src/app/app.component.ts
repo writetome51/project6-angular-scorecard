@@ -1,26 +1,38 @@
 import {Component} from '@angular/core';
-import {Player} from './Player';
+import {Player} from './Player.interface';
 
 
 @Component({
     selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    templateUrl: './app.component.html'
 })
 
 export class AppComponent {
     title = 'app';
     playerLimitReached = false;
+    tellUserPlayerLimitReached = false;
     players: Player[] = [];
+
 
     addPlayer() {
         if ( ! this.playerLimitReached) {
             this.players.push( {name: '', strokes: []} );
         }
+        else { this.tellUserPlayerLimitReached = true; }
+
         if (this.players.length === 4) {
             this.playerLimitReached = true;
         }
     }
+
+
+
+    updateTeesAndCells(){
+      //  loadCurrentCourseIndex();
+      //  loadCurrentCourseHref();
+      //  loadCourse(currentCourseHref);
+    }
+
 
     validateCellAndUpdateRow(input) {
         if (isNaN(input.value)) {

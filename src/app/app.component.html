@@ -1,17 +1,6 @@
 <div id="top-container">
 
-    <div class="form-container">
-        <form>
-            <div class="form-control">
-                <label>Choose a course</label>
-                <select id="course-name-options" name="course-name"
-                        (change)="updateTeesAndCells()">
-                </select>
-            </div>
-
-
-        </form>
-    </div>
+   <choose-course></choose-course>
 
     <div id="card-container">
 
@@ -55,7 +44,8 @@
             <div class="column-cell par-row" id="par-cell-1"></div>
             <div class="column-cell hcp-row" id="hcp-cell-1"></div>
             <div class="column-cell player1-row  strokes-input-cell" id="player1-strokes-1">
-                <input type="text" class="strokes-input" (keyup)="validateCellAndUpdateRow([value])">
+                <input *ngFor="let player of players; let i=index"
+                    type="text" class="strokes-input" [(ngModel)]="player.strokes[i]">
             </div>
             <div class="column-cell  player2-row  strokes-input-cell" id="player2-strokes-1">
                 <input type="text" class="strokes-input">
@@ -444,7 +434,9 @@
     <div>
         <span>
             <button (click)="addPlayer()">Add Player</button>
-            <span  *ngIf="playerLimitReached">You've reached the maximum number of players</span>
+            <span  *ngIf="tellUserPlayerLimitReached">
+                You've reached the maximum number of players
+            </span>
         </span>
     </div>
 
