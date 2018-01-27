@@ -1,0 +1,8 @@
+<div class="column-cell label-cell yards-row" id="tee-name-options-cell">
+    <label id="tee-name-options-label">Tee</label>
+    <select id="tee-name-options" ([ngModel])="selectedTee"  (change)="updateCells()">
+        <option  *ngFor="let tee of tees" [value]="tee">
+            {{tee}}
+        </option>
+    </select>
+</div>

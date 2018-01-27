@@ -7,13 +7,17 @@ import {CourseService} from './course.service';
 import {FormsModule} from '@angular/forms';
 import { ChooseCourseComponent } from './choose-course/choose-course.component';
 import { ScorecardComponent } from './scorecard/scorecard.component';
+import { ChooseTeeComponent } from './choose-tee/choose-tee.component';
+import { PlayerNamesComponent } from './player-names/player-names.component';
 
 
 @NgModule({
     declarations: [
         AppComponent,
         ChooseCourseComponent,
-        ScorecardComponent
+        ScorecardComponent,
+        ChooseTeeComponent,
+        PlayerNamesComponent
     ],
     imports: [
         BrowserModule,

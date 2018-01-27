@@ -2,34 +2,13 @@
 
     <div class="card-column first-column" id="label-column">
         <div class="column-cell label-cell hole-row" id="hole-cell">Hole</div>
-        <div class="column-cell label-cell yards-row" id="tee-name-options-cell">
-            <label id="tee-name-options-label">Tee</label>
-            <select id="tee-name-options" (change)="updateCells()"></select>
-        </div>
+
+        <choose-tee></choose-tee>
+
         <div class="column-cell label-cell par-row" id="par-column-1">Par</div>
         <div class="column-cell label-cell hcp-row" id="hcp-column-1">Handicap</div>
 
-        <!------   player name inputs     ---------->
-        <div class="column-cell label-cell player1-row  player-name-input-cell"
-             id="player1-input-cell">
-            <input type="text" class="player-name-input" placeholder="player1 name">
-        </div>
-
-        <div class="column-cell label-cell player2-row  player-name-input-cell"
-             id="player2-input-cell">
-            <input type="text" class="player-name-input" placeholder="player2 name">
-        </div>
-
-        <div class="column-cell label-cell player3-row  player-name-input-cell"
-             id="player3-input-cell">
-            <input type="text" class="player-name-input" placeholder="player3 name">
-        </div>
-
-
-        <div class="column-cell label-cell player4-row bottom-row  player-name-input-cell"
-             id="player4-input-cell">
-            <input type="text" class="player-name-input" placeholder="player4 name">
-        </div>
+       <player-names></player-names>
 
     </div>
 
