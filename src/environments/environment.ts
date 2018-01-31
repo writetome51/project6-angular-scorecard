@@ -4,5 +4,13 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+    production: false,
+    firebase: {
+        apiKey: 'AIzaSyBB_ym0qcKDrJtvTPt6Oj7c-fwEN3CY4eY',
+        authDomain: 'star-wars-chars-e3f23.firebaseapp.com',
+        databaseURL: 'https://star-wars-chars-e3f23.firebaseio.com',
+        projectId: 'star-wars-chars-e3f23',
+        storageBucket: 'star-wars-chars-e3f23.appspot.com',
+        messagingSenderId: '589179472537'
+    }
 };

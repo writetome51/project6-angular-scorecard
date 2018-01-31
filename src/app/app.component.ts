@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {Player} from './Player.interface';
 
 
 @Component({
@@ -11,7 +10,7 @@ export class AppComponent {
     title = 'app';
     playerLimitReached = false;
     tellUserPlayerLimitReached = false;
-    players: Player[] = [];
+
 
 
     addPlayer() {
