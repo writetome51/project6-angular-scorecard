@@ -6,11 +6,11 @@
 export const environment = {
     production: false,
     firebase: {
-        apiKey: 'AIzaSyBB_ym0qcKDrJtvTPt6Oj7c-fwEN3CY4eY',
-        authDomain: 'star-wars-chars-e3f23.firebaseapp.com',
-        databaseURL: 'https://star-wars-chars-e3f23.firebaseio.com',
-        projectId: 'star-wars-chars-e3f23',
-        storageBucket: 'star-wars-chars-e3f23.appspot.com',
-        messagingSenderId: '589179472537'
+        apiKey: 'AIzaSyCS9pG9933rNcf8ebj0amcTMze3Xswjb8Y',
+        authDomain: 'golf-scorecard-15298.firebaseapp.com',
+        databaseURL: 'https://golf-scorecard-15298.firebaseio.com',
+        projectId: 'golf-scorecard-15298',
+        storageBucket: 'golf-scorecard-15298.appspot.com',
+        messagingSenderId: '180929117832'
     }
 };
