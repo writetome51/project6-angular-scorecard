@@ -7,12 +7,12 @@ import { AngularFireAuth } from "angularfire2/auth";
   template: `
     <h1>Welcome!</h1>
     <div>
-      <mat-form-field>
-        <input matInput placeholder="Email" type="email" [(ngModel)]="email">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Password" type="password" [(ngModel)]="password">
-      </mat-form-field>
+      <form>
+          <input matInput placeholder="Email" type="email" [(ngModel)]="email">
+
+          <input matInput placeholder="Password" type="password" [(ngModel)]="password">
+      </form>
+       
       <button style="margin-left: 100px" 
               mat-raised-button 
               color="primary" 
@@ -30,7 +30,7 @@ export class WelcomeComponent {
 
   constructor(private angularFireAuth: AngularFireAuth) {
     this.angularFireAuth.auth.signOut();
-    
+
     this.angularFireAuth.authState.subscribe(state => {
       console.log(state + '  blah blah!!!');
     });

@@ -19,6 +19,7 @@ import {PlayerNamesComponent} from './player-names/player-names.component';
 import {CourseService} from './services/course.service';
 import {PlayersService} from './services/players.service';
 import { LabelColumnComponent } from './label-column/label-column.component';
+import { HoleColumnsComponent } from './hole-columns/hole-columns.component';
 
 
 @NgModule({
@@ -28,7 +29,9 @@ import { LabelColumnComponent } from './label-column/label-column.component';
         ScorecardComponent,
         ChooseTeeComponent,
         PlayerNamesComponent,
-        LabelColumnComponent
+        LabelColumnComponent,
+        WelcomeComponent,
+        HoleColumnsComponent
     ],
     imports: [
         BrowserModule,

@@ -12,7 +12,7 @@ export class AppComponent {
     tellUserPlayerLimitReached = false;
 
 
-
+/******************
     addPlayer() {
         if ( ! this.playerLimitReached) {
             this.players.push( {name: '', strokes: []} );
@@ -41,6 +41,7 @@ export class AppComponent {
        // let player = this.getPlayer($(this));
       //  this.updateStrokeTotals(player);
     }
+ ********/
 
 /************
     updateStrokeTotals(player) {
