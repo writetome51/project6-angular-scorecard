@@ -15,7 +15,7 @@ export class HoleColumnsComponent implements OnInit {
         '16', '17', '18', 'in', 'total'
     ];
 
-    nonPlayerRows = [
+    fetchedDataRows = [
         'yards', 'par', 'hcp'
     ];
 
@@ -34,9 +34,11 @@ export class HoleColumnsComponent implements OnInit {
   }
 
 
-
   isTotalColumn(id) {
       return (id === 'out' || id === 'in' || id === 'total');
   }
+
+
+  isLastPlayer(){}
 
 }

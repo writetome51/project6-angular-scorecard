@@ -1,29 +1,29 @@
-<div *ngFor="let columnID of columnIDs" class="card-column" [class.total-column]="isTotalColumn(columnID)"
+<div *ngFor="let columnID of columnIDs"
+     class="card-column"  [class.total-column]="isTotalColumn(columnID)"
      [id]="getColumnIDForHTML(columnID)">
-    <div class="column-cell hole-row" [id]="'hole-cell-' + columnID" >{{columnID | uppercase}}</div>
 
-    <div *ngFor="let nonPlayerRow of nonPlayerRows"
-         [class]="'column-cell ' + nonPlayerRow + '-row'"
-         [id]="nonPlayerRow + '-cell-' + columnID" >
-
+    <div class="column-cell hole-row"
+         [id]="'hole-cell-' + columnID" >
+        {{columnID | uppercase}}
     </div>
 
+    <div *ngFor="let fetchedDataRow of fetchedDataRows"
+         [class]="'column-cell ' + fetchedDataRow + '-row'"
+         [id]="fetchedDataRow + '-cell-' + columnID" >
 
-    <div class="column-cell player1-row  strokes-input-cell" id="player1-strokes-1">
-        <input *ngFor="let player of players; let i=index"
-               type="text" class="strokes-input" [(ngModel)]="player.strokes[i]">
     </div>
-    <div class="column-cell  player2-row  strokes-input-cell" id="player2-strokes-1">
-        <input type="text" class="strokes-input">
+
+
+    <div *ngFor="let player of players; let i=index"
+         class="column-cell player1-row  strokes-input-cell" [class.bottom-row]="isLastPlayer()"
+         id="player1-strokes-1">
+        <input type="text" class="strokes-input" [(ngModel)]="player.strokes[i]">
     </div>
-    <div class="column-cell  player3-row  strokes-input-cell" id="player3-strokes-1">
-        <input type="text" class="strokes-input">
-    </div>
-    <div class="column-cell  player4-row bottom-row strokes-input-cell" id="player4-strokes-1">
-        <input type="text" class="strokes-input">
-    </div>
+
 </div>
 
+
+<!-------------
 <div class="card-column" id="hole-2-column">
     <div class="column-cell hole-row" id="hole-cell-2">2</div>
     <div class="column-cell yards-row" id="yards-cell-2"></div>
@@ -380,6 +380,8 @@
     <div class="column-cell total-cell player3-row" id="player3-cell-total"></div>
     <div class="column-cell total-cell player4-row bottom-row" id="player4-cell-total"></div>
 </div>
+
+------------------>
 
 
 <!--------------- HCP Column, probably don't need.
