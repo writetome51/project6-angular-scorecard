@@ -1,8 +1,14 @@
-<div *ngFor="let columnID of columnIDs"  class="card-column" id="hole-1-column">
-    <div class="column-cell hole-row" id="hole-cell-1">1</div>
-    <div class="column-cell yards-row" id="yards-cell-1"></div>
-    <div class="column-cell par-row" id="par-cell-1"></div>
-    <div class="column-cell hcp-row" id="hcp-cell-1"></div>
+<div *ngFor="let columnID of columnIDs" class="card-column" [class.total-column]="isTotalColumn(columnID)"
+     [id]="getColumnIDForHTML(columnID)">
+    <div class="column-cell hole-row" [id]="'hole-cell-' + columnID" >{{columnID | uppercase}}</div>
+
+    <div *ngFor="let nonPlayerRow of nonPlayerRows"
+         [class]="'column-cell ' + nonPlayerRow + '-row'"
+         [id]="nonPlayerRow + '-cell-' + columnID" >
+
+    </div>
+
+
     <div class="column-cell player1-row  strokes-input-cell" id="player1-strokes-1">
         <input *ngFor="let player of players; let i=index"
                type="text" class="strokes-input" [(ngModel)]="player.strokes[i]">
@@ -170,7 +176,7 @@
     </div>
 </div>
 
-<div *ngIf="index=8"  class="card-column total-column" id="out-column">
+<div class="card-column total-column"   id="out-column">
     <div class="column-cell total-cell hole-row" id="hole-cell-out">Out</div>
     <div class="column-cell total-cell yards-row" id="yards-cell-out"></div>
     <div class="column-cell total-cell par-row" id="par-cell-out"></div>
