@@ -16,8 +16,9 @@ import {ScorecardComponent} from './scorecard/scorecard.component';
 import {ChooseTeeComponent} from './choose-tee/choose-tee.component';
 import {PlayerNamesComponent} from './player-names/player-names.component';
 
-import {CourseService} from './course.service';
-import {PlayersService} from './players.service';
+import {CourseService} from './services/course.service';
+import {PlayersService} from './services/players.service';
+import { LabelColumnComponent } from './label-column/label-column.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {PlayersService} from './players.service';
         ChooseCourseComponent,
         ScorecardComponent,
         ChooseTeeComponent,
-        PlayerNamesComponent
+        PlayerNamesComponent,
+        LabelColumnComponent
     ],
     imports: [
         BrowserModule,

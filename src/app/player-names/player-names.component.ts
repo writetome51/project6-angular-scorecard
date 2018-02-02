@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {PlayersService} from '../players.service';
+import {PlayersService} from '../services/players.service';
 
 @Component({
   selector: 'player-names',

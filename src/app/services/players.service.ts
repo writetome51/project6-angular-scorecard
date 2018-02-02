@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Player} from './Player.interface';
+import {Player} from '../Player.interface';
 
 @Injectable()
 
