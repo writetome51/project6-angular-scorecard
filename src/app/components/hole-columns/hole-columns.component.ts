@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {isNumber} from 'util';
+import {PlayersService} from '../../services/players.service';
+import {Player} from '../../Player.interface';
 
 @Component({
   selector: 'hole-columns',
   templateUrl: './hole-columns.component.html'
 })
 export class HoleColumnsComponent implements OnInit {
+
+    players: Player[];
 
     columnIDs = [
         '1', '2', '3', '4',
@@ -19,7 +22,9 @@ export class HoleColumnsComponent implements OnInit {
         'yards', 'par', 'hcp'
     ];
 
-  constructor() { }
+  constructor(private playersService: PlayersService) {
+      this.players = this.playersService.getPlayers();
+  }
 
   ngOnInit() {
   }
@@ -31,6 +36,17 @@ export class HoleColumnsComponent implements OnInit {
       else{
           return (prefix + id + suffix);
       }
+  }
+
+  getPlayerCellID(playerNumber, columnID){
+      let midSection: string;
+      if (this.isTotalColumn(columnID)){
+          midSection = '-cell-';
+      }
+      else{
+          midSection = '-strokes-';
+      }
+      return playerNumber + midSection + columnID;
   }
 
 

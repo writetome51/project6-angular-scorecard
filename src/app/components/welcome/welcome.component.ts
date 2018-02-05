@@ -36,6 +36,7 @@ export class WelcomeComponent {
     });
   }
 
+
   logIn() {
     this.angularFireAuth.auth
       .signInWithEmailAndPassword(this.email, this.password)
@@ -49,8 +50,8 @@ export class WelcomeComponent {
   }
 
 
-
   toggleState() {
     this.state = this.state === "small" ? "large" : "small";
   }
+
 }

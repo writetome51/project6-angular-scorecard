@@ -1,6 +1,6 @@
 <!------   player name inputs     ---------->
-<div *ngFor="let playerNumber of playerNumbers"
+<div *ngFor="let playerNumber of playerNumbers;  let i=index"
      [class]="'column-cell label-cell player-name-input-cell ' + playerNumber + '-row'"
      [id]="playerNumber + '-input-cell'">
-    <input type="text" class="player-name-input"  [placeholder]="playerNumber + ' name'">
+    <input type="text" class="player-name-input"  [placeholder]="playerNumber + ' name'" [(ngModel)]="names[i]">
 </div>
