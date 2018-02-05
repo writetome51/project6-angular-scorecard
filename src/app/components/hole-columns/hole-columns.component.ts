@@ -54,6 +54,10 @@ export class HoleColumnsComponent implements OnInit {
       return (id === 'out' || id === 'in' || id === 'total');
   }
 
+  notTotalColumn(id){
+      return ( ! this.isTotalColumn(id));
+  }
+
 
   isLastPlayer(){}
 

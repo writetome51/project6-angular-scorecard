@@ -17,7 +17,7 @@
          [class]="'column-cell  strokes-input-cell ' + 'player' + (i+1) + '-row'"
          [class.bottom-row]="isLastPlayer()"
          [id]="getPlayerCellID('player' + (i+1))">
-        <input type="text" class="strokes-input" [(ngModel)]="player.strokes[i]">
+        <input *ngIf="notTotalColumn(columnID)" type="text" class="strokes-input" >
     </div>
 
 </div>

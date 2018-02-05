@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Player} from '../Player.interface';
 import {HttpClient} from '@angular/common/http';
+import {AngularFirestore} from 'angularfire2/firestore';
 
 @Injectable()
 
@@ -9,17 +10,23 @@ export class PlayersService {
     private _players: Player[] = [];
     private _player: Player;
 
-    constructor(private _http: HttpClient) {
+    constructor(private _angularFirestore: AngularFirestore) {
     }
 
-    get players() {
-        // retrieve Player[] from db.
+    private _getPlayers(): Player[] {
+        if (!this._players || this._players.length === 0){
+            this._angularFirestore.collection('games')
+                .valueChanges()
+                .subscribe(items => {
+                    this.items = items;
+                    console.log('items', items);
+                });;
+        }
     }
 
-    set players(value: Player[]) {
-        // save value in db.
+    private _setPlayers(value: Player[]){
+
     }
 
-    get player(){}
 
 }
