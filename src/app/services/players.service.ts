@@ -2,6 +2,7 @@ import {Injectable, OnInit} from '@angular/core';
 import {Player} from '../Player.interface';
 import {HttpClient} from '@angular/common/http';
 import {AngularFirestore} from 'angularfire2/firestore';
+import {GameService} from './game.service';
 
 @Injectable()
 
@@ -11,13 +12,8 @@ export class PlayersService {
     private _player: Player;
 
 
-    constructor(private _angularFirestore: AngularFirestore) {
-        this._angularFirestore.collection('games')
-            .valueChanges()
-            .subscribe(items => {
-                this._players = items;
-                console.log('items', items);
-            });
+    constructor(private _game: GameService) {
+
     }
 
 

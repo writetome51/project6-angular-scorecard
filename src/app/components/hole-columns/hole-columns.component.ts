@@ -23,7 +23,7 @@ export class HoleColumnsComponent implements OnInit {
     ];
 
   constructor(private playersService: PlayersService) {
-      this.players = this.playersService.getPlayers();
+      this.players = this.playersService.players;
   }
 
   ngOnInit() {

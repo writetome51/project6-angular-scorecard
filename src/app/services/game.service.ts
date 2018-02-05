@@ -1,35 +1,36 @@
 import {Injectable} from '@angular/core';
-import {Player} from '../Player.interface';
-import {AngularFirestore} from 'angularfire2/firestore';
+import {AngularFirestore, AngularFirestoreDocument} from 'angularfire2/firestore';
 import {Game} from '../Game.interface';
+import {Player} from '../Player.interface';
 
 @Injectable()
 export class GameService {
 
-    game: Game;
+    public activeGame: AngularFirestoreDocument<Game>;
 
-    constructor(private _angularFirestore: AngularFirestore) {
-        this._angularFirestore.collection('games')
-            .valueChanges()
-            .subscribe(items => {
-                this.games = items;
-                console.log('games — ', items);
-            });
+
+    constructor(private _db: AngularFirestore) {
     }
 
 
     add(gameId: string, playerNames: string[]){
-        let playerData = {};
-        for (let i = 0, thisPlayer:string; i < playerNames.length; ++i){
+        let players = {};
+        for (let i = 0, thisPlayer: string; i < playerNames.length; ++i){
             thisPlayer = 'player' + (i + 1);
-            playerData[thisPlayer] = {name: playerNames[i], strokes: []};
+            players[thisPlayer] = {name: playerNames[i], strokes: []};
         }
-        this._angularFirestore.collection('games').doc(gameId).set(playerData);
+        this._db.collection('games').doc(gameId).set(players);
     }
 
 
-    get(gameId){
-        return this.games[gameId];
+    modify(game: Game){
+        this.activeGame.set(game);
+    }
+
+
+    get(gameId): AngularFirestoreDocument<Game>{
+        this.activeGame = this._db.collection('games').doc(gameId);
+        return this.activeGame;
     }
 
 }
