@@ -22,10 +22,12 @@ export class HoleColumnsComponent implements OnInit {
         'yards', 'par', 'hcp'
     ];
 
-  constructor(private playersService: PlayersService) {
+  constructor(private playersService: PlayersService, private _gameID) {
   }
 
   ngOnInit() {
+      // this._gameID = something...
+      // this.playersService.setGameID(this._gameID);
       this.playersService.get((playerCollection) => {
           this.players = Object.values(playerCollection);
           console.log(this.players);

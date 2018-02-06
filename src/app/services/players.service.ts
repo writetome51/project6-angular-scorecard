@@ -2,27 +2,30 @@ import {Injectable, OnInit} from '@angular/core';
 import {Player} from '../Player.interface';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {GameService} from './game.service';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 
 export class PlayersService {
 
-  //  private _players: Player[] = [];
-   // private _player: Player;
-    private _gameObservable;
+    private _gameObservable: Observable<any>;
+    private _gameId: string;
 
 
     constructor(private _game: GameService) {
-        this._gameObservable  = this._game.get('180205_1259');
+    }
+
+    setGameID(value: string){
+        this._gameId = value;
     }
 
     get(functionThatGetsPlayers){ // function takes one parameter.
+        this._gameObservable  = this._game.get(this._gameId);
         this._gameObservable.subscribe(functionThatGetsPlayers);
     }
 
 
     private _setPlayers(value: Player[]){
-
     }
 
 
