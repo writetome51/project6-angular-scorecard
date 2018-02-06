@@ -1,35 +1,17 @@
-import { Component } from "@angular/core";
-import { animate, state, style, transition, trigger, keyframes } from "@angular/animations";
-import { AngularFireAuth } from "angularfire2/auth";
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import { Component } from '@angular/core';
+import { AngularFireAuth } from 'angularfire2/auth';
+
 
 @Component({
   selector: 'welcome',
-  template: `
-    <h1>Welcome!</h1>
-    <div>
-        <!--
-      <form>
-          <input matInput placeholder="Email" type="email" name="email" >
-
-          <input matInput placeholder="Password" type="password" name="password">
-      </form>
-       -->
-      <button style="margin-left: 100px" 
-              mat-raised-button 
-              color="primary" 
-             
-              (click)="logIn()">Log in</button>
-    </div>
-  `
+  templateUrl: 'welcome.component.html'
 })
 
 export class WelcomeComponent {
 
-  email: string;
-  password: string;
-  state = "small";
+    email = '';
+    password = '';
+
 
   constructor(private angularFireAuth: AngularFireAuth) {
     this.angularFireAuth.auth.signOut();
@@ -53,8 +35,5 @@ export class WelcomeComponent {
   }
 
 
-  toggleState() {
-    this.state = this.state === "small" ? "large" : "small";
-  }
 
 }

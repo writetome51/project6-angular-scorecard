@@ -22,6 +22,7 @@ import { LabelColumnComponent } from './components/label-column/label-column.com
 import { HoleColumnsComponent } from './components/hole-columns/hole-columns.component';
 import {GameService} from './services/game.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {GameIdService} from './services/game-id.service';
 
 
 @NgModule({
@@ -50,7 +51,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
         AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
         AngularFireStorageModule
     ],
-    providers: [CourseService, PlayersService, GameService],
+    providers: [CourseService, PlayersService, GameService, GameIdService],
     bootstrap: [AppComponent]
 })
 

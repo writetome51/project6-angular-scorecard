@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {PlayersService} from '../../services/players.service';
 import {Player} from '../../Player.interface';
+import {GameIdService} from '../../services/game-id.service';
 
 @Component({
   selector: 'hole-columns',
@@ -22,7 +23,7 @@ export class HoleColumnsComponent implements OnInit {
         'yards', 'par', 'hcp'
     ];
 
-  constructor(private playersService: PlayersService, private _gameID) {
+  constructor(private playersService: PlayersService, private _gameID: GameIdService) {
   }
 
   ngOnInit() {
@@ -60,8 +61,8 @@ export class HoleColumnsComponent implements OnInit {
       return (id === 'out' || id === 'in' || id === 'total');
   }
 
-  notTotalColumn(id){
-      return ( ! this.isTotalColumn(id));
+  isNumberedColumn(id){
+      return ( ! isNaN(id));
   }
 
 
