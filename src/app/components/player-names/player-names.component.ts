@@ -12,7 +12,7 @@ export class PlayerNamesComponent implements OnInit {
         'player1', 'player2', 'player3', 'player4'
     ];
 
-    playerNames: string[];
+    playerNames: string[] = [];
 
 
   constructor(private _players: PlayersService) { }

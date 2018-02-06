@@ -20,6 +20,8 @@ import {CourseService} from './services/course.service';
 import {PlayersService} from './services/players.service';
 import { LabelColumnComponent } from './components/label-column/label-column.component';
 import { HoleColumnsComponent } from './components/hole-columns/hole-columns.component';
+import {GameService} from './services/game.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -35,6 +37,7 @@ import { HoleColumnsComponent } from './components/hole-columns/hole-columns.com
     ],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         FormsModule,
         HttpClientModule,
         RouterModule.forRoot([
@@ -47,7 +50,7 @@ import { HoleColumnsComponent } from './components/hole-columns/hole-columns.com
         AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
         AngularFireStorageModule
     ],
-    providers: [CourseService, PlayersService],
+    providers: [CourseService, PlayersService, GameService],
     bootstrap: [AppComponent]
 })
 

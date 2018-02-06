@@ -8,7 +8,7 @@ import {Player} from '../../Player.interface';
 })
 export class HoleColumnsComponent implements OnInit {
 
-    players: Player[];
+    players: Player[] = [];
 
     columnIDs = [
         '1', '2', '3', '4',
@@ -23,11 +23,15 @@ export class HoleColumnsComponent implements OnInit {
     ];
 
   constructor(private playersService: PlayersService) {
-      this.players = this.playersService.players;
   }
 
   ngOnInit() {
+      this.playersService.get((playerCollection) => {
+          this.players = Object.values(playerCollection);
+          console.log(this.players);
+      });
   }
+
 
   getColumnIDForHTML(id){
       let prefix = 'hole-';

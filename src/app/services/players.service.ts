@@ -1,6 +1,5 @@
 import {Injectable, OnInit} from '@angular/core';
 import {Player} from '../Player.interface';
-import {HttpClient} from '@angular/common/http';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {GameService} from './game.service';
 
@@ -8,20 +7,19 @@ import {GameService} from './game.service';
 
 export class PlayersService {
 
-    private _players: Player[] = [];
-    private _player: Player;
+  //  private _players: Player[] = [];
+   // private _player: Player;
+    private _gameObservable;
 
 
     constructor(private _game: GameService) {
-
+        this._gameObservable  = this._game.get('180205_1259');
     }
 
-
-    get players(): Player[] {
-        if (!this._players || this._players.length === 0){
-
-        }
+    get(functionThatGetsPlayers){ // function takes one parameter.
+        this._gameObservable.subscribe(functionThatGetsPlayers);
     }
+
 
     private _setPlayers(value: Player[]){
 
