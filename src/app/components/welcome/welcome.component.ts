@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {GameService} from '../../services/game.service';
+import {PlayerNumbersService} from '../../services/player-numbers.service';
 
 
 
@@ -14,13 +15,22 @@ export class WelcomeComponent implements OnInit{
     email = '';
     password = '';
     selectOptions: string[];
+    playerNumbers: string[];
 
 
-    constructor(private angularFireAuth: AngularFireAuth, private _game: GameService) {
+    constructor(private _angularFireAuth: AngularFireAuth,
+                private _game: GameService,
+                playerNumbersService: PlayerNumbersService) {
+        this.playerNumbers = playerNumbersService.self;
     }
 
 
-    ngOnInit(): OnInit {
+    ngOnInit() {
+    }
+
+
+    getPlayerPlaceholder(){
+        // Find out how many players are already signed up to the game.
     }
 
 }

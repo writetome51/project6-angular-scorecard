@@ -1,7 +1,8 @@
 <h1>Welcome!</h1>
 <h2>Start New Game</h2>
 <form>
-    <input type="text" name="player1" placeholder="player1">
+    <input type="text" [name]="getPlayerPlaceholder()"
+           [placeholder]="getPlayerPlaceholder()">
     <button>Add Player</button>
 </form>
 

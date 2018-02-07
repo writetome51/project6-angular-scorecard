@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PlayersService} from '../../services/players.service';
-import {PlayerNumberService} from '../../services/player-numbers.service';
+import {PlayerNumbersService} from '../../services/player-numbers.service';
 
 @Component({
     selector: 'player-names',
@@ -12,7 +12,7 @@ export class PlayerNamesComponent implements OnInit {
 
     constructor(
         public players: PlayersService,
-        public playerNumbers: PlayerNumberService
+        public playerNumbers: PlayerNumbersService
     ) {
     }
 

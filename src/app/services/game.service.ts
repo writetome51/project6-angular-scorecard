@@ -13,9 +13,9 @@ export class GameService {
     }
 
 
-    add(gameId: string, playerNames: string[]){
+    add(gameId: string, playerNames: string[]) {
         let players = {};
-        for (let i = 0, thisPlayer: string; i < playerNames.length; ++i){
+        for (let i = 0, thisPlayer: string; i < playerNames.length; ++i) {
             thisPlayer = 'player' + (i + 1);
             players[thisPlayer] = {name: playerNames[i], strokes: []};
         }
@@ -23,28 +23,24 @@ export class GameService {
     }
 
 
-    modify(game: Game){
+    modify(game: Game): any {
         //  get a reference to the firestore document in games collection.
         //  gameReference.update(game);
     }
 
 
-    get(gameId: string): Observable<any>{
-        this._activeGame = this._db.collection('games').doc(gameId).valueChanges();
-
+    get(gameId: string): Observable<any> {
+        return this._db.collection('games').doc(gameId).valueChanges();
+        // You can call .subscribe() on the returned Observable, for instance:
         //    .subscribe((response) => {
-         //       this._activeGame = response;
-         //   console.log(response.player1);
-       // });
-
-      //  console.log(this._activeGame);
-        return this._activeGame;
+        //       this._activeGame = response;
+        //   console.log(response.player1);
+        // });
     }
 
-    getAll(){
-        let result =  this._db.collection('games').valueChanges();
-        console.log(result);
-      //  return this._db.collection('games');
+
+    getAll(): Observable<any> {
+        return this._db.collection('games').valueChanges();
     }
 
 }

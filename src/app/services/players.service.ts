@@ -21,7 +21,7 @@ export class PlayersService {
     }
 
     get(functionThatGetsPlayers){ // function takes one parameter.
-        this._gameObservable  = this._game.get(this._gameId);
+        this._gameObservable  = this._game.get('180205_1259');
         this._gameObservable.subscribe(functionThatGetsPlayers);
     }
 
