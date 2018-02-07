@@ -14,8 +14,8 @@ export class WelcomeComponent implements OnInit{
 
     email = '';
     password = '';
-    selectOptions: string[];
     playerNumbers: string[];
+    gameIDs: string[] = [];
 
 
     constructor(private _angularFireAuth: AngularFireAuth,
@@ -26,11 +26,21 @@ export class WelcomeComponent implements OnInit{
 
 
     ngOnInit() {
+       this._setGameIDs();
     }
 
 
     getPlayerPlaceholder(){
         // Find out how many players are already signed up to the game.
+    }
+
+
+    private _setGameIDs(){
+        this._game.getAll((games) => {
+            games.forEach((game) => {
+                this.gameIDs.push(game.payload.doc.id);
+            });
+        });
     }
 
 }

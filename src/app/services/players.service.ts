@@ -13,16 +13,15 @@ export class PlayersService {
 
 
     constructor(private _game: GameService) {
-        this._game.getAll();
     }
 
     setGameID(value: string){
         this._gameId = value;
     }
 
-    get(functionThatGetsPlayers){ // function takes one parameter.
+    get(functionThatManipulatesResponse){ // function takes one parameter.
         this._gameObservable  = this._game.get('180205_1259');
-        this._gameObservable.subscribe(functionThatGetsPlayers);
+        this._gameObservable.subscribe(functionThatManipulatesResponse);
     }
 
 

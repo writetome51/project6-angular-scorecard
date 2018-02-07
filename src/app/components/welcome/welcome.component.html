@@ -10,9 +10,9 @@
 <div>
     <form>
         <select>
-            <option *ngFor="let selectOption of selectOptions"
-                    [value]="selectOption">
-                {{selectOption}}
+            <option *ngFor="let gameID of gameIDs"
+                    [value]="gameID">
+                {{gameID}}
             </option>
         </select>
         <button>Resume</button>

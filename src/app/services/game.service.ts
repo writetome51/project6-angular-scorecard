@@ -13,6 +13,26 @@ export class GameService {
     }
 
 
+    get(gameId: string): Observable<any> {
+        return this._db.collection('games').doc(gameId).valueChanges();
+        // You can call .subscribe() on the returned Observable, for instance:
+        //    .subscribe((response) => {
+        //       this._activeGame = response;
+        //   console.log(response.player1);
+        // });
+    }
+
+
+    getAll(functionThatManipulatesResponse){
+        this._getAllAsObservableWithMetadata().subscribe(functionThatManipulatesResponse);
+    }
+
+
+    private _getAllAsObservableWithMetadata(): Observable<any> {
+        return this._db.collection('games').snapshotChanges();
+    }
+
+
     add(gameId: string, playerNames: string[]) {
         let players = {};
         for (let i = 0, thisPlayer: string; i < playerNames.length; ++i) {
@@ -29,18 +49,5 @@ export class GameService {
     }
 
 
-    get(gameId: string): Observable<any> {
-        return this._db.collection('games').doc(gameId).valueChanges();
-        // You can call .subscribe() on the returned Observable, for instance:
-        //    .subscribe((response) => {
-        //       this._activeGame = response;
-        //   console.log(response.player1);
-        // });
-    }
-
-
-    getAll(): Observable<any> {
-        return this._db.collection('games').valueChanges();
-    }
 
 }
