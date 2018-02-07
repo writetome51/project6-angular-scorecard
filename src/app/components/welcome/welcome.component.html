@@ -9,9 +9,11 @@
 <h2>Or, Resume a Game</h2>
 <div>
     <form>
-        <select>
-            <option *ngFor="let gameID of gameIDs"
-                    [value]="gameID">
+        <label>Choose Game </label>
+        <select  required  name="choose-game" (change)="setGame()"
+                [(ngModel)]='chosenGame'>
+            <option *ngFor="let gameID of gameIDs" name="choose-game-option"
+                    [value]="gameID" >
                 {{gameID}}
             </option>
         </select>
