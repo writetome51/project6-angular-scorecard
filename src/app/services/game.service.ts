@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from 'angularfire2/firestore';
-import {Game} from '../Game.interface';
+import {Game} from '../interfaces/Game.interface';
 import {Observable} from 'rxjs/Observable';
 
 @Injectable()
@@ -39,6 +39,12 @@ export class GameService {
 
       //  console.log(this._activeGame);
         return this._activeGame;
+    }
+
+    getAll(){
+        let result =  this._db.collection('games').valueChanges();
+        console.log(result);
+      //  return this._db.collection('games');
     }
 
 }

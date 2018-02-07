@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {PlayersService} from '../../services/players.service';
-import {Player} from '../../Player.interface';
+import {Player} from '../../interfaces/Player.interface';
 import {GameIdService} from '../../services/game-id.service';
 
 @Component({
@@ -31,7 +31,7 @@ export class HoleColumnsComponent implements OnInit {
       // this.playersService.setGameID(this._gameID);
       this.playersService.get((playerCollection) => {
           this.players = Object.values(playerCollection);
-          console.log(this.players);
+        //  console.log(this.players);
       });
   }
 

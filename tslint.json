@@ -80,7 +80,7 @@
       true,
       "check-catch"
     ],
-    "prefer-const": true,
+
     "quotemark": [
       true,
       "single"

@@ -1,39 +1,26 @@
-import { Component } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
+import {Component, OnInit} from '@angular/core';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {GameService} from '../../services/game.service';
+
 
 
 @Component({
-  selector: 'welcome',
-  templateUrl: 'welcome.component.html'
+    selector: 'welcome',
+    templateUrl: 'welcome.component.html'
 })
 
-export class WelcomeComponent {
+export class WelcomeComponent implements OnInit{
 
     email = '';
     password = '';
+    selectOptions: string[];
 
 
-  constructor(private angularFireAuth: AngularFireAuth) {
-    this.angularFireAuth.auth.signOut();
-
-    this.angularFireAuth.authState.subscribe(state => {
-    //  console.log(state + '  blah blah!!!');
-    });
-  }
+    constructor(private angularFireAuth: AngularFireAuth, private _game: GameService) {
+    }
 
 
-  logIn() {
-    this.angularFireAuth.auth
-      .signInWithEmailAndPassword(this.email, this.password)
-      .then(data => {
-        console.log(data + ' this was data!!!!!!!!!!!!!!!!!!');
-      });
-  }
-
-  subscribe() {
-
-  }
-
-
+    ngOnInit(): OnInit {
+    }
 
 }

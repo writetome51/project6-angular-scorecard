@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PlayersService} from '../../services/players.service';
+import {PlayerNumberService} from '../../services/player-numbers.service';
 
 @Component({
     selector: 'player-names',
@@ -8,12 +9,11 @@ import {PlayersService} from '../../services/players.service';
 
 export class PlayerNamesComponent implements OnInit {
 
-    playerNumbers = [
-        'player1', 'player2', 'player3', 'player4'
-    ];
 
-
-    constructor(public players: PlayersService) {
+    constructor(
+        public players: PlayersService,
+        public playerNumbers: PlayerNumberService
+    ) {
     }
 
     ngOnInit() {

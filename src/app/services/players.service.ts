@@ -1,5 +1,5 @@
 import {Injectable, OnInit} from '@angular/core';
-import {Player} from '../Player.interface';
+import {Player} from '../interfaces/Player.interface';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {GameService} from './game.service';
 import {Observable} from 'rxjs/Observable';
@@ -13,6 +13,7 @@ export class PlayersService {
 
 
     constructor(private _game: GameService) {
+        this._game.getAll();
     }
 
     setGameID(value: string){

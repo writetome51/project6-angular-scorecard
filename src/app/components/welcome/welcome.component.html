@@ -1,13 +1,19 @@
 <h1>Welcome!</h1>
+<h2>Start New Game</h2>
+<form>
+    <input type="text" name="player1" placeholder="player1">
+    <button>Add Player</button>
+</form>
+
+<h2>Or, Resume a Game</h2>
 <div>
     <form>
-
-        <button style="margin-left: 100px"
-                mat-raised-button
-                color="primary"
-
-                (click)="logIn()">
-            Log in
-        </button>
+        <select>
+            <option *ngFor="let selectOption of selectOptions"
+                    [value]="selectOption">
+                {{selectOption}}
+            </option>
+        </select>
+        <button>Resume</button>
     </form>
 </div>

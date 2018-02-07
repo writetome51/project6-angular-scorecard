@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Player} from '../../Player.interface';
+import {Player} from '../../interfaces/Player.interface';
 
 @Component({
     selector: 'scorecard',
