@@ -1,17 +1,23 @@
 <h1>Welcome!</h1>
-<h2>Start New Game</h2>
-<form>
-    <input type="text" [name]="getPlayerPlaceholder()"
-           [placeholder]="getPlayerPlaceholder()">
-    <button>Add Player</button>
-</form>
 
-<h2>Or, Resume a Game</h2>
 <div>
+    <h2>Start New Game</h2>
+    <form  *ngIf="lessThanFourPlayersSignedUp()" >
+        <input
+            type="text" required  [name]="getPlayerPlaceholder()"
+            [placeholder]="getPlayerPlaceholder()"
+            [(ngModel)]="newPlayerName">
+        <input type="submit" value="Add Player" (click)="addPlayerName()">
+    </form>
+
+    <button *ngIf="atLeastOnePlayerSignedUp()"  id="begin-button">Begin</button>
+</div>
+
+<div *ngIf="lessThanFourPlayersSignedUp()">
+    <h2>Or, Resume a Game</h2>
     <form>
         <label>Choose Game </label>
-        <select  required  name="choose-game" (change)="setGame()"
-                [(ngModel)]='chosenGame'>
+        <select  required  name="choose-game" [(ngModel)]='chosenGame'>
             <option *ngFor="let gameID of gameIDs" name="choose-game-option"
                     [value]="gameID" >
                 {{gameID}}
@@ -19,4 +25,8 @@
         </select>
         <button>Resume</button>
     </form>
+</div>
+
+<div>
+
 </div>

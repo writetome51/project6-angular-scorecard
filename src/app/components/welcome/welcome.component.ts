@@ -13,9 +13,11 @@ export class WelcomeComponent implements OnInit {
 
     email = '';
     password = '';
+    newPlayerName: string;
+    signedUpPlayerNames: string[] = [];
     playerNumbers: string[];
     gameIDs: string[] = [];
-    chosenGame: string;
+    chosenGame = '';
 
 
     constructor(private _angularFireAuth: AngularFireAuth,
@@ -29,18 +31,33 @@ export class WelcomeComponent implements OnInit {
 
     ngOnInit() {
         this._setGameIDs();
-        this.chosenGame = this.gameIDs[this.gameIDs.length - 1];
     }
 
 
-    getPlayerPlaceholder() {
+    getPlayerPlaceholder(): string {
         // Find out how many players are already signed up to the game.
+        let nextPlayer = this.signedUpPlayerNames.length;
+        return this.playerNumbers[nextPlayer];
     }
 
 
-    setGame() {
-        console.log(this.chosenGame);
+    addPlayerName(){
+        if (this.newPlayerName.length > 0){
+            this.signedUpPlayerNames.push(this.newPlayerName);
+            this.newPlayerName = '';
+        }
     }
+
+
+    lessThanFourPlayersSignedUp(){
+        return (this.signedUpPlayerNames.length < 4);
+    }
+
+
+    atLeastOnePlayerSignedUp(){
+        return (this.signedUpPlayerNames.length > 0);
+    }
+
 
 
     private _setGameIDs() {

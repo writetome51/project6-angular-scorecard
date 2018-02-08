@@ -74,10 +74,14 @@ input{
 .bottom-row{border-bottom: none;}
 
 
-#label-column{font-weight: bold; width:128px; padding-right:0;}
+#label-column{ padding-right:0;}
+
+#label-column, #begin-button{ width:128px; font-weight: bold;}
 
 #label-column div{width:100%;}
 
 #images-container{width:870px; margin:auto; margin-top:15px; padding:auto;}
 
 #images-container img {display: inline; width:48%; margin:auto; margin-left: 10px;}
+
+#begin-button{ height:80px;}
