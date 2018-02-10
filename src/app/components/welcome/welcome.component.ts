@@ -59,7 +59,9 @@ export class WelcomeComponent implements OnInit {
     }
 
 
-    resumeGame(){}
+    resumeGame(){
+
+    }
 
 
     private _setGameIDs() {

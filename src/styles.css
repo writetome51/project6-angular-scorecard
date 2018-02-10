@@ -99,4 +99,6 @@
 
 #begin-button{font-weight: bold;}
 
-
+#choose-course-and-suspend-game div{
+    display: inline; border:none; margin-right: 20px;
+}

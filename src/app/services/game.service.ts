@@ -46,12 +46,18 @@ export class GameService {
             players[thisPlayer] = {name: playerNames[i], strokes: []};
         }
         this._db.collection('games').doc(gameId).set(players);
+        this._setActiveGame(gameId);
     }
 
 
     modify(game: Game): any {
         //  get a reference to the firestore document in games collection.
         //  gameReference.update(game);
+    }
+
+
+    private _setActiveGame(gameId){
+        this._activeGame = gameId;
     }
 
 

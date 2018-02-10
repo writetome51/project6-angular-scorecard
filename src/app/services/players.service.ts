@@ -19,9 +19,11 @@ export class PlayersService {
         this._gameId = value;
     }
 
-    get(functionThatManipulatesResponse){ // function takes one parameter.
+    getPlayersAndAssignTo(property){ // function takes one parameter.
         this._gameObservable  = this._game.get(this._gameId);
-        this._gameObservable.subscribe(functionThatManipulatesResponse);
+        this._gameObservable.subscribe((players) => {
+            property = players;
+        });
     }
 
 

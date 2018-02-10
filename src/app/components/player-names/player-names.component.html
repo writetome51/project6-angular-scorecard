@@ -1,4 +1,6 @@
 <!------   player name inputs     ---------->
+
+<!------   player name inputs
 <div *ngFor="let playerNumber of playerNumbers; let i = index"
      [class]="'column-cell label-cell player-name-input-cell ' + playerNumber + '-row'"
      [id]="playerNumber + '-input-cell'">
@@ -6,4 +8,18 @@
       class="scorecard-input player-name-input"
            [placeholder]="playerNumber + ' name'"
            [(ngModel)]="players[i].name">
+</div>
+ ---------->
+
+<div *ngFor="let playerName of playerNames; let i = index"
+     [class]="'column-cell label-cell player-name-input-cell ' + 'player' + (i+1)  + '-row'"
+     [id]="'player' + (i+1)  + '-input-cell'">
+    <input type="text"
+           class="scorecard-input player-name-input"
+           [placeholder]="playerNumber + ' name'"
+           [(ngModel)]="playerNames[i]">
+</div>
+
+
+<div class="column-cell hcp-row" id="hcp-cell-out">
 </div>
