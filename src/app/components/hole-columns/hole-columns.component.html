@@ -17,7 +17,8 @@
          [class]="'column-cell  strokes-input-cell ' + 'player' + (i+1) + '-row'"
          [class.bottom-row]="isLastPlayer()"
          [id]="getPlayerCellID('player' + (i+1))">
-        <input *ngIf="isNumberedColumn(columnID)" type="text" class="strokes-input"
+        <input *ngIf="isNumberedColumn(columnID)" type="text"
+               class="scorecard-input  strokes-input"
                [(ngModel)]="player.strokes[(columnID) - 1]">
     </div>
 

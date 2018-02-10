@@ -7,7 +7,7 @@ import {ScorecardComponent} from '../components/scorecard/scorecard.component';
     imports: [
         CommonModule,
         RouterModule.forChild([
-            {path: 'characters', component: ScorecardComponent},
+            {path: 'game', component: ScorecardComponent},
         ])
     ],
     declarations: []

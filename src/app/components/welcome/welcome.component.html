@@ -1,32 +1,42 @@
-<h1>Welcome!</h1>
-
-<div>
-    <h2>Start New Game</h2>
-    <form  *ngIf="lessThanFourPlayersSignedUp()" >
-        <input
-            type="text" required  [name]="getPlayerPlaceholder()"
-            [placeholder]="getPlayerPlaceholder()"
-            [(ngModel)]="newPlayerName">
-        <input type="submit" value="Add Player" (click)="addPlayerName()">
-    </form>
-
-    <button *ngIf="atLeastOnePlayerSignedUp()"  id="begin-button">Begin</button>
-</div>
-
-<div *ngIf="lessThanFourPlayersSignedUp()">
-    <h2>Or, Resume a Game</h2>
-    <form>
-        <label>Choose Game </label>
-        <select  required  name="choose-game" [(ngModel)]='chosenGame'>
-            <option *ngFor="let gameID of gameIDs" name="choose-game-option"
-                    [value]="gameID" >
-                {{gameID}}
-            </option>
-        </select>
-        <button>Resume</button>
-    </form>
-</div>
 
 <div>
 
+    <div class="center-block">
+
+        <div  *ngIf="lessThanFourPlayersSignedUp()" >
+            <h2>Start New Game?</h2>
+            <form>
+                <input class="welcome-page-input form-control center-block"
+                       type="text" required [name]="getPlayerPlaceholder()"
+                       [placeholder]="getPlayerPlaceholder()"
+                       [(ngModel)]="newPlayerName">
+                <input type="submit" class="welcome-page-button"
+                       value="Add Player" (click)="addPlayerName()">
+            </form>
+        </div>
+
+        <button *ngIf="atLeastOnePlayerSignedUp()" class="welcome-page-button"
+                id="begin-button"
+                [routerLink]="['/game']">Begin</button>
+    </div>
+
+    <div *ngIf="lessThanFourPlayersSignedUp()" class="center-block">
+        <h2>Or, Resume Game?</h2>
+        <form>
+            <label>Choose Game </label>
+            <select required name="choose-game" [(ngModel)]='chosenGame'>
+                <option *ngFor="let gameID of gameIDs" name="choose-game-option"
+                        [value]="gameID">
+                    {{gameID}}
+                </option>
+            </select>
+            <button>Resume</button>
+        </form>
+    </div>
+
+    <div id="images-container" class="center-block">
+        <img src="../../../assets/images/bill-murray.jpg">
+    </div>
+
 </div>
+

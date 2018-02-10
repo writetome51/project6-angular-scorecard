@@ -7,7 +7,7 @@ import {Component} from '@angular/core';
 })
 
 export class AppComponent {
-    title = 'app';
+    title = 'SCORE!';
     playerLimitReached = false;
     tellUserPlayerLimitReached = false;
 

@@ -9,7 +9,6 @@
 }
 
 
-
 #card-container{
   border:1px solid #d3d3d3;
   width:870px;
@@ -37,6 +36,12 @@
   border-bottom:1px solid #d3d3d3;
 }
 
+.center-block, .welcome-page{text-align: center; width:65%;}
+
+.center-block {margin-top: 20px;}
+
+#app-title{font-weight: bold;  font-size:30px;  text-align: center; margin-bottom: 30px; }
+
 
 #tee-name-options-label{margin-right:5px;}
 
@@ -46,7 +51,12 @@
 
 .form-control{border:none;}
 
-input{
+.welcome-page-input{border: 1px solid lightblue; margin-bottom: 10px;
+    width:65%;}
+
+
+
+.scorecard-input{
   width:100%;
   font-weight: normal;
   text-align: center;
@@ -73,10 +83,13 @@ input{
 
 .bottom-row{border-bottom: none;}
 
+.welcome-page-button{
+    margin-bottom: 20px;  width:100px;}
+
 
 #label-column{ padding-right:0;}
 
-#label-column, #begin-button{ width:128px; font-weight: bold;}
+#label-column{ width:128px; font-weight: bold;}
 
 #label-column div{width:100%;}
 
@@ -84,4 +97,6 @@ input{
 
 #images-container img {display: inline; width:48%; margin:auto; margin-left: 10px;}
 
-#begin-button{ height:80px;}
+#begin-button{font-weight: bold;}
+
+
