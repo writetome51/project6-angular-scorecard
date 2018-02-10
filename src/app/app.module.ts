@@ -24,6 +24,7 @@ import {GameService} from './services/game.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {GameIdService} from './services/game-id.service';
 import {PlayerNumbersService} from './services/player-numbers.service';
+import {GameModule} from './game/game.module';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import {PlayerNumbersService} from './services/player-numbers.service';
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule, // imports firebase/firestore, only needed for database features
         AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
-        AngularFireStorageModule
+        AngularFireStorageModule,
+        GameModule
     ],
     providers: [CourseService, PlayersService,
         PlayerNumbersService, GameService, GameIdService],

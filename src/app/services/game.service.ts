@@ -33,7 +33,13 @@ export class GameService {
     }
 
 
-    add(gameId: string, playerNames: string[]) {
+    getGameID(gameDocument){
+        return gameDocument.payload.doc.id;
+    }
+
+
+    add(playerNames: string[]) {
+        let gameId = this.getDatetime();
         let players = {};
         for (let i = 0, thisPlayer: string; i < playerNames.length; ++i) {
             thisPlayer = 'player' + (i + 1);
@@ -46,6 +52,18 @@ export class GameService {
     modify(game: Game): any {
         //  get a reference to the firestore document in games collection.
         //  gameReference.update(game);
+    }
+
+
+    getDatetime(): string{
+        let d = new Date();
+        let year = d.getFullYear();
+        let month = d.getMonth() + 1;
+        let day = d.getDate();
+        let hour = d.getHours();
+        let mins = d.getMinutes();
+        let secs = d.getSeconds();
+        return year + '-' + month + '-' + day + '_' + hour + mins + secs;
     }
 
 
