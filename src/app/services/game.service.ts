@@ -39,7 +39,7 @@ export class GameService {
 
 
     add(playerNames: string[]) {
-        let gameId = this.getDatetime();
+        let gameId = this._getDatetime();
         let players = {};
         for (let i = 0, thisPlayer: string; i < playerNames.length; ++i) {
             thisPlayer = 'player' + (i + 1);
@@ -55,7 +55,7 @@ export class GameService {
     }
 
 
-    getDatetime(): string{
+    private _getDatetime(): string{
         let d = new Date();
         let year = d.getFullYear();
         let month = d.getMonth() + 1;

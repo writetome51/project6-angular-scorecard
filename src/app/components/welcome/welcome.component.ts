@@ -33,7 +33,7 @@ export class WelcomeComponent implements OnInit {
 
     getPlayerPlaceholder(): string {
         let nextPlayer = this.signedUpPlayerNames.length;
-        return this.playerNumbers[nextPlayer];
+        return this.playerNumbers[nextPlayer] + ' name';
     }
 
 
@@ -52,6 +52,14 @@ export class WelcomeComponent implements OnInit {
     atLeastOnePlayerSignedUp(){
         return (this.signedUpPlayerNames.length > 0);
     }
+
+
+    createNewGame(){
+        this._gameService.add(this.signedUpPlayerNames);
+    }
+
+
+    resumeGame(){}
 
 
     private _setGameIDs() {

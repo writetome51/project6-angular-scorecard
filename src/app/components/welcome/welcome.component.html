@@ -17,7 +17,7 @@
 
         <button *ngIf="atLeastOnePlayerSignedUp()" class="welcome-page-button"
                 id="begin-button"
-                [routerLink]="['/game']">Begin</button>
+                (click)="createNewGame()"  [routerLink]="['/game']">Begin</button>
     </div>
 
     <div *ngIf="lessThanFourPlayersSignedUp()" class="center-block">
@@ -30,7 +30,7 @@
                     {{gameID}}
                 </option>
             </select>
-            <button>Resume</button>
+            <button (click)="resumeGame()"  [routerLink]="['/game']">Resume</button>
         </form>
     </div>
 
