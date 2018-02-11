@@ -17,10 +17,14 @@ export class ActiveGameService {
       return this._self;
   }
 
-
-  save(activeGameID){
+  set(activeGameID){
       this._self = activeGameID;
       sessionStorage.setItem(this.sessionKey, this._self);
+  }
+
+  delete(){
+      this._self = '';
+      sessionStorage.removeItem(this.sessionKey);
   }
 
 }

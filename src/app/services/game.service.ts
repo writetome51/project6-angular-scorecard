@@ -7,11 +7,9 @@ import {ActiveGameService} from './active-game.service';
 @Injectable()
 export class GameService {
 
-    public activeGame: string;
-
-
-    constructor(private _db: AngularFirestore, activeGame: ActiveGameService) {
-        this.activeGame = activeGame.get();
+    constructor(
+        private _db: AngularFirestore,
+        private _activeGame: ActiveGameService) {
     }
 
 
@@ -42,20 +40,25 @@ export class GameService {
 
     add(playerNames: string[]) {
         let gameId = this._getDatetime();
+        let players = this._preparePlayerObjects(playerNames);
+        this._db.collection('games').doc(gameId).set(players);
+        this._activeGame.set(gameId);
+    }
+
+    private _preparePlayerObjects(playerNames): object{
         let players = {};
         for (let i = 0, thisPlayer: string; i < playerNames.length; ++i) {
             thisPlayer = 'player' + (i + 1);
             players[thisPlayer] = {name: playerNames[i], strokes: []};
         }
-        this._db.collection('games').doc(gameId).set(players);
-        this.activeGame = gameId;
-        console.log('adding game...');
-        console.log(this.activeGame);
+        return players;
     }
 
 
-    modify(withData){
-        this._db.collection('games').doc(this.activeGame).update(withData);
+    addMorePlayers(playerNames: string[]){
+        let newPlayers = this._preparePlayerObjects(playerNames);
+        this._db.collection('games')
+            .doc(this._activeGame.get()).update(newPlayers);
         //  get a reference to the firestore document in games collection.
         //  gameReference.update(game);
     }

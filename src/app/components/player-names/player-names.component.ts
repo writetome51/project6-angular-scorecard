@@ -14,7 +14,7 @@ export class PlayerNamesComponent implements OnInit {
     playerNumbers: string[];
     playerNames: string[] = [];
     private _playersStillAvailable: string[];
-    playersAddedLate: [string | null] = [null, null, null];
+    playersAddedLate = [];
 
 
     constructor(
@@ -25,8 +25,11 @@ export class PlayerNamesComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._playersService.getPlayersAndAssignTo(this.players);
-        this._setPlayerNames();
+        this._playersService.getPlayers((playerCollection) => {
+            this.players = playerCollection;
+            this._setPlayerNames();
+        });
+
     }
 
 
@@ -41,8 +44,10 @@ export class PlayerNamesComponent implements OnInit {
 
 
     private _setPlayerNames(){
+        console.log('players:', this.players);
         for (let prop in this.players){
             this.playerNames.push(this.players[prop].name);
+            console.log(this.playerNames);
         }
     }
 

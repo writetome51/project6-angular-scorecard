@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {GameService} from '../../services/game.service';
 import {PlayerNumbersService} from '../../services/player-numbers.service';
+import {ActiveGameService} from '../../services/active-game.service';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class WelcomeComponent implements OnInit {
 
     constructor(private _angularFireAuth: AngularFireAuth,
                 private _gameService: GameService,
+                private _activeGame: ActiveGameService,
                 playerNumbersService: PlayerNumbersService) {
 
         this.playerNumbers = playerNumbersService.self;
@@ -60,7 +62,7 @@ export class WelcomeComponent implements OnInit {
 
 
     resumeGame(){
-
+        this._activeGame.set(this.chosenGame);
     }
 
 

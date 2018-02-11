@@ -3,6 +3,7 @@ import {Player} from '../interfaces/Player.interface';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {GameService} from './game.service';
 import {Observable} from 'rxjs/Observable';
+import {ActiveGameService} from './active-game.service';
 
 @Injectable()
 
@@ -12,21 +13,21 @@ export class PlayersService {
     private _gameId: string;
 
 
-    constructor(private _game: GameService) {
+    constructor(
+        private _game: GameService,
+        private _activeGame: ActiveGameService) {
     }
 
 
-    getPlayersAndAssignTo(property){ // function takes one parameter.
-        console.log(this._game.activeGame);
-        this._gameObservable  = this._game.get(this._game.activeGame);
-        this._gameObservable.subscribe((playerCollection) => {
-            property =  Object.values(playerCollection);
-        });
+    getPlayers(functionThatManipulatesResponse){ // function takes one parameter.
+        console.log(this._activeGame.get());
+        this._gameObservable  = this._game.get(this._activeGame.get());
+        this._gameObservable.subscribe(functionThatManipulatesResponse);
     }
 
 
     addMorePlayers(playerNames: string[]){
-        this._game.modify(playerNames);
+        this._game.addMorePlayers(playerNames);
     }
 
 
