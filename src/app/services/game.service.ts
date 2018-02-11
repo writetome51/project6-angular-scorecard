@@ -15,11 +15,6 @@ export class GameService {
 
     get(gameId: string): Observable<any> {
         return this._db.collection('games').doc(gameId).valueChanges();
-        // You can call .subscribe() on the returned Observable, for instance:
-        //    .subscribe((response) => {
-        //       this.activeGame = response;
-        //   console.log(response.player1);
-        // });
     }
 
 
@@ -40,23 +35,25 @@ export class GameService {
 
     add(playerNames: string[]) {
         let gameId = this._getDatetime();
-        let players = this._preparePlayerObjects(playerNames);
-        this._db.collection('games').doc(gameId).set(players);
         this._activeGame.set(gameId);
+        let players = this._preparePlayerObjects(playerNames, 1);
+        this._db.collection('games').doc(gameId).set(players);
     }
 
-    private _preparePlayerObjects(playerNames): object{
+    private _preparePlayerObjects(playerNames: string[], startingPlayerNumber): object{
         let players = {};
-        for (let i = 0, thisPlayer: string; i < playerNames.length; ++i) {
-            thisPlayer = 'player' + (i + 1);
-            players[thisPlayer] = {name: playerNames[i], strokes: []};
+
+        for (let j = 0, thisPlayer: string;  j < playerNames.length;  ++j) {
+            thisPlayer = 'player' + startingPlayerNumber;
+            players[thisPlayer] = {name: playerNames[j], strokes: []};
+            ++startingPlayerNumber;
         }
         return players;
     }
 
 
-    addMorePlayers(playerNames: string[]){
-        let newPlayers = this._preparePlayerObjects(playerNames);
+    addMorePlayers(playerNames, startingPlayerNumber){
+        let newPlayers = this._preparePlayerObjects(playerNames, startingPlayerNumber);
         this._db.collection('games')
             .doc(this._activeGame.get()).update(newPlayers);
         //  get a reference to the firestore document in games collection.

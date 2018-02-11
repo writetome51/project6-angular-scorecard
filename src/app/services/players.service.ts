@@ -26,8 +26,8 @@ export class PlayersService {
     }
 
 
-    addMorePlayers(playerNames: string[]){
-        this._game.addMorePlayers(playerNames);
+    addMorePlayers(playerNames, startingNumber){
+        this._game.addMorePlayers(playerNames, startingNumber);
     }
 
 

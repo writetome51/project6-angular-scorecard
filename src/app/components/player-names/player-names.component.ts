@@ -25,11 +25,14 @@ export class PlayerNamesComponent implements OnInit {
     }
 
     ngOnInit() {
+       this._refreshPlayers();
+    }
+
+    private _refreshPlayers(){
         this._playersService.getPlayers((playerCollection) => {
             this.players = playerCollection;
             this._setPlayerNames();
         });
-
     }
 
 
@@ -38,17 +41,20 @@ export class PlayerNamesComponent implements OnInit {
         return this.playerNumbers.slice(i);
     }
 
+
     savePlayerToGame(){
-        this._playersService.addMorePlayers(this.playersAddedLate);
+        this._refreshPlayers();
+        this._playersService.addMorePlayers(this.playersAddedLate, this.playerNames.length + 1);
+        this.playersAddedLate = [];
     }
 
 
     private _setPlayerNames(){
-        console.log('players:', this.players);
+        this.playerNames = [];
         for (let prop in this.players){
             this.playerNames.push(this.players[prop].name);
-            console.log(this.playerNames);
         }
     }
+
 
 }
