@@ -12,10 +12,22 @@ export class ChooseCourseComponent implements OnInit {
     courses = [];
 
     constructor(private _courseService: CourseService) {
-        this.courses = this._courseService.getCourses();
     }
 
     ngOnInit() {
+        this._courseService.getCourses((courses) => {
+            this.courses = courses.courses;
+        });
     }
+
+
+    loadCourseNames(){
+        for (let p in courses.courses){
+          //  courseNames.push(courses.courses[p].name);
+        }
+    }
+
+
+    suspendGame(){}
 
 }

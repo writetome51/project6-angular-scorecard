@@ -1,21 +1,9 @@
-<!------   player name inputs     ---------->
-
-<!------   player name inputs
-<div *ngFor="let playerNumber of playerNumbers; let i = index"
-     [class]="'column-cell label-cell player-name-input-cell ' + playerNumber + '-row'"
-     [id]="playerNumber + '-input-cell'">
-    <input type="text"
-      class="scorecard-input player-name-input"
-           [placeholder]="playerNumber + ' name'"
-           [(ngModel)]="players[i].name">
-</div>
- ---------->
 
 <div *ngFor="let playerName of playerNames; let i = index"
      [class]="'column-cell label-cell player-name-input-cell ' + playerNumbers[i]  + '-row'"
-     [id]="'player' + (i+1)  + '-input-cell'">
+     [id]="playerNumbers[i]  + '-input-cell'">
 
-    <div class="column-cell" id="">
+    <div class="column-cell">
         {{playerName}}
     </div>
 </div>

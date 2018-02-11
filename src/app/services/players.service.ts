@@ -20,7 +20,6 @@ export class PlayersService {
 
 
     getPlayers(functionThatManipulatesResponse){ // function takes one parameter.
-        console.log(this._activeGame.get());
         this._gameObservable  = this._game.get(this._activeGame.get());
         this._gameObservable.subscribe(functionThatManipulatesResponse);
     }
@@ -28,10 +27,6 @@ export class PlayersService {
 
     addMorePlayers(playerNames, startingNumber){
         this._game.addMorePlayers(playerNames, startingNumber);
-    }
-
-
-    private _setPlayers(value: Player[]){
     }
 
 

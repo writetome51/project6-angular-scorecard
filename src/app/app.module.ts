@@ -55,7 +55,7 @@ import {ActiveGameService} from './services/active-game.service';
         GameModule
     ],
     providers: [CourseService, PlayersService,
-        PlayerNumbersService, GameService, ActiveGameService],
+                PlayerNumbersService, GameService, ActiveGameService],
     bootstrap: [AppComponent]
 })
 
