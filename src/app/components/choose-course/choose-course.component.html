@@ -5,7 +5,7 @@
             <select id="course-name-options" name="course-name"
                     ([ngModel])="selectedCourse"
                     (change)="updateTeesAndCells()">
-                <option  *ngFor="let courseName of courseNames" [value]="course">
+                <option  *ngFor="let courseName of courseNames; let i=index" [value]="i">
                     {{courseName}}
                 </option>
             </select>

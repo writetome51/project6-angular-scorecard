@@ -6,8 +6,8 @@ import {HttpClient} from '@angular/common/http';
 export class CourseService {
 
     coursesUrl = 'https://golf-courses-api.herokuapp.com/courses';
-    currentCourseHref: '';
     localObj = {latitude: 40.4426135, longitude: -111.8631116, radius: 100};
+    functionThatManipulatesResponse
 
 
     constructor(private _http: HttpClient) {
@@ -18,9 +18,11 @@ export class CourseService {
         observable.subscribe(functionThatManipulatesResponse);
     }
 
-    getCourse(url): object {
-        return {};
+    getCourse(url, functionThatManipulatesResponse) {
+        let observable = this._http.get(url);
+        observable.subscribe(functionThatManipulatesResponse);
     }
+
 
 
 }
