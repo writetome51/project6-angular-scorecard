@@ -72,13 +72,7 @@ export class ChooseCourseComponent implements OnInit {
     }
 
 /*********
-    updateCells(){
-        loadCurrentTee();
-        loadDataOfCurrentTeeForEachHole();
-        fillTeeRow();
-        fillParRow();
-        fillHandicapRow();
-    }
+
 *********/
 
 /*********

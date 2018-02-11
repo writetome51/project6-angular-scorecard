@@ -16,6 +16,17 @@ export class ChooseTeeComponent implements OnInit {
   }
 
 
+    updateCells(){
+      /***
+        loadCurrentTee();
+        loadDataOfCurrentTeeForEachHole();
+        fillTeeRow();
+        fillParRow();
+        fillHandicapRow();
+       ***/
+    }
+
+
   /******
 
     loadTeeTypes(){
