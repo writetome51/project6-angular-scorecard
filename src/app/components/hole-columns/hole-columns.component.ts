@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {PlayersService} from '../../services/players.service';
 import {Player} from '../../interfaces/Player.interface';
-import {GameIdService} from '../../services/game-id.service';
+import {PlayersService} from '../../services/players.service';
+import {ActiveGameService} from '../../services/active-game.service';
 
 @Component({
   selector: 'hole-columns',
@@ -23,16 +23,12 @@ export class HoleColumnsComponent implements OnInit {
         'yards', 'par', 'hcp'
     ];
 
-  constructor(private playersService: PlayersService, private _gameID: GameIdService) {
+  constructor(private playersService: PlayersService,
+              private _activeGame: ActiveGameService) {
   }
 
   ngOnInit() {
-      // this._gameID = something...
-      // this.playersService.setGameID(this._gameID);
-      this.playersService.get((playerCollection) => {
-          this.players = Object.values(playerCollection);
-        //  console.log(this.players);
-      });
+    //  this.playersService.getPlayersAndAssignTo(this.players);
   }
 
 

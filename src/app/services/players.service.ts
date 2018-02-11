@@ -15,15 +15,18 @@ export class PlayersService {
     constructor(private _game: GameService) {
     }
 
-    setGameID(value: string){
-        this._gameId = value;
-    }
 
     getPlayersAndAssignTo(property){ // function takes one parameter.
-        this._gameObservable  = this._game.get(this._gameId);
-        this._gameObservable.subscribe((players) => {
-            property = players;
+        console.log(this._game.activeGame);
+        this._gameObservable  = this._game.get(this._game.activeGame);
+        this._gameObservable.subscribe((playerCollection) => {
+            property =  Object.values(playerCollection);
         });
+    }
+
+
+    addMorePlayers(playerNames: string[]){
+        this._game.modify(playerNames);
     }
 
 

@@ -2,14 +2,16 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {Game} from '../interfaces/Game.interface';
 import {Observable} from 'rxjs/Observable';
+import {ActiveGameService} from './active-game.service';
 
 @Injectable()
 export class GameService {
 
-    private _activeGame: Observable<any>;
+    public activeGame: string;
 
 
-    constructor(private _db: AngularFirestore) {
+    constructor(private _db: AngularFirestore, activeGame: ActiveGameService) {
+        this.activeGame = activeGame.get();
     }
 
 
@@ -17,7 +19,7 @@ export class GameService {
         return this._db.collection('games').doc(gameId).valueChanges();
         // You can call .subscribe() on the returned Observable, for instance:
         //    .subscribe((response) => {
-        //       this._activeGame = response;
+        //       this.activeGame = response;
         //   console.log(response.player1);
         // });
     }
@@ -46,18 +48,16 @@ export class GameService {
             players[thisPlayer] = {name: playerNames[i], strokes: []};
         }
         this._db.collection('games').doc(gameId).set(players);
-        this._setActiveGame(gameId);
+        this.activeGame = gameId;
+        console.log('adding game...');
+        console.log(this.activeGame);
     }
 
 
-    modify(game: Game): any {
+    modify(withData){
+        this._db.collection('games').doc(this.activeGame).update(withData);
         //  get a reference to the firestore document in games collection.
         //  gameReference.update(game);
-    }
-
-
-    private _setActiveGame(gameId){
-        this._activeGame = gameId;
     }
 
 

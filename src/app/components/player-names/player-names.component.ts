@@ -11,18 +11,32 @@ import {Player} from '../../interfaces/Player.interface';
 export class PlayerNamesComponent implements OnInit {
 
     players: object;
+    playerNumbers: string[];
     playerNames: string[] = [];
+    private _playersStillAvailable: string[];
+    playersAddedLate: [string | null] = [null, null, null];
 
 
     constructor(
         private _playersService: PlayersService,
-        public playerNumbers: PlayerNumbersService
+        playerNumbers: PlayerNumbersService
     ) {
+        this.playerNumbers = playerNumbers.self;
     }
 
     ngOnInit() {
         this._playersService.getPlayersAndAssignTo(this.players);
         this._setPlayerNames();
+    }
+
+
+    get playersStillAvailable() {
+        let i = this.playerNames.length;
+        return this.playerNumbers.slice(i);
+    }
+
+    savePlayerToGame(){
+        this._playersService.addMorePlayers(this.playersAddedLate);
     }
 
 

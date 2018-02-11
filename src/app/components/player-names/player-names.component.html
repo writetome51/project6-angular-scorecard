@@ -12,14 +12,20 @@
  ---------->
 
 <div *ngFor="let playerName of playerNames; let i = index"
-     [class]="'column-cell label-cell player-name-input-cell ' + 'player' + (i+1)  + '-row'"
+     [class]="'column-cell label-cell player-name-input-cell ' + playerNumbers[i]  + '-row'"
      [id]="'player' + (i+1)  + '-input-cell'">
-    <input type="text"
-           class="scorecard-input player-name-input"
-           [placeholder]="playerNumber + ' name'"
-           [(ngModel)]="playerNames[i]">
+
+    <div class="column-cell hcp-row" id="hcp-cell-out">
+        {{playerName}}
+    </div>
 </div>
 
-
-<div class="column-cell hcp-row" id="hcp-cell-out">
+<div
+    *ngFor="let playerStillAvailable of playersStillAvailable; let i = index"
+     [class]="'column-cell label-cell player-name-input-cell ' + playerStillAvailable + '-row'"
+     [id]="playerStillAvailable  + '-input-cell'">
+    <input type="text"
+       class="scorecard-input player-name-input"
+       [placeholder]="playerStillAvailable + ' name'"
+       [(ngModel)]="playersAddedLate[i]"  (blur)="savePlayerToGame()">
 </div>

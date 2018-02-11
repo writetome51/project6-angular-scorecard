@@ -22,9 +22,9 @@ import { LabelColumnComponent } from './components/label-column/label-column.com
 import { HoleColumnsComponent } from './components/hole-columns/hole-columns.component';
 import {GameService} from './services/game.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {GameIdService} from './services/game-id.service';
 import {PlayerNumbersService} from './services/player-numbers.service';
 import {GameModule} from './game/game.module';
+import {ActiveGameService} from './services/active-game.service';
 
 
 @NgModule({
@@ -36,7 +36,7 @@ import {GameModule} from './game/game.module';
         PlayerNamesComponent,
         LabelColumnComponent,
         WelcomeComponent,
-        HoleColumnsComponent
+        HoleColumnsComponent,
     ],
     imports: [
         BrowserModule,
@@ -55,7 +55,7 @@ import {GameModule} from './game/game.module';
         GameModule
     ],
     providers: [CourseService, PlayersService,
-        PlayerNumbersService, GameService, GameIdService],
+        PlayerNumbersService, GameService, ActiveGameService],
     bootstrap: [AppComponent]
 })
 

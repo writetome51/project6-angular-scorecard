@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {PlayersService} from '../../services/players.service';
+import {PlayerNumbersService} from '../../services/player-numbers.service';
 
 @Component({
   selector: 'label-column',
@@ -6,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LabelColumnComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _playersService: PlayersService,
+              private _playerNumbersService: PlayerNumbersService) { }
 
   ngOnInit() {
   }
