@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CourseService} from '../../services/course.service';
+import {Course} from '../../interfaces/Course.interface';
 
 @Component({
     selector: 'choose-course',
@@ -11,10 +12,9 @@ export class ChooseCourseComponent implements OnInit {
     selectedCourse = '';
     selectedCourseIndex = 0;
     selectedCourseHref = '';
-    courses: object[] = [];
+    courses: Course[] = [];
     courseNames = [];
-    course: object;
-    selectedTee = '';
+  //  course: object;
 
 
     constructor(private _courseService: CourseService) {
@@ -23,6 +23,7 @@ export class ChooseCourseComponent implements OnInit {
     ngOnInit() {
         this._courseService.getCourses((courses) => {
             this.courses = courses.courses;
+            console.log(this.courses);
             this.setCourseNames();
             this.updateTeesAndCells();
         });
@@ -58,29 +59,19 @@ export class ChooseCourseComponent implements OnInit {
        this._courseService.getCourse(
            this.selectedCourseHref,
            (course) => {
-               this.course = course;
+               this._courseService.selectedCourse = course;
            }
        );
-
+/***********
             this.loadTeeTypes();
             loadTeeNames();
             loadTeeNameOptions();
             updateCells();
+ ********/
 
     }
 
-
-    loadTeeTypes(){
-        teeTypes = course.tee_types;
-    }
-
-    loadTeeNames(){
-        teeNames=[];
-        for (var i=0; i < teeTypes.length;  ++i){
-            teeNames.push(teeTypes[i].tee_type);
-        }
-    }
-
+/*********
     updateCells(){
         loadCurrentTee();
         loadDataOfCurrentTeeForEachHole();
@@ -88,12 +79,9 @@ export class ChooseCourseComponent implements OnInit {
         fillParRow();
         fillHandicapRow();
     }
+*********/
 
-    function loadCurrentTee(){
-        loadCurrentTeeIndex();
-        loadCurrentTeeName();
-    }
-
+/*********
 
     function fillTeeRow(){
         fillHoleCells('tee-row', yardagesOfCurrentTeeForEachHole);
@@ -112,17 +100,7 @@ export class ChooseCourseComponent implements OnInit {
         fillAllHandicapTotals();
     }
 
-
-    function loadCurrentTeeIndex(){
-        currentTeeIndex =  $('#tee-name-options').val();
-    }
-
-
-    function loadCurrentTeeName(){
-        currentTeeName = teeNames[currentTeeIndex];
-    }
-
-
+***********/
 
     suspendGame(){}
 

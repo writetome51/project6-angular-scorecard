@@ -7,7 +7,7 @@ export class CourseService {
 
     coursesUrl = 'https://golf-courses-api.herokuapp.com/courses';
     localObj = {latitude: 40.4426135, longitude: -111.8631116, radius: 100};
-    functionThatManipulatesResponse
+    selectedCourse: object;
 
 
     constructor(private _http: HttpClient) {
