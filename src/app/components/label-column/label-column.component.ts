@@ -8,8 +8,7 @@ import {PlayerNumbersService} from '../../services/player-numbers.service';
 })
 export class LabelColumnComponent implements OnInit {
 
-  constructor(private _playersService: PlayersService,
-              private _playerNumbersService: PlayerNumbersService) { }
+  constructor() { }
 
   ngOnInit() {
   }

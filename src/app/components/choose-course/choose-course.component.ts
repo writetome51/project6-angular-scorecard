@@ -10,6 +10,7 @@ export class ChooseCourseComponent implements OnInit {
 
     selectedCourse = '';
     courses = [];
+    courseNames = [];
 
     constructor(private _courseService: CourseService) {
     }
@@ -17,14 +18,16 @@ export class ChooseCourseComponent implements OnInit {
     ngOnInit() {
         this._courseService.getCourses((courses) => {
             this.courses = courses.courses;
+            this.setCourseNames();
+            console.log(this.courseNames);
         });
     }
 
 
-    loadCourseNames(){
-        for (let p in courses.courses){
-          //  courseNames.push(courses.courses[p].name);
-        }
+    setCourseNames(){
+        this.courses.forEach((course) => {
+            this.courseNames.push(course.name);
+        });
     }
 
 
