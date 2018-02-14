@@ -14,6 +14,7 @@ export class ChooseCourseComponent implements OnInit, OnDestroy {
     selectedCourseName = '';
     selectedCourseIndex = 0;
     selectedCourseHref = '';
+    selectedCourse: Course;
     courses: Course[] = [];
     courseNames = [];
     subscription: Subscription;
@@ -35,7 +36,7 @@ export class ChooseCourseComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(){
         this.subscription.unsubscribe();
-        this._courseService.selectedCourseSubscription.unsubscribe();
+
     }
 
 
@@ -56,7 +57,6 @@ export class ChooseCourseComponent implements OnInit, OnDestroy {
     setSelectedCourse(){
         this.set_selectedCourseIndex();
         this.set_selectedCourseHref();
-        this.set_selectedCourse();
     }
 
 
@@ -67,19 +67,9 @@ export class ChooseCourseComponent implements OnInit, OnDestroy {
 
     set_selectedCourseHref(){
         let currentCourse = this.courses[this.selectedCourseIndex];
-        this.selectedCourseHref = currentCourse.href;
+        this._courseService.selectedCourseHref = currentCourse.href;
     }
 
-
-    set_selectedCourse(){
-        this._courseService.selectedCourseSubscription = this._courseService.getCourse(
-           this.selectedCourseHref,
-           (course) => {
-               this._courseService.selectedCourse = course;
-               console.log(course);
-           }
-       );
-    }
 
 
     suspendGame(){

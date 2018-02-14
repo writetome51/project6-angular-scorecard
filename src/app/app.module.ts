@@ -9,13 +9,11 @@ import {environment} from '../environments/environment';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {AngularFireAuthModule} from 'angularfire2/auth';
-
 import {AppComponent} from './app.component';
 import {ChooseCourseComponent} from './components/choose-course/choose-course.component';
 import {ScorecardComponent} from './components/scorecard/scorecard.component';
 import {ChooseTeeComponent} from './components/choose-tee/choose-tee.component';
 import {PlayerNamesComponent} from './components/player-names/player-names.component';
-
 import {CourseService} from './services/course.service';
 import {PlayersService} from './services/players.service';
 import { LabelColumnComponent } from './components/label-column/label-column.component';
@@ -25,6 +23,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {PlayerNumbersService} from './services/player-numbers.service';
 import {GameModule} from './game/game.module';
 import {ActiveGameService} from './services/active-game.service';
+import { ChooseComponent } from './choose-component/choose.component';
 
 
 @NgModule({
@@ -37,6 +36,7 @@ import {ActiveGameService} from './services/active-game.service';
         LabelColumnComponent,
         WelcomeComponent,
         HoleColumnsComponent,
+        ChooseComponent,
     ],
     imports: [
         BrowserModule,

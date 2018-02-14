@@ -1,21 +1,27 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CourseService} from '../../services/course.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
     selector: 'choose-tee',
     templateUrl: './choose-tee.component.html'
 })
-export class ChooseTeeComponent implements OnInit {
+export class ChooseTeeComponent implements OnInit, OnDestroy {
 
     tees = [];
     selectedTee = '';
     tee_types;
+    subscription: Subscription;
 
     constructor(private _courseService: CourseService) {
     }
 
     ngOnInit() {
         this.loadTeeTypes();
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
 
@@ -30,9 +36,11 @@ export class ChooseTeeComponent implements OnInit {
     }
 
 
-    loadTeeTypes(){
-        this.tee_types = this._courseService.selectedCourse;
-        console.log(this.tee_types);
+    loadTeeTypes() {
+       this._courseService.selectedCourseHref;
+
+
+        //  console.log(this.tee_types);
     }
 
 
