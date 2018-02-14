@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CourseService} from '../../services/course.service';
 import {Course} from '../../interfaces/Course.interface';
+import {ActiveGameService} from '../../services/active-game.service';
 
 @Component({
     selector: 'choose-course',
@@ -9,7 +10,7 @@ import {Course} from '../../interfaces/Course.interface';
 
 export class ChooseCourseComponent implements OnInit {
 
-    selectedCourse = '';
+    selectedCourseName = '';
     selectedCourseIndex = 0;
     selectedCourseHref = '';
     courses: Course[] = [];
@@ -17,15 +18,19 @@ export class ChooseCourseComponent implements OnInit {
   //  course: object;
 
 
-    constructor(private _courseService: CourseService) {
+    constructor(private _courseService: CourseService,
+                private _activeGame: ActiveGameService) {
     }
 
     ngOnInit() {
         this._courseService.getCourses((courses) => {
             this.courses = courses.courses;
-            console.log(this.courses);
             this.setCourseNames();
-            this.updateTeesAndCells();
+            if (this.selectedCourseName === ''){
+                this.selectedCourseName = this.courseNames[0];
+            }
+            console.log(this.courseNames);
+            this.setSelectedCourse();
         });
     }
 
@@ -37,16 +42,20 @@ export class ChooseCourseComponent implements OnInit {
     }
 
 
-    updateTeesAndCells(){
+    setSelectedCourse(){
+
+        console.log(this.selectedCourseName);
         this.setSelectedCourseIndex();
+        console.log(this.selectedCourseIndex);
         this.setSelectedCourseHref();
         this.setCourse();
     }
 
 
     setSelectedCourseIndex(){
-        this.selectedCourseIndex = this.courseNames.indexOf(this.selectedCourse);
+        this.selectedCourseIndex = this.courseNames.indexOf(this.selectedCourseName);
     }
+
 
     setSelectedCourseHref(){
         let currentCourse = this.courses[this.selectedCourseIndex];
@@ -62,41 +71,47 @@ export class ChooseCourseComponent implements OnInit {
                this._courseService.selectedCourse = course;
            }
        );
-/***********
-            this.loadTeeTypes();
-            loadTeeNames();
-            loadTeeNameOptions();
-            updateCells();
- ********/
-
     }
 
-/*********
 
-*********/
+    suspendGame(){
+        this._activeGame.delete();
+    }
 
-/*********
 
-    function fillTeeRow(){
+    /***********
+     this.loadTeeTypes();
+     loadTeeNames();
+     loadTeeNameOptions();
+     updateCells();
+     ********/
+
+
+
+    /*********
+
+     *********/
+
+    /*********
+
+     function fillTeeRow(){
         fillHoleCells('tee-row', yardagesOfCurrentTeeForEachHole);
         fillAllTeeTotals();
     }
 
 
-    function fillParRow(){
+     function fillParRow(){
         fillHoleCells('par-row', parOfCurrentTeeForEachHole);
         fillAllParTotals();
     }
 
 
-    function fillHandicapRow(){
+     function fillHandicapRow(){
         fillHoleCells('handicap-row', hcpOfCurrentTeeForEachHole);
         fillAllHandicapTotals();
     }
 
-***********/
-
-    suspendGame(){}
+     ***********/
 
 
 

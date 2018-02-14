@@ -9,6 +9,7 @@ export class ChooseTeeComponent implements OnInit {
 
     tees = [];
     selectedTee = '';
+    tee_types;
 
   constructor( private _courseService: CourseService) { }
 
