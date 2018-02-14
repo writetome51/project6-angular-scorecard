@@ -54,7 +54,7 @@ import {ActiveGameService} from './services/active-game.service';
         AngularFireStorageModule,
         GameModule
     ],
-    providers: [CourseService, PlayersService,
+    providers: [ PlayersService, CourseService,
                 PlayerNumbersService, GameService, ActiveGameService],
     bootstrap: [AppComponent]
 })

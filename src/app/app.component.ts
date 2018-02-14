@@ -8,8 +8,6 @@ import {Component} from '@angular/core';
 
 export class AppComponent {
     title = 'SCORE!';
-    playerLimitReached = false;
-    tellUserPlayerLimitReached = false;
 
 
 /******************

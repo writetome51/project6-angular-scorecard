@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CourseService} from '../../services/course.service';
 
 @Component({
-  selector: 'choose-tee',
-  templateUrl: './choose-tee.component.html'
+    selector: 'choose-tee',
+    templateUrl: './choose-tee.component.html'
 })
 export class ChooseTeeComponent implements OnInit {
 
@@ -11,53 +11,58 @@ export class ChooseTeeComponent implements OnInit {
     selectedTee = '';
     tee_types;
 
-  constructor( private _courseService: CourseService) { }
+    constructor(private _courseService: CourseService) {
+    }
 
-  ngOnInit() {
-  }
-
-
-    updateCells(){
-      /***
-        loadCurrentTee();
-        loadDataOfCurrentTeeForEachHole();
-        fillTeeRow();
-        fillParRow();
-        fillHandicapRow();
-       ***/
+    ngOnInit() {
+        this.loadTeeTypes();
     }
 
 
-  /******
+    updateCells() {
+        /***
+         loadCurrentTee();
+         loadDataOfCurrentTeeForEachHole();
+         fillTeeRow();
+         fillParRow();
+         fillHandicapRow();
+         ***/
+    }
+
 
     loadTeeTypes(){
-        teeTypes = this._courseService.selectedCourse.tee_types;
+        this.tee_types = this._courseService.selectedCourse;
+        console.log(this.tee_types);
     }
 
-    loadTeeNames(){
+
+    /******
+
+
+     loadTeeNames(){
         teeNames=[];
         for (var i=0; i < teeTypes.length;  ++i){
             teeNames.push(teeTypes[i].tee_type);
         }
     }
 
-    loadCurrentTee(){
+     loadCurrentTee(){
         loadCurrentTeeIndex();
         loadCurrentTeeName();
     }
 
 
-    loadCurrentTeeIndex(){
+     loadCurrentTeeIndex(){
         currentTeeIndex =  $('#tee-name-options').val();
     }
 
 
-    loadCurrentTeeName(){
+     loadCurrentTeeName(){
         currentTeeName = teeNames[currentTeeIndex];
     }
 
 
-   *******/
+     *******/
 
 
 }

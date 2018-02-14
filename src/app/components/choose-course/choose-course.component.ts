@@ -1,74 +1,82 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CourseService} from '../../services/course.service';
 import {Course} from '../../interfaces/Course.interface';
 import {ActiveGameService} from '../../services/active-game.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
     selector: 'choose-course',
     templateUrl: './choose-course.component.html'
 })
 
-export class ChooseCourseComponent implements OnInit {
+export class ChooseCourseComponent implements OnInit, OnDestroy {
 
     selectedCourseName = '';
     selectedCourseIndex = 0;
     selectedCourseHref = '';
     courses: Course[] = [];
     courseNames = [];
-  //  course: object;
+    subscription: Subscription;
 
 
     constructor(private _courseService: CourseService,
                 private _activeGame: ActiveGameService) {
     }
 
+
     ngOnInit() {
-        this._courseService.getCourses((courses) => {
+        this.subscription = this._courseService.getCourses((courses) => {
             this.courses = courses.courses;
-            this.setCourseNames();
-            if (this.selectedCourseName === ''){
-                this.selectedCourseName = this.courseNames[0];
-            }
-            console.log(this.courseNames);
+            this.set_courseNames();
+            this.setDefaultValueFor_selectedCourseName();
             this.setSelectedCourse();
         });
     }
 
+    ngOnDestroy(){
+        this.subscription.unsubscribe();
+        this._courseService.selectedCourseSubscription.unsubscribe();
+    }
 
-    setCourseNames(){
+
+    set_courseNames(){
         this.courses.forEach((course) => {
             this.courseNames.push(course.name);
         });
     }
 
 
-    setSelectedCourse(){
-
-        console.log(this.selectedCourseName);
-        this.setSelectedCourseIndex();
-        console.log(this.selectedCourseIndex);
-        this.setSelectedCourseHref();
-        this.setCourse();
+    setDefaultValueFor_selectedCourseName(){
+        if (this.selectedCourseName === ''){
+            this.selectedCourseName = this.courseNames[0];
+        }
     }
 
 
-    setSelectedCourseIndex(){
+    setSelectedCourse(){
+        this.set_selectedCourseIndex();
+        this.set_selectedCourseHref();
+        this.set_selectedCourse();
+    }
+
+
+    set_selectedCourseIndex(){
         this.selectedCourseIndex = this.courseNames.indexOf(this.selectedCourseName);
     }
 
 
-    setSelectedCourseHref(){
+    set_selectedCourseHref(){
         let currentCourse = this.courses[this.selectedCourseIndex];
-        console.log(currentCourse);
         this.selectedCourseHref = currentCourse.href;
     }
 
 
-    setCourse(){
-       this._courseService.getCourse(
+    set_selectedCourse(){
+        this._courseService.selectedCourseSubscription = this._courseService.getCourse(
            this.selectedCourseHref,
            (course) => {
                this._courseService.selectedCourse = course;
+               console.log(course);
            }
        );
     }
@@ -80,19 +88,12 @@ export class ChooseCourseComponent implements OnInit {
 
 
     /***********
+
      this.loadTeeTypes();
      loadTeeNames();
      loadTeeNameOptions();
      updateCells();
-     ********/
 
-
-
-    /*********
-
-     *********/
-
-    /*********
 
      function fillTeeRow(){
         fillHoleCells('tee-row', yardagesOfCurrentTeeForEachHole);
