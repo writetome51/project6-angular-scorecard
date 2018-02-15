@@ -2,10 +2,10 @@
     <form id="choose-course-and-suspend-game">
         <div>
             <label>Choose a course</label>
-            <select id="course-name-options" name="course-name"
+            <select  id="course-name-options" name="course-name"
                     [(ngModel)]="selectedCourseName"
                     (change)="setSelectedCourse()">
-                <option  *ngFor="let courseName of courseNames" [value]="courseName">
+                <option  *ngFor="let courseName of courseNames" [value]="courseName" name="course-option">
                     {{courseName}}
                 </option>
             </select>

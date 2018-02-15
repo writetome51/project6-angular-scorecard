@@ -3,6 +3,7 @@ import {CourseService} from '../../services/course.service';
 import {Course} from '../../interfaces/Course.interface';
 import {ActiveGameService} from '../../services/active-game.service';
 import {Subscription} from 'rxjs/Subscription';
+import {ChooseComponent} from '../choose/choose.component';
 
 @Component({
     selector: 'choose-course',
@@ -13,8 +14,6 @@ export class ChooseCourseComponent implements OnInit, OnDestroy {
 
     selectedCourseName = '';
     selectedCourseIndex = 0;
-    selectedCourseHref = '';
-    selectedCourse: Course;
     courses: Course[] = [];
     courseNames = [];
     subscription: Subscription;
@@ -26,53 +25,52 @@ export class ChooseCourseComponent implements OnInit, OnDestroy {
 
 
     ngOnInit() {
-        this.subscription = this._courseService.getCourses((courses) => {
-            this.courses = courses.courses;
-            this.set_courseNames();
-            this.setDefaultValueFor_selectedCourseName();
-            this.setSelectedCourse();
-        });
+        this._courseService.subscription =
+            this._courseService.getCourses((courses) => {
+                this.courses = courses.courses;
+                this.set_courseNames();
+                this.setDefaultValueFor_selectedCourseName();
+                this.setSelectedCourse();
+            });
     }
 
-    ngOnDestroy(){
-        this.subscription.unsubscribe();
-
+    ngOnDestroy() {
+        this._courseService.subscription.unsubscribe();
     }
 
 
-    set_courseNames(){
+    set_courseNames() {
         this.courses.forEach((course) => {
             this.courseNames.push(course.name);
         });
     }
 
 
-    setDefaultValueFor_selectedCourseName(){
-        if (this.selectedCourseName === ''){
+    setDefaultValueFor_selectedCourseName() {
+        if (this.selectedCourseName === '') {
             this.selectedCourseName = this.courseNames[0];
         }
     }
 
 
-    setSelectedCourse(){
+    setSelectedCourse() {
         this.set_selectedCourseIndex();
         this.set_selectedCourseHref();
     }
 
 
-    set_selectedCourseIndex(){
+    set_selectedCourseIndex() {
         this.selectedCourseIndex = this.courseNames.indexOf(this.selectedCourseName);
     }
 
 
-    set_selectedCourseHref(){
+    set_selectedCourseHref() {
         let currentCourse = this.courses[this.selectedCourseIndex];
         this._courseService.selectedCourseHref = currentCourse.href;
     }
 
 
-
-    suspendGame(){
+    suspendGame() {
         this._activeGame.delete();
     }
 
@@ -103,7 +101,6 @@ export class ChooseCourseComponent implements OnInit, OnDestroy {
     }
 
      ***********/
-
 
 
 }

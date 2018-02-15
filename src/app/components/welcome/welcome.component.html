@@ -24,7 +24,7 @@
         <h2>Or, Resume Game?</h2>
         <form>
             <label>Choose Game </label>
-            <select required name="choose-game" [(ngModel)]='chosenGame'>
+            <select name="choose-game" [(ngModel)]='chosenGame'>
                 <option *ngFor="let gameID of gameIDs" name="choose-game-option"
                         [value]="gameID">
                     {{gameID}}

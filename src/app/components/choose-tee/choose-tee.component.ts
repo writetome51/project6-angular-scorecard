@@ -1,6 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CourseService} from '../../services/course.service';
 import {Subscription} from 'rxjs/Subscription';
+import {ChooseComponent} from '../choose/choose.component';
+import {setTimeout, setInterval} from 'timers';
 
 @Component({
     selector: 'choose-tee',
@@ -17,11 +19,11 @@ export class ChooseTeeComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+      //  this._waitFor_selectedCourseHref_toBeSet();
         this.loadTeeTypes();
     }
 
     ngOnDestroy() {
-        this.subscription.unsubscribe();
     }
 
 
@@ -37,11 +39,9 @@ export class ChooseTeeComponent implements OnInit, OnDestroy {
 
 
     loadTeeTypes() {
-       this._courseService.selectedCourseHref;
 
-
-        //  console.log(this.tee_types);
     }
+
 
 
     /******

@@ -29,7 +29,18 @@ export class WelcomeComponent implements OnInit {
 
 
     ngOnInit() {
-        this._setGameIDs();
+        this._gameService.getAll((games) => {
+            this._setGameIDs(games);
+            this._setDefaultFor_chosenGame();
+        });
+
+    }
+
+
+    _setDefaultFor_chosenGame(){
+        if (this.chosenGame  === ''){
+            this.chosenGame = this.gameIDs[0];
+        }
     }
 
 
@@ -66,12 +77,10 @@ export class WelcomeComponent implements OnInit {
     }
 
 
-    private _setGameIDs() {
-        this._gameService.getAll((games) => {
-            games.forEach((game) => {
-                let gameID = this._gameService.getGameID(game);
-                this.gameIDs.push(gameID);
-            });
+    private _setGameIDs(games) {
+        games.forEach((game) => {
+            let gameID = this._gameService.getGameID(game);
+            this.gameIDs.push(gameID);
         });
     }
 

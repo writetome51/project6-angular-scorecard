@@ -23,7 +23,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {PlayerNumbersService} from './services/player-numbers.service';
 import {GameModule} from './game/game.module';
 import {ActiveGameService} from './services/active-game.service';
-import { ChooseComponent } from './choose-component/choose.component';
+import { ChooseComponent } from './components/choose/choose.component';
+import {setInterval, setTimeout} from 'timers';
 
 
 @NgModule({
