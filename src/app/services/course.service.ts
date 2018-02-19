@@ -12,7 +12,7 @@ export class CourseService {
     localObj = {latitude: 40.4426135, longitude: -111.8631116, radius: 100};
     selectedCourse: object;
     selectedCourseObservable: Observable<any>;
-    selectedCourseHref = '';
+    selectedCourseHref: Observable<string>;
     subscription: Subscription;
 
 

@@ -19,11 +19,11 @@ export class ChooseTeeComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-      //  this._waitFor_selectedCourseHref_toBeSet();
-        this.loadTeeTypes();
+        this.set_teeTypes();
     }
 
     ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
 
@@ -38,10 +38,12 @@ export class ChooseTeeComponent implements OnInit, OnDestroy {
     }
 
 
-    loadTeeTypes() {
-
+    set_teeTypes() {
+        this.subscription = this._courseService.selectedCourseHref
+            .subscribe((response) => {
+                this.tee_types = response;
+            });
     }
-
 
 
     /******
