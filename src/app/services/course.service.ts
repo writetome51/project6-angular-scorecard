@@ -160,7 +160,7 @@ export class CourseService {
             this.findCorrectTeeBoxAndGetDataFor(thisHole);
         }
 
-        this.appendDashesTo_descriptiveData_UntilAllHave18Items();
+        this.makeSureEach_descriptiveDataRow_has18Items();
     }
 
 
@@ -178,12 +178,24 @@ export class CourseService {
     }
 
 
-    appendDashesTo_descriptiveData_UntilAllHave18Items() {
+
+
+
+    makeSureEach_descriptiveDataRow_has18Items() {
+        for (let p in this.descriptiveData){
+            this.descriptiveData[p].forEach((item, index) => {
+                if ( ! item){
+                    this.descriptiveData[p][index] = ' - ';
+                }
+            });
+        }
+
         for (let p in this.descriptiveData) {
             while (this.descriptiveData[p].length < 18) {
                 this.descriptiveData[p].push(' - ');
             }
         }
+        console.log(this.descriptiveData);
     }
 
 
