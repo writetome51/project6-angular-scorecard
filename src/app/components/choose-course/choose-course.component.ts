@@ -4,6 +4,7 @@ import {Course} from '../../interfaces/Course.interface';
 import {ActiveGameService} from '../../services/active-game.service';
 import {Subscription} from 'rxjs/Subscription';
 import {ChooseComponent} from '../choose/choose.component';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
     selector: 'choose-course',
@@ -12,14 +13,11 @@ import {ChooseComponent} from '../choose/choose.component';
 
 export class ChooseCourseComponent implements OnInit, OnDestroy {
 
-    selectedCourseName = '';
-    selectedCourseIndex = 0;
-    courses: Course[] = [];
-    courseNames = [];
+
     subscription: Subscription;
 
 
-    constructor(private _courseService: CourseService,
+    constructor(public courseService: CourseService,
                 private _activeGame: ActiveGameService) {
     }
 
@@ -39,68 +37,11 @@ export class ChooseCourseComponent implements OnInit, OnDestroy {
     }
 
 
-    set_courseNames() {
-        this.courses.forEach((course) => {
-            this.courseNames.push(course.name);
-        });
-    }
-
-
-    setDefaultValueFor_selectedCourseName() {
-        if (this.selectedCourseName === '') {
-            this.selectedCourseName = this.courseNames[0];
-        }
-    }
-
-
-    setSelectedCourse() {
-        this.set_selectedCourseIndex();
-        this.set_selectedCourseHref();
-    }
-
-
-    set_selectedCourseIndex() {
-        this.selectedCourseIndex = this.courseNames.indexOf(this.selectedCourseName);
-    }
-
-
-    set_selectedCourseHref() {
-        let currentCourse = this.courses[this.selectedCourseIndex];
-        this._courseService.selectedCourseHref = currentCourse.href;
-    }
-
 
     suspendGame() {
         this._activeGame.delete();
     }
 
-
-    /***********
-
-     this.loadTeeTypes();
-     loadTeeNames();
-     loadTeeNameOptions();
-     updateCells();
-
-
-     function fillTeeRow(){
-        fillHoleCells('tee-row', yardagesOfCurrentTeeForEachHole);
-        fillAllTeeTotals();
-    }
-
-
-     function fillParRow(){
-        fillHoleCells('par-row', parOfCurrentTeeForEachHole);
-        fillAllParTotals();
-    }
-
-
-     function fillHandicapRow(){
-        fillHoleCells('handicap-row', hcpOfCurrentTeeForEachHole);
-        fillAllHandicapTotals();
-    }
-
-     ***********/
 
 
 }
