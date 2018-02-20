@@ -1,16 +1,16 @@
 
 <div *ngFor="let playerName of playerNames; let i = index"
-     [class]="'column-cell label-cell player-name-input-cell ' + playerNumbers[i]  + '-row'"
+     [class]="'cell label-cell player-name-input-cell ' + playerNumbers[i]  + '-row'"
      [id]="playerNumbers[i]  + '-input-cell'">
 
-    <div class="column-cell">
+    <div class="cell">
         {{playerName}}
     </div>
 </div>
 
 <div
     *ngFor="let playerStillAvailable of playersStillAvailable; let i = index"
-     [class]="'column-cell label-cell player-name-input-cell ' + playerStillAvailable + '-row'"
+     [class]="'cell label-cell player-name-input-cell ' + playerStillAvailable + '-row'"
      [id]="playerStillAvailable  + '-input-cell'">
     <input type="text"
        class="scorecard-input player-name-input"

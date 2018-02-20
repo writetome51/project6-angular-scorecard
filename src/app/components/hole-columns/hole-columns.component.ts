@@ -60,12 +60,27 @@ export class HoleColumnsComponent implements OnInit {
     }
 
 
-    isTotalColumn(id) {
-        return (id === 'out' || id === 'in' || id === 'total');
+    isTotalColumn(columnID) {
+        return (columnID === 'out' || columnID === 'in' || columnID === 'total');
     }
 
-    isNumberedColumn(id) {
-        return (!isNaN(id));
+    isNumberedColumn(columnID) {
+        return (!isNaN(columnID));
+    }
+
+
+    ifNumberedColumn_ShowDescriptiveData(columnID, descriptiveRow){
+        if (this.isNumberedColumn(columnID)){
+            let rowOfData = this.courseService.descriptiveData[descriptiveRow];
+            return rowOfData[(columnID - 1)];
+        }
+    }
+
+
+    ifTotalColumn_ShowTotal(columnID){
+        if (this.isTotalColumn(columnID)){
+            return;
+        }
     }
 
 

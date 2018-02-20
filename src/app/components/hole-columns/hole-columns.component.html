@@ -3,20 +3,21 @@
      class="card-column"  [class.total-column]="isTotalColumn(columnID)"
      [id]="getColumnIDForHTML(columnID)">
 
-    <div class="column-cell hole-row"
+    <div class="cell hole-row"
          [id]="'hole-cell-' + columnID" >
         {{columnID | uppercase}}
     </div>
 
     <div *ngFor="let descriptiveRow of descriptiveRows"
-         [class]="'column-cell ' + descriptiveRow + '-row'"
+         [class]="'cell ' + descriptiveRow + '-row'"
          [id]="descriptiveRow + '-cell-' + columnID" >
-        {{courseService.descriptiveData[descriptiveRow][i]}}
+        {{ifNumberedColumn_ShowDescriptiveData(columnID, descriptiveRow)}}
+        {{ifTotalColumn_ShowTotal(columnID, descriptiveRow)}}
     </div>
 
 
     <div *ngFor="let player of players; let i=index"
-         [class]="'column-cell  strokes-input-cell ' + 'player' + (i+1) + '-row'"
+         [class]="'cell  strokes-input-cell ' + 'player' + (i+1) + '-row'"
          [class.bottom-row]="isLastPlayer()"
          [id]="getPlayerCellID('player' + (i+1))">
         <input *ngIf="isNumberedColumn(columnID)" type="text"
