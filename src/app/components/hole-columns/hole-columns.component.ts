@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Player} from '../../interfaces/Player.interface';
 import {PlayersService} from '../../services/players.service';
 import {ActiveGameService} from '../../services/active-game.service';
+import {CourseService} from '../../services/course.service';
 
 @Component({
-  selector: 'hole-columns',
-  templateUrl: './hole-columns.component.html'
+    selector: 'hole-columns',
+    templateUrl: './hole-columns.component.html'
 })
 export class HoleColumnsComponent implements OnInit {
 
@@ -19,51 +20,56 @@ export class HoleColumnsComponent implements OnInit {
         '16', '17', '18', 'in', 'total'
     ];
 
-    fetchedDataRows = [
-        'yards', 'par', 'hcp'
-    ];
-
-  constructor(private playersService: PlayersService,
-              private _activeGame: ActiveGameService) {
-  }
-
-  ngOnInit() {
-      this.playersService.getPlayers((response) => {
-          this.players = response;
-      });
-  }
+    descriptiveRows: string[];
 
 
-  getColumnIDForHTML(id){
-      let prefix = 'hole-';
-      let suffix = '-column';
-      if (isNaN(id)){ return id + suffix; }
-      else{
-          return (prefix + id + suffix);
-      }
-  }
+    constructor(private playersService: PlayersService,
+                private _activeGame: ActiveGameService,
+                public courseService: CourseService) {
 
-  getPlayerCellID(playerNumber, columnID){
-      let midSection: string;
-      if (this.isTotalColumn(columnID)){
-          midSection = '-cell-';
-      }
-      else{
-          midSection = '-strokes-';
-      }
-      return playerNumber + midSection + columnID;
-  }
+        this.descriptiveRows = Object.keys(this.courseService.descriptiveData);
+    }
+
+    ngOnInit() {
+        this.playersService.getPlayers((response) => {
+            this.players = Object.values(response);
+        });
+    }
 
 
-  isTotalColumn(id) {
-      return (id === 'out' || id === 'in' || id === 'total');
-  }
+    getColumnIDForHTML(id) {
+        let prefix = 'hole-';
+        let suffix = '-column';
+        if (isNaN(id)) {
+            return id + suffix;
+        }
+        else {
+            return (prefix + id + suffix);
+        }
+    }
 
-  isNumberedColumn(id){
-      return ( ! isNaN(id));
-  }
+    getPlayerCellID(playerNumber, columnID) {
+        let midSection: string;
+        if (this.isTotalColumn(columnID)) {
+            midSection = '-cell-';
+        }
+        else {
+            midSection = '-strokes-';
+        }
+        return playerNumber + midSection + columnID;
+    }
 
 
-  isLastPlayer(){}
+    isTotalColumn(id) {
+        return (id === 'out' || id === 'in' || id === 'total');
+    }
+
+    isNumberedColumn(id) {
+        return (!isNaN(id));
+    }
+
+
+    isLastPlayer() {
+    }
 
 }

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Subscription} from 'rxjs/Subscription';
+import {Course} from '../interfaces/Course.interface';
 
 
 
@@ -18,12 +19,28 @@ export class ApiService {
 
     getCourses(functionThatManipulatesResponse): Subscription {
         let observable = this._http.post(this.coursesUrl, this.localObj);
-        return observable.subscribe(functionThatManipulatesResponse);
+        return observable.subscribe((response: any) => {
+            let courses = response.courses;
+            functionThatManipulatesResponse(courses);
+        });
     }
 
     getCourse(href, functionThatManipulatesResponse): Subscription{
         return this._http.get(href)
             .subscribe(functionThatManipulatesResponse);
+    }
+
+
+    getCoursename(course: Course){
+        return course.name;
+    }
+
+    getTeename(tee){
+        return tee.tee_type;
+    }
+
+    getTees(course: Course): object[]{
+        return course.tee_types;
     }
 
 

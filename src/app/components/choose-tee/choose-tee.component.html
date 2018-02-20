@@ -1,6 +1,6 @@
 <div class="column-cell label-cell yards-row" id="tee-name-options-cell">
     <label id="tee-name-options-label">Tee</label>
-    <select id="tee-name-options" ([ngModel])="courseService.selectedTeename"
+    <select id="tee-name-options" [(ngModel)]="courseService.selectedTeename"
             (change)="courseService.updateCells()">
         <option  *ngFor="let teeName of courseService.teeNames" [value]="teeName">
             {{teeName}}

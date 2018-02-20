@@ -1,4 +1,5 @@
-<div *ngFor="let columnID of columnIDs"
+<!--  This div represents a single column     -->
+<div *ngFor="let columnID of columnIDs; let i = index"
      class="card-column"  [class.total-column]="isTotalColumn(columnID)"
      [id]="getColumnIDForHTML(columnID)">
 
@@ -7,9 +8,10 @@
         {{columnID | uppercase}}
     </div>
 
-    <div *ngFor="let fetchedDataRow of fetchedDataRows"
-         [class]="'column-cell ' + fetchedDataRow + '-row'"
-         [id]="fetchedDataRow + '-cell-' + columnID" >
+    <div *ngFor="let descriptiveRow of descriptiveRows"
+         [class]="'column-cell ' + descriptiveRow + '-row'"
+         [id]="descriptiveRow + '-cell-' + columnID" >
+        {{courseService.descriptiveData[descriptiveRow][i]}}
     </div>
 
 

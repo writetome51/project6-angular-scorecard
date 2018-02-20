@@ -19,7 +19,7 @@ export class CourseService {
     selectedCourseName = '';
     selectedCourseIndex = 0;
     teeNames = [];
-    selectedTeename: string;
+    selectedTeename = '';
     selectedTee = '';
     selectedTeeIndex = 0;
     tee_types: any[];
@@ -31,35 +31,33 @@ export class CourseService {
 
 
     constructor(private _api: ApiService) {
-        this.coursesSubscription = this._api.getCourses((response) => {
-            this.courses = response.courses;
-            this.set_courseNames();
+        this.loadAllData();
+    }
+
+
+    loadAllData(){
+        this.coursesSubscription = this._api.getCourses((response: Course[]) => {
+            this.courses = response;
+            this.clearAndSet_courseNames();
             this.setDefaultValueFor_selectedCourseName();
-            this.setSelectedCourse();
-            this._api.getCourse(
-                this.selectedCourseHref,
-                (courseObject) => {
-                    this.selectedCourse = courseObject.course;
-                    this.tee_types = this.selectedCourse.tee_types;
-                    this.set_teeNames();
-                }
-            );
+            this.getCourseData();
         });
-
-
     }
 
 
-    set_teeNames() {
-        for (let i = 0; i < this.tee_types.length; ++i) {
-            this.teeNames.push(this.tee_types[i].tee_type);
-        }
+    clearAndSet_courseNames(){
+        this.clear_courseNames();
+        this.set_courseNames();
     }
 
+
+    clear_courseNames(){
+        this.courseNames = [];
+    }
 
     set_courseNames() {
         this.courses.forEach((course) => {
-            this.courseNames.push(course.name);
+            this.courseNames.push(this._api.getCoursename(course));
         });
     }
 
@@ -68,6 +66,50 @@ export class CourseService {
         if (this.selectedCourseName === '') {
             this.selectedCourseName = this.courseNames[0];
         }
+    }
+
+
+    getCourseData(){
+        this.setSelectedCourse();
+        this.courseSubscription = this._api.getCourse(
+            this.selectedCourseHref,
+            (courseObject) => {
+                this.selectedCourse = courseObject.course;
+                this.tee_types = this._api.getTees(this.selectedCourse);
+                this.clearAndSet_teeNames();
+                this.setDefaultValueFor_selectedTeename();
+                this.getTeeData();
+            }
+        );
+    }
+
+
+    clearAndSet_teeNames(){
+        this.clear_teeNames();
+        this.set_teeNames();
+    }
+
+
+    clear_teeNames(){
+        this.teeNames = [];
+    }
+
+
+    set_teeNames() {
+        for (let i = 0; i < this.tee_types.length; ++i) {
+            this.teeNames.push(this._api.getTeename(this.tee_types[i]));
+        }
+    }
+
+
+    getTeeData(){
+        this.setCurrentTee();
+        this.set_descriptiveData();
+    }
+
+
+    setDefaultValueFor_selectedTeename() {
+        this.selectedTeename = this.teeNames[0];
     }
 
 
@@ -92,39 +134,33 @@ export class CourseService {
     }
 
 
-    updateCells() {
-        this.setCurrentTee();
-        this.loaddescriptiveData();
-    }
-
-
     setCurrentTee() {
         this.selectedTeeIndex = this.teeNames.indexOf(this.selectedTeename);
         this.selectedTeename = this.teeNames[this.selectedTeeIndex];
     }
 
 
-    loaddescriptiveData() {
-        this.cleardescriptiveData();
-        this.filldescriptiveData();
+    set_descriptiveData() {
+        this.clear_descriptiveData();
+        this.fill_descriptiveData();
     }
 
 
-    cleardescriptiveData() {
+    clear_descriptiveData() {
         for (let p in this.descriptiveData) {
             this.descriptiveData[p] = [];
         }
     }
 
 
-    filldescriptiveData() {
+    fill_descriptiveData() {
         for (let hole = 0, thisHole; hole < this.selectedCourse.holes.length; ++hole) {
             thisHole = this.selectedCourse.holes[hole];
 
             this.findCorrectTeeBoxAndGetDataFor(thisHole);
         }
 
-        this.appendDashesTodescriptiveDataUntilAllHave18Items();
+        this.appendDashesTo_descriptiveData_UntilAllHave18Items();
     }
 
 
@@ -142,7 +178,7 @@ export class CourseService {
     }
 
 
-    appendDashesTodescriptiveDataUntilAllHave18Items() {
+    appendDashesTo_descriptiveData_UntilAllHave18Items() {
         for (let p in this.descriptiveData) {
             while (this.descriptiveData[p].length < 18) {
                 this.descriptiveData[p].push(' - ');
