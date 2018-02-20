@@ -3,14 +3,13 @@ import {HttpClient} from '@angular/common/http';
 import {Subscription} from 'rxjs/Subscription';
 import {Observable} from 'rxjs/Observable';
 import {Course} from '../interfaces/Course.interface';
+import {ApiService} from './api.service';
 
 
 @Injectable()
 
 export class CourseService {
 
-    coursesUrl = 'https://golf-courses-api.herokuapp.com/courses';
-    localObj = {latitude: 40.4426135, longitude: -111.8631116, radius: 100};
     courses: Course[] = [];
     courseNames = [];
     selectedCourse: Course;
@@ -24,24 +23,27 @@ export class CourseService {
     selectedTee = '';
     selectedTeeIndex = 0;
     tee_types: any[];
-    fetchedDataForEachHole = {
+    descriptiveData = {
         yards: [],
         par: [],
         hcp: []
     };
 
 
-    constructor(private _http: HttpClient) {
-        this.coursesSubscription = this.getCourses((response) => {
+    constructor(private _api: ApiService) {
+        this.coursesSubscription = this._api.getCourses((response) => {
             this.courses = response.courses;
             this.set_courseNames();
             this.setDefaultValueFor_selectedCourseName();
             this.setSelectedCourse();
-            this.courseSubscription = this.getCourse((courseObject) => {
-                this.selectedCourse = courseObject.course;
-                this.tee_types = this.selectedCourse.tee_types;
-                this.set_teeNames();
-            });
+            this._api.getCourse(
+                this.selectedCourseHref,
+                (courseObject) => {
+                    this.selectedCourse = courseObject.course;
+                    this.tee_types = this.selectedCourse.tee_types;
+                    this.set_teeNames();
+                }
+            );
         });
 
 
@@ -52,7 +54,6 @@ export class CourseService {
         for (let i = 0; i < this.tee_types.length; ++i) {
             this.teeNames.push(this.tee_types[i].tee_type);
         }
-
     }
 
 
@@ -86,64 +87,53 @@ export class CourseService {
         this.selectedCourse = this.courses[this.selectedCourseIndex];
     }
 
-    set_selectedCourseHref(){
+    set_selectedCourseHref() {
         this.selectedCourseHref = this.selectedCourse.href;
     }
 
 
-    updateCells(){
+    updateCells() {
         this.setCurrentTee();
-        this.loadFetchedDataForEachHole();
+        this.loaddescriptiveData();
     }
 
 
-    setCurrentTee(){
-        this.set_selectedTeeIndex();
-        this.set_selectedTeename();
-    }
-
-
-    set_selectedTeeIndex(){
+    setCurrentTee() {
         this.selectedTeeIndex = this.teeNames.indexOf(this.selectedTeename);
-    }
-
-
-    set_selectedTeename(){
         this.selectedTeename = this.teeNames[this.selectedTeeIndex];
     }
 
 
-
-    loadFetchedDataForEachHole(){
-        this.clearFetchedData();
-        this.fillFetchedData();
+    loaddescriptiveData() {
+        this.cleardescriptiveData();
+        this.filldescriptiveData();
     }
 
 
-    clearFetchedData() {
-        for (let p in this.fetchedDataForEachHole){
-            this.fetchedDataForEachHole[p] = [];
+    cleardescriptiveData() {
+        for (let p in this.descriptiveData) {
+            this.descriptiveData[p] = [];
         }
     }
 
 
-    fillFetchedData(){
-        for (let hole = 0, thisHole;  hole < this.selectedCourse.holes.length;  ++hole){
+    filldescriptiveData() {
+        for (let hole = 0, thisHole; hole < this.selectedCourse.holes.length; ++hole) {
             thisHole = this.selectedCourse.holes[hole];
 
             this.findCorrectTeeBoxAndGetDataFor(thisHole);
         }
 
-        this.appendDashesToFetchedDataUntilAllHave18Items();
+        this.appendDashesTodescriptiveDataUntilAllHave18Items();
     }
 
 
-    findCorrectTeeBoxAndGetDataFor(thisHole){
-        for (let tee_box = 0, currentTee; tee_box < thisHole.tee_boxes.length; ++tee_box){
+    findCorrectTeeBoxAndGetDataFor(thisHole) {
+        for (let tee_box = 0, currentTee; tee_box < thisHole.tee_boxes.length; ++tee_box) {
             currentTee = thisHole.tee_boxes[tee_box];
-            if (currentTee.tee_type === this.selectedTeename){
-                for (let p in this.fetchedDataForEachHole){
-                    this.fetchedDataForEachHole[p].push(currentTee[p]);
+            if (currentTee.tee_type === this.selectedTeename) {
+                for (let p in this.descriptiveData) {
+                    this.descriptiveData[p].push(currentTee[p]);
                 }
 
                 break;
@@ -152,25 +142,12 @@ export class CourseService {
     }
 
 
-    appendDashesToFetchedDataUntilAllHave18Items() {
-        for (let p in this.fetchedDataForEachHole){
-            while (this.fetchedDataForEachHole[p].length < 18){
-                this.fetchedDataForEachHole[p].push(' - ');
+    appendDashesTodescriptiveDataUntilAllHave18Items() {
+        for (let p in this.descriptiveData) {
+            while (this.descriptiveData[p].length < 18) {
+                this.descriptiveData[p].push(' - ');
             }
         }
-    }
-
-
-
-
-    getCourses(functionThatManipulatesResponse): Subscription {
-        let observable = this._http.post(this.coursesUrl, this.localObj);
-        return observable.subscribe(functionThatManipulatesResponse);
-    }
-
-    getCourse(functionThatManipulatesResponse): Subscription{
-        return this._http.get(this.selectedCourseHref)
-            .subscribe(functionThatManipulatesResponse);
     }
 
 
