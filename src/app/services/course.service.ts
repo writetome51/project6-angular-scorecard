@@ -178,10 +178,13 @@ export class CourseService {
     }
 
 
-
-
-
     makeSureEach_descriptiveDataRow_has18Items() {
+        this.ifAnyItemsAreEmpty_convertThemToDashes();
+        this.appendDashesToRowsUntilEachHas18Items();
+    }
+
+
+    ifAnyItemsAreEmpty_convertThemToDashes(){
         for (let p in this.descriptiveData){
             this.descriptiveData[p].forEach((item, index) => {
                 if ( ! item){
@@ -189,13 +192,15 @@ export class CourseService {
                 }
             });
         }
+    }
 
+
+    appendDashesToRowsUntilEachHas18Items(){
         for (let p in this.descriptiveData) {
             while (this.descriptiveData[p].length < 18) {
                 this.descriptiveData[p].push(' - ');
             }
         }
-        console.log(this.descriptiveData);
     }
 
 
