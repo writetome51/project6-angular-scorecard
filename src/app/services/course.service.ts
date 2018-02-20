@@ -22,6 +22,7 @@ export class CourseService {
     teeNames = [];
     selectedTeename: string;
     selectedTee = '';
+    selectedTeeIndex = 0;
     tee_types: any[];
     fetchedDataForEachHole = {
         yards: [],
@@ -36,13 +37,14 @@ export class CourseService {
             this.set_courseNames();
             this.setDefaultValueFor_selectedCourseName();
             this.setSelectedCourse();
+            this.courseSubscription = this.getCourse((courseObject) => {
+                this.selectedCourse = courseObject.course;
+                this.tee_types = this.selectedCourse.tee_types;
+                this.set_teeNames();
+            });
         });
 
-        this.courseSubscription = this.getCourse((response) => {
-            this.selectedCourse = response.course;
-            this.tee_types = this.selectedCourse.tee_types;
-            this.set_teeNames();
-        });
+
     }
 
 
@@ -92,13 +94,22 @@ export class CourseService {
     updateCells(){
         this.setCurrentTee();
         this.loadFetchedDataForEachHole();
-        this.fillRowsRepresentingFetchedData();
     }
 
 
     setCurrentTee(){
-        loadCurrentTeeIndex();
-        loadCurrentTeeName();
+        this.set_selectedTeeIndex();
+        this.set_selectedTeename();
+    }
+
+
+    set_selectedTeeIndex(){
+        this.selectedTeeIndex = this.teeNames.indexOf(this.selectedTeename);
+    }
+
+
+    set_selectedTeename(){
+        this.selectedTeename = this.teeNames[this.selectedTeeIndex];
     }
 
 
@@ -109,42 +120,42 @@ export class CourseService {
     }
 
 
-    fillRowsRepresentingFetchedData(){
-        for (var p in fetchedDataForEachHole){
-            fillHoleCells(p + '-row', fetchedDataForEachHole[p]);
-            fillTotalCells(p);
-        }
-    }
-
-
     clearFetchedData() {
-        for (let p in fetchedDataForEachHole){
-            fetchedDataForEachHole[p] = [];
+        for (let p in this.fetchedDataForEachHole){
+            this.fetchedDataForEachHole[p] = [];
         }
     }
 
 
     fillFetchedData(){
-        for (var hole=0, thisHole;  hole < course.holes.length;  ++hole){
-            thisHole = course.holes[hole];
+        for (let hole = 0, thisHole;  hole < this.selectedCourse.holes.length;  ++hole){
+            thisHole = this.selectedCourse.holes[hole];
 
-            findCorrectTeeBoxAndGetDataFor(thisHole);
-            ifNoDataForThisHole_FillWithDash(hole);
+            this.findCorrectTeeBoxAndGetDataFor(thisHole);
         }
 
-        appendDashesToFetchedDataUntilAllHave18Items();
+        this.appendDashesToFetchedDataUntilAllHave18Items();
     }
 
 
     findCorrectTeeBoxAndGetDataFor(thisHole){
         for (let tee_box = 0, currentTee; tee_box < thisHole.tee_boxes.length; ++tee_box){
             currentTee = thisHole.tee_boxes[tee_box];
-            if (currentTee.tee_type === currentTeeName){
+            if (currentTee.tee_type === this.selectedTeename){
                 for (let p in this.fetchedDataForEachHole){
                     this.fetchedDataForEachHole[p].push(currentTee[p]);
                 }
 
                 break;
+            }
+        }
+    }
+
+
+    appendDashesToFetchedDataUntilAllHave18Items() {
+        for (let p in this.fetchedDataForEachHole){
+            while (this.fetchedDataForEachHole[p].length < 18){
+                this.fetchedDataForEachHole[p].push(' - ');
             }
         }
     }

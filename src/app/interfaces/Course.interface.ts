@@ -4,4 +4,5 @@ export interface Course {
     name: string;
     id: number;
     tee_types?: string[];
+    holes: any[];
 }
