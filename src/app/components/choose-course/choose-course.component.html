@@ -5,7 +5,7 @@
             <select  id="course-name-options" name="course-name"
                     [(ngModel)]="courseService.selectedCourseName"
                     (change)="courseService.setSelectedCourse()">
-                <option  *ngFor="let courseName of courseNames"
+                <option  *ngFor="let courseName of courseService.courseNames"
                          [value]="courseName" name="course-option">
                     {{courseName}}
                 </option>

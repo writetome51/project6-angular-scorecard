@@ -23,19 +23,12 @@ export class ChooseCourseComponent implements OnInit, OnDestroy {
 
 
     ngOnInit() {
-        this._courseService.subscription =
-            this._courseService.getCourses((courses) => {
-                this.courses = courses.courses;
-                this.set_courseNames();
-                this.setDefaultValueFor_selectedCourseName();
-                this.setSelectedCourse();
-            });
+
     }
 
     ngOnDestroy() {
-        this._courseService.subscription.unsubscribe();
+        this.courseService.coursesSubscription.unsubscribe();
     }
-
 
 
     suspendGame() {
