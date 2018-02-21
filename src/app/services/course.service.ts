@@ -171,7 +171,6 @@ export class CourseService {
                 for (let p in this.descriptiveData) {
                     this.descriptiveData[p].push(currentTee[p]);
                 }
-
                 break;
             }
         }

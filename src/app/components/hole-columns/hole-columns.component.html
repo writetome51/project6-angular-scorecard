@@ -11,8 +11,7 @@
     <div *ngFor="let descriptiveRow of descriptiveRows"
          [class]="'cell ' + descriptiveRow + '-row'"
          [id]="descriptiveRow + '-cell-' + columnID" >
-        {{ifNumberedColumn_ShowDescriptiveData(columnID, descriptiveRow)}}
-        {{ifTotalColumn_ShowTotal(columnID, descriptiveRow)}}
+        {{figureOutWhatDataToShow(columnID, descriptiveRow)}}
     </div>
 
 
