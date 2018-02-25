@@ -1,8 +1,9 @@
 <div class="cell label-cell yards-row" id="tee-name-options-cell">
     <label id="tee-name-options-label">Tee</label>
-    <select id="tee-name-options" [(ngModel)]="courseService.selectedTeename"
-            (change)="courseService.updateCells()">
-        <option  *ngFor="let teeName of courseService.teeNames" [value]="teeName">
+    <select id="tee-name-options" [(ngModel)]="courseService.selectedTeeName"
+            (change)="courseService.loadAllDataForSelectedTee()"  name="select-tee">
+        <option  *ngFor="let teeName of courseService.teeNames"
+                 [value]="teeName" name="tee-option">
             {{teeName}}
         </option>
     </select>

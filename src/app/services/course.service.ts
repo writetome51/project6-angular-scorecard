@@ -19,8 +19,7 @@ export class CourseService {
     selectedCourseName = '';
     selectedCourseIndex = 0;
     teeNames = [];
-    selectedTeename = '';
-    selectedTee = '';
+    selectedTeeName = '';
     selectedTeeIndex = 0;
     tee_types: any[];
     descriptiveData = {
@@ -76,8 +75,8 @@ export class CourseService {
             (courseObject) => {
                 this.selectedCourse = courseObject.course;
                 this.clearAndSet_teeNames();
-                this.setDefaultValueFor_selectedTeename();
-                this.getTeeData();
+                this.setDefaultValueFor_selectedTeeName();
+                this.loadAllDataForSelectedTee();
             }
         );
     }
@@ -102,14 +101,14 @@ export class CourseService {
     }
 
 
-    getTeeData(){
+    loadAllDataForSelectedTee(){
         this.setCurrentTee();
         this.set_descriptiveData();
     }
 
 
-    setDefaultValueFor_selectedTeename() {
-        this.selectedTeename = this.teeNames[0];
+    setDefaultValueFor_selectedTeeName() {
+        this.selectedTeeName = this.teeNames[0];
     }
 
 
@@ -135,7 +134,7 @@ export class CourseService {
 
 
     setCurrentTee() {
-        this.selectedTeeIndex = this.teeNames.indexOf(this.selectedTeename);
+        this.selectedTeeIndex = this.teeNames.indexOf(this.selectedTeeName);
     }
 
 
@@ -152,27 +151,11 @@ export class CourseService {
     }
 
 
-    fill_descriptiveData() {
-        for (let hole = 0, thisHole; hole < this.selectedCourse.holes.length; ++hole) {
-            thisHole = this.selectedCourse.holes[hole];
-
-            this.findCorrectTeeBoxAndGetDataFor(thisHole);
-        }
-
+    fill_descriptiveData(){
+        this._api.fill_descriptiveData(
+            this.descriptiveData, this.selectedCourse, this.selectedTeeName
+        );
         this.makeSureEach_descriptiveDataRow_has18Items();
-    }
-
-
-    findCorrectTeeBoxAndGetDataFor(thisHole) {
-        for (let tee_box = 0, currentTee; tee_box < thisHole.tee_boxes.length; ++tee_box) {
-            currentTee = thisHole.tee_boxes[tee_box];
-            if (currentTee.tee_type === this.selectedTeename) {
-                for (let p in this.descriptiveData) {
-                    this.descriptiveData[p].push(currentTee[p]);
-                }
-                break;
-            }
-        }
     }
 
 
@@ -199,6 +182,11 @@ export class CourseService {
                 this.descriptiveData[p].push(' - ');
             }
         }
+    }
+
+
+    calculateDescriptiveDataTotals(){
+
     }
 
 
