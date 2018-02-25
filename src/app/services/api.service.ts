@@ -17,17 +17,16 @@ export class ApiService {
     }
 
 
-    getCourses(functionThatManipulatesResponse): Subscription {
+    getCourses(observer): Subscription {
         let observable = this._http.post(this.coursesUrl, this.localObj);
         return observable.subscribe((response: any) => {
             let courses = response.courses;
-            functionThatManipulatesResponse(courses);
+            observer(courses);
         });
     }
 
-    getCourse(href, functionThatManipulatesResponse): Subscription{
-        return this._http.get(href)
-            .subscribe(functionThatManipulatesResponse);
+    getCourse(href, observer): Subscription{
+        return this._http.get(href).subscribe(observer);
     }
 
 

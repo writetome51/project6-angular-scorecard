@@ -38,8 +38,10 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.descriptiveRows = Object.keys(this.courseService.descriptiveData);
-        this.set_rowTallies();
         this.set_totalHoles();
+        this.set_rowTallies();
+        this.setTotals();
+
         this.playersService.getPlayers((response) => {
             this.players = Object.values(response);
         });
@@ -138,7 +140,7 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
     tallySelection(descriptiveRow, range: [number, number]) {
         let rowOfNumbers = this.courseService.descriptiveData[descriptiveRow];
-        let numbersToTally = rowOfNumbers.splice(range[0], range[1]);
+        let numbersToTally = rowOfNumbers.slice(range[0], range[1]);
         return this.getTally(numbersToTally);
     }
 

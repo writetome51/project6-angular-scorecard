@@ -19,9 +19,9 @@ export class PlayersService {
     }
 
 
-    getPlayers(functionThatManipulatesResponse){ // function takes one parameter.
+    getPlayers(observer){ // function takes one parameter.
         this._gameObservable  = this._game.get(this._activeGame.get());
-        this._gameObservable.subscribe(functionThatManipulatesResponse);
+        this._gameObservable.subscribe(observer);
     }
 
 

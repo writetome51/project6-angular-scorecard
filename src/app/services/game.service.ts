@@ -18,8 +18,8 @@ export class GameService {
     }
 
 
-    getAll(functionThatManipulatesResponse){
-        this._getAllAsObservableWithMetadata().subscribe(functionThatManipulatesResponse);
+    getAll(observer){
+        this._getAllAsObservableWithMetadata().subscribe(observer);
     }
 
 

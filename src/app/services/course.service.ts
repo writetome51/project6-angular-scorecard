@@ -40,7 +40,7 @@ export class CourseService {
             this.courses = response;
             this.clearAndSet_courseNames();
             this.setDefaultValueFor_selectedCourseName();
-            this.getCourseData();
+            this.loadAllDataForSelectedCourse();
         });
     }
 
@@ -69,13 +69,12 @@ export class CourseService {
     }
 
 
-    getCourseData(){
+    loadAllDataForSelectedCourse(){
         this.setSelectedCourse();
         this.courseSubscription = this._api.getCourse(
             this.selectedCourseHref,
             (courseObject) => {
                 this.selectedCourse = courseObject.course;
-                this.tee_types = this._api.getTees(this.selectedCourse);
                 this.clearAndSet_teeNames();
                 this.setDefaultValueFor_selectedTeename();
                 this.getTeeData();
@@ -96,6 +95,7 @@ export class CourseService {
 
 
     set_teeNames() {
+        this.tee_types = this._api.getTees(this.selectedCourse);
         for (let i = 0; i < this.tee_types.length; ++i) {
             this.teeNames.push(this._api.getTeename(this.tee_types[i]));
         }
@@ -136,7 +136,6 @@ export class CourseService {
 
     setCurrentTee() {
         this.selectedTeeIndex = this.teeNames.indexOf(this.selectedTeename);
-        this.selectedTeename = this.teeNames[this.selectedTeeIndex];
     }
 
 
