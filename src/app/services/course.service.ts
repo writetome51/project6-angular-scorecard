@@ -31,13 +31,13 @@ export class CourseService {
 
 
     constructor(private _api: ApiService) {
+        this.initialize_descriptiveDataTotals();
         this.loadAllData();
     }
 
 
     loadAllData() {
         this.coursesSubscription = this._api.getCourses((response: Course[]) => {
-            this.initialize_descriptiveDataTotals();
             this.courses = response;
             this.clearAndSet_courseNames();
             this.setDefaultValueFor_selectedCourseName();
