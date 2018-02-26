@@ -27,6 +27,7 @@ export class CourseService {
         par: [],
         hcp: []
     };
+    descriptiveDataTotals = {};
 
 
     constructor(private _api: ApiService) {
@@ -34,7 +35,7 @@ export class CourseService {
     }
 
 
-    loadAllData(){
+    loadAllData() {
         this.coursesSubscription = this._api.getCourses((response: Course[]) => {
             this.courses = response;
             this.clearAndSet_courseNames();
@@ -44,13 +45,13 @@ export class CourseService {
     }
 
 
-    clearAndSet_courseNames(){
+    clearAndSet_courseNames() {
         this.clear_courseNames();
         this.set_courseNames();
     }
 
 
-    clear_courseNames(){
+    clear_courseNames() {
         this.courseNames = [];
     }
 
@@ -68,7 +69,7 @@ export class CourseService {
     }
 
 
-    loadAllDataForSelectedCourse(){
+    loadAllDataForSelectedCourse() {
         this.setSelectedCourse();
         this.courseSubscription = this._api.getCourse(
             this.selectedCourseHref,
@@ -82,13 +83,13 @@ export class CourseService {
     }
 
 
-    clearAndSet_teeNames(){
+    clearAndSet_teeNames() {
         this.clear_teeNames();
         this.set_teeNames();
     }
 
 
-    clear_teeNames(){
+    clear_teeNames() {
         this.teeNames = [];
     }
 
@@ -101,7 +102,7 @@ export class CourseService {
     }
 
 
-    loadAllDataForSelectedTee(){
+    loadAllDataForSelectedTee() {
         this.setCurrentTee();
         this.set_descriptiveData();
     }
@@ -129,7 +130,7 @@ export class CourseService {
     }
 
     set_selectedCourseHref() {
-        this.selectedCourseHref = this.selectedCourse.href;
+        this.selectedCourseHref = this._api.getCourseHref(this.selectedCourse);
     }
 
 
@@ -151,7 +152,7 @@ export class CourseService {
     }
 
 
-    fill_descriptiveData(){
+    fill_descriptiveData() {
         this._api.fill_descriptiveData(
             this.descriptiveData, this.selectedCourse, this.selectedTeeName
         );
@@ -165,10 +166,10 @@ export class CourseService {
     }
 
 
-    ifAnyItemsAreEmpty_convertThemToDashes(){
-        for (let p in this.descriptiveData){
+    ifAnyItemsAreEmpty_convertThemToDashes() {
+        for (let p in this.descriptiveData) {
             this.descriptiveData[p].forEach((item, index) => {
-                if ( ! item){
+                if (!item) {
                     this.descriptiveData[p][index] = ' - ';
                 }
             });
@@ -176,7 +177,7 @@ export class CourseService {
     }
 
 
-    appendDashesToRowsUntilEachHas18Items(){
+    appendDashesToRowsUntilEachHas18Items() {
         for (let p in this.descriptiveData) {
             while (this.descriptiveData[p].length < 18) {
                 this.descriptiveData[p].push(' - ');
@@ -185,8 +186,34 @@ export class CourseService {
     }
 
 
-    calculateDescriptiveDataTotals(){
+    fill_descriptiveDataTotals() {
+        let ranges = [[0, 8],  [9, 17],  [0, 17]];
+        for (let p in this.descriptiveData){
+            this.descriptiveDataTotals[p] = [];
+            ranges.forEach((range) => {
+                let tally = this.calculateTotalsInRange(range, this.descriptiveData[p]);
+                this.descriptiveDataTotals[p].push(tally);
+            });
+        }
+        console.log(this.descriptiveDataTotals);
+    }
 
+
+    calculateTotalsInRange(range: number[], array: number[]) {
+        return this.getTally(array.slice(range[0], (range[1] + 1)));
+    }
+
+
+    getTally(arrayToTally) {
+        let sum = 0;
+
+        for (let i = 0; i < arrayToTally.length; ++i) {
+            if (isNaN(arrayToTally[i])) {
+                arrayToTally[i] = 0;
+            }
+            sum += arrayToTally[i];
+        }
+        return sum;
     }
 
 

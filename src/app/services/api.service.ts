@@ -34,6 +34,10 @@ export class ApiService {
         return course.name;
     }
 
+    getCourseHref(course: Course){
+        return course.href;
+    }
+
     getTeename(tee){
         return tee.tee_type;
     }
@@ -47,17 +51,17 @@ export class ApiService {
         for (let hole = 0, thisHole; hole < selectedCourse.holes.length; ++hole) {
             thisHole = selectedCourse.holes[hole];
 
-            this.findCorrectTeeBoxAndGetDataFor(thisHole, selectedTeeName);
+            this.findCorrectTeeBoxAndGetDataFor(descriptiveData, thisHole, selectedTeeName);
         }
     }
 
 
-    findCorrectTeeBoxAndGetDataFor(thisHole, selectedTeeName) {
+    findCorrectTeeBoxAndGetDataFor(descriptiveData, thisHole, selectedTeeName) {
         for (let tee_box = 0, currentTee; tee_box < thisHole.tee_boxes.length; ++tee_box) {
             currentTee = thisHole.tee_boxes[tee_box];
             if (currentTee.tee_type === selectedTeeName) {
-                for (let p in this.descriptiveData) {
-                    this.descriptiveData[p].push(currentTee[p]);
+                for (let p in descriptiveData) {
+                    descriptiveData[p].push(currentTee[p]);
                 }
                 break;
             }
