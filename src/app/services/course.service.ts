@@ -37,11 +37,19 @@ export class CourseService {
 
     loadAllData() {
         this.coursesSubscription = this._api.getCourses((response: Course[]) => {
+            this.initialize_descriptiveDataTotals();
             this.courses = response;
             this.clearAndSet_courseNames();
             this.setDefaultValueFor_selectedCourseName();
             this.loadAllDataForSelectedCourse();
         });
+    }
+
+
+    initialize_descriptiveDataTotals(){
+        for (let p in this.descriptiveData){
+            this.descriptiveDataTotals[p] = [];
+        }
     }
 
 
@@ -140,14 +148,28 @@ export class CourseService {
 
 
     set_descriptiveData() {
-        this.clear_descriptiveData();
-        this.fill_descriptiveData();
+        this.clearAllDescriptiveData();
+        this.fillAllDescriptiveData();
     }
 
 
-    clear_descriptiveData() {
-        for (let p in this.descriptiveData) {
-            this.descriptiveData[p] = [];
+    clearAllDescriptiveData() {
+        let descriptiveDataSets = [this.descriptiveData, this.descriptiveDataTotals];
+        descriptiveDataSets.forEach((dataSet) => {
+            this.setObjectPropertiesToEmptyArrays(dataSet);
+        });
+    }
+
+
+    fillAllDescriptiveData(){
+        this.fill_descriptiveData();
+        this.fill_descriptiveDataTotals();
+    }
+
+
+    setObjectPropertiesToEmptyArrays(obj) {
+        for (let p in obj) {
+            obj[p] = [];
         }
     }
 
@@ -187,15 +209,13 @@ export class CourseService {
 
 
     fill_descriptiveDataTotals() {
-        let ranges = [[0, 8],  [9, 17],  [0, 17]];
-        for (let p in this.descriptiveData){
-            this.descriptiveDataTotals[p] = [];
+        let ranges = [[0, 8], [9, 17], [0, 17]];
+        for (let p in this.descriptiveData) {
             ranges.forEach((range) => {
                 let tally = this.calculateTotalsInRange(range, this.descriptiveData[p]);
                 this.descriptiveDataTotals[p].push(tally);
             });
         }
-        console.log(this.descriptiveDataTotals);
     }
 
 
