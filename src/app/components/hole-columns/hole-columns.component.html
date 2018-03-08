@@ -21,7 +21,8 @@
          [id]="getPlayerCellID('player' + (i+1))">
         <input *ngIf="isNumberedColumn(columnID)" type="text"
                class="scorecard-input  strokes-input"
-               [(ngModel)]="player.strokes[(columnID) - 1]">
+               [(ngModel)]="player.strokes[(columnID) - 1]"
+               (change)="validateEntry(player, columnID - 1)">
     </div>
 
 </div>

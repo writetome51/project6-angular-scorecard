@@ -52,6 +52,15 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     }
 
 
+    validateEntry(player, column){
+        if (player.strokes[column] !== ''){
+            if (isNaN(Number(player.strokes[column]))) {
+                player.strokes[column] = 0;
+            }
+        }
+    }
+
+
     getColumnIDForHTML(id) {
         let prefix = 'hole-';
         let suffix = '-column';
