@@ -3,6 +3,7 @@ import {AngularFirestore} from 'angularfire2/firestore';
 import {Game} from '../interfaces/Game.interface';
 import {Observable} from 'rxjs/Observable';
 import {ActiveGameService} from './active-game.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Injectable()
 export class GameService {
@@ -52,7 +53,7 @@ export class GameService {
     }
 
 
-    addMorePlayers(playerNames, startingPlayerNumber){
+    addMorePlayers(playerNames, startingPlayerNumber) {
         let newPlayers = this._preparePlayerObjects(playerNames, startingPlayerNumber);
         this._db.collection('games')
             .doc(this._activeGame.get()).update(newPlayers);

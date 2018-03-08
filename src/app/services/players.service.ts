@@ -4,6 +4,7 @@ import {AngularFirestore} from 'angularfire2/firestore';
 import {GameService} from './game.service';
 import {Observable} from 'rxjs/Observable';
 import {ActiveGameService} from './active-game.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Injectable()
 
@@ -19,9 +20,9 @@ export class PlayersService {
     }
 
 
-    getPlayers(observer){ // function takes one parameter.
+    getPlayers(observer): Subscription{
         this._gameObservable  = this._game.get(this._activeGame.get());
-        this._gameObservable.subscribe(observer);
+        return this._gameObservable.subscribe(observer);
     }
 
 

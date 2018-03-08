@@ -17,12 +17,12 @@
 
     <div *ngFor="let player of players; let i=index"
          [class]="'cell  strokes-input-cell ' + 'player' + (i+1) + '-row'"
-         [class.bottom-row]="isLastPlayer()"
+         [class.bottom-row]="isLastPlayer(i)"
          [id]="getPlayerCellID('player' + (i+1))">
         <input *ngIf="isNumberedColumn(columnID)" type="text"
                class="scorecard-input  strokes-input"
                [(ngModel)]="player.strokes[(columnID) - 1]"
-               (change)="validateEntry(player, columnID - 1)">
+               (change)="validateAndUpdateRowTotals(i, columnID - 1)">
     </div>
 
 </div>

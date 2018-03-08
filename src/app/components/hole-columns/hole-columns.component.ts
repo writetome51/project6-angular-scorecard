@@ -16,7 +16,7 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     outColumn = 'out';
     inColumn = 'in';
     totalColumn = 'total';
-    descriptiveDataTotalColumnIDs = [this.outColumn, this.inColumn, this.totalColumn];
+    totalColumnIDs = [this.outColumn, this.inColumn, this.totalColumn];
     columnIDs = [
         '1', '2', '3', '4',
         '5', '6', '7', '8',
@@ -25,30 +25,37 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
         '16', '17', '18', this.inColumn, this.totalColumn
     ];
 
-
     descriptiveRows: string[];
-    rowTallies: object;
 
 
     constructor(public courseService: CourseService,
-                private playersService: PlayersService,
-                private playerNumbers: PlayerNumbersService,
-                private _activeGame: ActiveGameService) {
+                private playersService: PlayersService) {
     }
 
 
     ngOnInit() {
         this.descriptiveRows = Object.keys(this.courseService.descriptiveData);
         this.set_totalHoleCount();
-      //  this.setTotals();
 
         this.playersService.getPlayers((response) => {
             this.players = Object.values(response);
         });
     }
 
+
     ngOnDestroy() {
         this.courseService.courseSubscription.unsubscribe();
+    }
+
+
+    validateAndUpdateRowTotals(playerIndex, columnIndex){
+        this.validateEntry(this.players[playerIndex], columnIndex);
+        this.updateRowTotals(playerIndex);
+    }
+
+
+    updateRowTotals(playerIndex){
+
     }
 
 
@@ -107,7 +114,7 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
             return this.showDescriptiveData(columnID, descriptiveRow);
         }
         else if (this.isTotalColumn(columnID)) {
-            columnID = this.descriptiveDataTotalColumnIDs.indexOf(columnID);
+            columnID = this.totalColumnIDs.indexOf(columnID);
             return this.courseService.descriptiveDataTotals[descriptiveRow][columnID];
         }
     }
@@ -118,23 +125,6 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
         return rowOfData[(columnID - 1)];
     }
 
-/*****
-    setTotals() {
-        for (let p in this.rowTallies) {
-            this.descriptiveRows.forEach((row) => {
-                let totalRange = [0, this.totalHoleCount];
-                let inRange = [(Math.round(this.totalHoleCount / 2)), this.totalHoleCount];
-                let outRange = [0, (this.totalHoleCount / 2)];
-                let ranges = [outRange, inRange, totalRange];
-
-                ranges.forEach((range: [number, number]) => {
-                    this.rowTallies[p].push(this.tallySelection(row, range));
-                });
-            });
-
-        }
-    }
-****/
 
     tallySelection(descriptiveRow, range: [number, number]) {
         let rowOfNumbers = this.courseService.descriptiveData[descriptiveRow];
@@ -155,7 +145,9 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     }
 
 
-    isLastPlayer() {
+    isLastPlayer(index) {
+        let lastIndex = this.players.length - 1;
+        return (lastIndex === index);
     }
 
 }
