@@ -23,11 +23,9 @@
         <input *ngIf="isNumberedColumn(columnID)" type="text"
                class="scorecard-input  strokes-input"
                [(ngModel)]="player.strokes[(columnID) - 1]"
-               (change)="validateAndUpdateRowTotals(i, columnID - 1)">
-        {{ifTotalColumn_showTotal(columnID)}}
+               (change)="validateAndUpdatePlayerTotals(i, columnID - 1)">
+        {{ifTotalColumn_showTotal(columnID - 1)}}
     </div>
 
 
-
 </div>
-

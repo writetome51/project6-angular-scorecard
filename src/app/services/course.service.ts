@@ -36,6 +36,20 @@ export class CourseService {
     }
 
 
+    public loadAllDataForSelectedCourse() {
+        this._setSelectedCourse();
+        this.courseSubscription = this._api.getCourse(
+            this.selectedCourseHref,
+            (courseObject) => {
+                this.selectedCourse = courseObject.course;
+                this._clearAndSet_teeNames();
+                this._setDefaultValueFor_selectedTeeName();
+                this._loadAllDataForSelectedTee();
+            }
+        );
+    }
+
+
     private _initialize_descriptiveDataTotals(){
         for (let p in this.descriptiveData){
             this.descriptiveDataTotals[p] = [];
@@ -48,7 +62,7 @@ export class CourseService {
             this.courses = response;
             this._clearAndSet_courseNames();
             this._setDefaultValueFor_selectedCourseName();
-            this._loadAllDataForSelectedCourse();
+            this.loadAllDataForSelectedCourse();
         });
     }
 
@@ -74,20 +88,6 @@ export class CourseService {
         if (this.selectedCourseName === '') {
             this.selectedCourseName = this.courseNames[0];
         }
-    }
-
-
-    private _loadAllDataForSelectedCourse() {
-        this._setSelectedCourse();
-        this.courseSubscription = this._api.getCourse(
-            this.selectedCourseHref,
-            (courseObject) => {
-                this.selectedCourse = courseObject.course;
-                this._clearAndSet_teeNames();
-                this._setDefaultValueFor_selectedTeeName();
-                this._loadAllDataForSelectedTee();
-            }
-        );
     }
 
 

@@ -26,7 +26,7 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     ];
 
     descriptiveRows: string[];
-    playerRowTotals: number[] = [];
+    playerRowTotals: Array<number[]>;
 
 
     constructor(public courseService: CourseService,
@@ -40,6 +40,7 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
         this.playersService.getPlayers((response) => {
             this.players = Object.values(response);
+            this.updateRowTotals();
         });
     }
 
@@ -50,12 +51,28 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     }
 
 
-    ifTotalColumn_showTotal(columnID){
-
+    private _calculateAllPlayerTotals(){
+        this._inititalize_playerRowTotals();
+        this._fill_Totals();
     }
 
 
-    validateAndUpdateRowTotals(playerIndex, columnIndex){
+    private _inititalize_playerRowTotals(){
+        this.playerRowTotals = [];
+        for (let i = 0;  i < this.players.length;  ++i){
+            this.playerRowTotals.push([]);
+        }
+    }
+
+
+    ifTotalColumn_showTotal(columnID){
+        if (this.isTotalColumn(columnID)){
+            // return this.playerRowTotals[index][columnID]
+        }
+    }
+
+
+    validateAndUpdatePlayerTotals(playerIndex, columnIndex){
         this.validateEntry(this.players[playerIndex], columnIndex);
         this.updateRowTotals(playerIndex);
     }
@@ -71,7 +88,8 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
 
     updateRowTotals(playerIndex){
-
+        this._inititalize_playerRowTotals();
+        this._fill_Totals();
     }
 
 
