@@ -26,6 +26,7 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     ];
 
     descriptiveRows: string[];
+    playerRowTotals: number[] = [];
 
 
     constructor(public courseService: CourseService,
@@ -45,6 +46,12 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.courseService.courseSubscription.unsubscribe();
+        this.playersService.subscription.unsubscribe();
+    }
+
+
+    ifTotalColumn_showTotal(columnID){
+
     }
 
 
@@ -54,17 +61,17 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     }
 
 
-    updateRowTotals(playerIndex){
-
-    }
-
-
     validateEntry(player, column){
         if (player.strokes[column] !== ''){
             if (isNaN(Number(player.strokes[column]))) {
                 player.strokes[column] = 0;
             }
         }
+    }
+
+
+    updateRowTotals(playerIndex){
+
     }
 
 
@@ -126,15 +133,25 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     }
 
 
-    tallySelection(descriptiveRow, range: [number, number]) {
-        let rowOfNumbers = this.courseService.descriptiveData[descriptiveRow];
-        let numbersToTally = rowOfNumbers.slice(range[0], range[1]);
-        return this.getTally(numbersToTally);
+    private _fill_Totals() {
+        let ranges = [[0, 8], [9, 17], [0, 17]];
+        for (let p in this.descriptiveData) {
+            ranges.forEach((range) => {
+                let tally = this._calculateTotalsInRange(range, this.descriptiveData[p]);
+                this.descriptiveDataTotals[p].push(tally);
+            });
+        }
     }
 
 
-    getTally(arrayToTally) {
+    private _calculateTotalsInRange(range: number[], array: number[]) {
+        return this._getTally(array.slice(range[0], (range[1] + 1)));
+    }
+
+
+    private _getTally(arrayToTally) {
         let sum = 0;
+
         for (let i = 0; i < arrayToTally.length; ++i) {
             if (isNaN(arrayToTally[i])) {
                 arrayToTally[i] = 0;
@@ -145,9 +162,11 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     }
 
 
+
     isLastPlayer(index) {
         let lastIndex = this.players.length - 1;
         return (lastIndex === index);
     }
+
 
 }

@@ -31,78 +31,78 @@ export class CourseService {
 
 
     constructor(private _api: ApiService) {
-        this.initialize_descriptiveDataTotals();
-        this.loadAllData();
+        this._initialize_descriptiveDataTotals();
+        this._loadAllData();
     }
 
 
-    loadAllData() {
-        this.coursesSubscription = this._api.getCourses((response: Course[]) => {
-            this.courses = response;
-            this.clearAndSet_courseNames();
-            this.setDefaultValueFor_selectedCourseName();
-            this.loadAllDataForSelectedCourse();
-        });
-    }
-
-
-    initialize_descriptiveDataTotals(){
+    private _initialize_descriptiveDataTotals(){
         for (let p in this.descriptiveData){
             this.descriptiveDataTotals[p] = [];
         }
     }
 
 
-    clearAndSet_courseNames() {
-        this.clear_courseNames();
-        this.set_courseNames();
+    private _loadAllData() {
+        this.coursesSubscription = this._api.getCourses((response: Course[]) => {
+            this.courses = response;
+            this._clearAndSet_courseNames();
+            this._setDefaultValueFor_selectedCourseName();
+            this._loadAllDataForSelectedCourse();
+        });
     }
 
 
-    clear_courseNames() {
+    private _clearAndSet_courseNames() {
+        this._clear_courseNames();
+        this._set_courseNames();
+    }
+
+
+    private _clear_courseNames() {
         this.courseNames = [];
     }
 
-    set_courseNames() {
+    private _set_courseNames() {
         this.courses.forEach((course) => {
             this.courseNames.push(this._api.getCoursename(course));
         });
     }
 
 
-    setDefaultValueFor_selectedCourseName() {
+    private _setDefaultValueFor_selectedCourseName() {
         if (this.selectedCourseName === '') {
             this.selectedCourseName = this.courseNames[0];
         }
     }
 
 
-    loadAllDataForSelectedCourse() {
-        this.setSelectedCourse();
+    private _loadAllDataForSelectedCourse() {
+        this._setSelectedCourse();
         this.courseSubscription = this._api.getCourse(
             this.selectedCourseHref,
             (courseObject) => {
                 this.selectedCourse = courseObject.course;
-                this.clearAndSet_teeNames();
-                this.setDefaultValueFor_selectedTeeName();
-                this.loadAllDataForSelectedTee();
+                this._clearAndSet_teeNames();
+                this._setDefaultValueFor_selectedTeeName();
+                this._loadAllDataForSelectedTee();
             }
         );
     }
 
 
-    clearAndSet_teeNames() {
-        this.clear_teeNames();
-        this.set_teeNames();
+    private _clearAndSet_teeNames() {
+        this._clear_teeNames();
+        this._set_teeNames();
     }
 
 
-    clear_teeNames() {
+    private _clear_teeNames() {
         this.teeNames = [];
     }
 
 
-    set_teeNames() {
+    private _set_teeNames() {
         this.tee_types = this._api.getTees(this.selectedCourse);
         for (let i = 0; i < this.tee_types.length; ++i) {
             this.teeNames.push(this._api.getTeename(this.tee_types[i]));
@@ -110,85 +110,86 @@ export class CourseService {
     }
 
 
-    loadAllDataForSelectedTee() {
-        this.setCurrentTee();
-        this.set_descriptiveData();
+    private _loadAllDataForSelectedTee() {
+        this._setCurrentTee();
+        this._set_descriptiveData();
     }
 
 
-    setDefaultValueFor_selectedTeeName() {
+    private _setDefaultValueFor_selectedTeeName() {
         this.selectedTeeName = this.teeNames[0];
     }
 
 
-    setSelectedCourse() {
-        this.set_selectedCourseIndex();
-        this.set_selectedCourse();
-        this.set_selectedCourseHref();
+    private _setSelectedCourse() {
+        this._set_selectedCourseIndex();
+        this._set_selectedCourse();
+        this._set_selectedCourseHref();
     }
 
 
-    set_selectedCourseIndex() {
+    private _set_selectedCourseIndex() {
         this.selectedCourseIndex = this.courseNames.indexOf(this.selectedCourseName);
     }
 
 
-    set_selectedCourse() {
+    private _set_selectedCourse() {
         this.selectedCourse = this.courses[this.selectedCourseIndex];
     }
 
-    set_selectedCourseHref() {
+
+    private _set_selectedCourseHref() {
         this.selectedCourseHref = this._api.getCourseHref(this.selectedCourse);
     }
 
 
-    setCurrentTee() {
+    private _setCurrentTee() {
         this.selectedTeeIndex = this.teeNames.indexOf(this.selectedTeeName);
     }
 
 
-    set_descriptiveData() {
-        this.clearAllDescriptiveData();
-        this.fillAllDescriptiveData();
+    private _set_descriptiveData() {
+        this._clearAllDescriptiveData();
+        this._fillAllDescriptiveData();
     }
 
 
-    clearAllDescriptiveData() {
+    private _clearAllDescriptiveData() {
         let descriptiveDataSets = [this.descriptiveData, this.descriptiveDataTotals];
         descriptiveDataSets.forEach((dataSet) => {
-            this.setObjectPropertiesToEmptyArrays(dataSet);
+            this._setObjectPropertiesToEmptyArrays(dataSet);
         });
     }
 
 
-    fillAllDescriptiveData(){
-        this.fill_descriptiveData();
-        this.fill_descriptiveDataTotals();
+    private _fillAllDescriptiveData(){
+        this._fill_descriptiveData();
+        this._fill_descriptiveDataTotals();
     }
 
 
-    setObjectPropertiesToEmptyArrays(obj) {
+    private _setObjectPropertiesToEmptyArrays(obj) {
         for (let p in obj) {
             obj[p] = [];
         }
     }
 
 
-    fill_descriptiveData() {
+    private _fill_descriptiveData() {
         this._api.fill_descriptiveData(
             this.descriptiveData, this.selectedCourse, this.selectedTeeName
         );
-        this.makeSureEach_descriptiveDataRow_has18Items();
+        this._makeSureEach_descriptiveDataRow_has18Items();
     }
 
 
-    makeSureEach_descriptiveDataRow_has18Items() {
-        this.ifAnyItemsAreEmpty_convertThemToDashes();
-        this.appendDashesToRowsUntilEachHas18Items();
+    private _makeSureEach_descriptiveDataRow_has18Items() {
+        this._ifAnyItemsAreEmpty_convertThemToDashes();
+        this._appendDashesToRowsUntilEachHas18Items();
     }
 
 
-    ifAnyItemsAreEmpty_convertThemToDashes() {
+    private _ifAnyItemsAreEmpty_convertThemToDashes() {
         for (let p in this.descriptiveData) {
             this.descriptiveData[p].forEach((item, index) => {
                 if (!item) {
@@ -199,7 +200,7 @@ export class CourseService {
     }
 
 
-    appendDashesToRowsUntilEachHas18Items() {
+    private _appendDashesToRowsUntilEachHas18Items() {
         for (let p in this.descriptiveData) {
             while (this.descriptiveData[p].length < 18) {
                 this.descriptiveData[p].push(' - ');
@@ -208,23 +209,23 @@ export class CourseService {
     }
 
 
-    fill_descriptiveDataTotals() {
+    private _fill_descriptiveDataTotals() {
         let ranges = [[0, 8], [9, 17], [0, 17]];
         for (let p in this.descriptiveData) {
             ranges.forEach((range) => {
-                let tally = this.calculateTotalsInRange(range, this.descriptiveData[p]);
+                let tally = this._calculateTotalsInRange(range, this.descriptiveData[p]);
                 this.descriptiveDataTotals[p].push(tally);
             });
         }
     }
 
 
-    calculateTotalsInRange(range: number[], array: number[]) {
-        return this.getTally(array.slice(range[0], (range[1] + 1)));
+    private _calculateTotalsInRange(range: number[], array: number[]) {
+        return this._getTally(array.slice(range[0], (range[1] + 1)));
     }
 
 
-    getTally(arrayToTally) {
+    private _getTally(arrayToTally) {
         let sum = 0;
 
         for (let i = 0; i < arrayToTally.length; ++i) {

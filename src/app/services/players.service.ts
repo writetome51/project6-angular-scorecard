@@ -13,6 +13,8 @@ export class PlayersService {
     private _gameObservable: Observable<any>;
     private _gameId: string;
 
+    subscription: Subscription;
+
 
     constructor(
         private _game: GameService,
@@ -20,9 +22,9 @@ export class PlayersService {
     }
 
 
-    getPlayers(observer): Subscription{
+    getPlayers(observer){
         this._gameObservable  = this._game.get(this._activeGame.get());
-        return this._gameObservable.subscribe(observer);
+        this.subscription = this._gameObservable.subscribe(observer);
     }
 
 
