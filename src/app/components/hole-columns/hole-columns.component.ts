@@ -12,7 +12,6 @@ import {PlayerNumbersService} from '../../services/player-numbers.service';
 export class HoleColumnsComponent implements OnInit, OnDestroy {
 
     players: Player[] = [];
-    totalHoleCount: number;
     outColumn = 'out';
     inColumn = 'in';
     totalColumn = 'total';
@@ -36,7 +35,6 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.descriptiveRows = Object.keys(this.courseService.descriptiveData);
-        this.set_totalHoleCount();
 
         this.playersService.getPlayers((response) => {
             this.players = Object.values(response);
@@ -122,11 +120,6 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     }
 
 
-    set_totalHoleCount() {
-        this.totalHoleCount = this.courseService.descriptiveData[this.descriptiveRows[0]].length;
-    }
-
-
     isTotalColumn(columnID) {
         return (columnID === this.outColumn ||
             columnID === this.inColumn ||
@@ -164,8 +157,8 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
 
     private _fill_Totals(playerIndex) {
-        let ranges = this._calculateRangesBasedOn_totalHoleCount();
-
+        let ranges = this.courseService.totalTallyRanges;
+        console.log(ranges);
         ranges.forEach((range) => {
             let tally = this._calculateTotalsInRange(range, this.players[playerIndex].strokes);
             this.playersRowTotals[playerIndex].push(tally);
@@ -174,17 +167,6 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     }
 
 
-    private _calculateRangesBasedOn_totalHoleCount() {
-        let ranges = [];
-        let outRanges = [0, Math.round((this.totalHoleCount / 2) - 1)];
-        ranges.push(outRanges);
-        let inRanges = [Math.round(this.totalHoleCount / 2), this.totalHoleCount - 1];
-        ranges.push(inRanges);
-        let totalRanges = [0, this.totalHoleCount - 1];
-        ranges.push(totalRanges);
-
-        return ranges;
-    }
 
 
     private _calculateTotalsInRange(range: number[], array: number[]) {

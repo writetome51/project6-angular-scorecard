@@ -28,6 +28,8 @@ export class CourseService {
         hcp: []
     };
     descriptiveDataTotals = {};
+    totalHoleCount: number;
+    totalTallyRanges: Array<number[]> = [];
 
 
     constructor(private _api: ApiService) {
@@ -45,6 +47,8 @@ export class CourseService {
                 this._clearAndSet_teeNames();
                 this._setDefaultValueFor_selectedTeeName();
                 this._loadAllDataForSelectedTee();
+                this.set_totalHoleCount();
+                console.log(this.totalHoleCount);
             }
         );
     }
@@ -236,6 +240,27 @@ export class CourseService {
         }
         return sum;
     }
+
+
+    set_totalHoleCount() {
+        let keys = Object.keys(this.descriptiveData);
+        this.totalHoleCount = this.descriptiveData[keys[0]].length;
+    }
+
+
+    private _calculateRangesBasedOn_totalHoleCount() {
+        let ranges = [];
+        let outRanges = [0, Math.round((this.courseService.totalHoleCount / 2) - 1)];
+        ranges.push(outRanges);
+        let inRanges = [Math.round(this.courseService.totalHoleCount / 2), this.courseService.totalHoleCount - 1];
+        ranges.push(inRanges);
+        let totalRanges = [0, this.courseService.totalHoleCount - 1];
+        ranges.push(totalRanges);
+
+        return ranges;
+    }
+
+
 
 
 }
