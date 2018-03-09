@@ -23,7 +23,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {PlayerNumbersService} from './services/player-numbers.service';
 import {GameModule} from './game/game.module';
 import {ActiveGameService} from './services/active-game.service';
-import { ChooseComponent } from './components/choose/choose.component';
 import {ApiService} from './services/api.service';
 
 
@@ -37,7 +36,6 @@ import {ApiService} from './services/api.service';
         LabelColumnComponent,
         WelcomeComponent,
         HoleColumnsComponent,
-        ChooseComponent,
     ],
     imports: [
         BrowserModule,
