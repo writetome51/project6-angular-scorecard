@@ -26,7 +26,7 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     ];
 
     descriptiveRows: string[];
-    playerRowTotals: Array<number[]>;
+    playersRowTotals: Array<number[]> = [];
 
 
     constructor(public courseService: CourseService,
@@ -40,7 +40,7 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
         this.playersService.getPlayers((response) => {
             this.players = Object.values(response);
-            this.updateRowTotals();
+            this._calculateAllPlayerTotals();
         });
     }
 
@@ -51,35 +51,40 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     }
 
 
-    private _calculateAllPlayerTotals(){
-        this._inititalize_playerRowTotals();
-        this._fill_Totals();
+    private _calculateAllPlayerTotals() {
+        this._initialize_playersRowTotals();
+      //  console.log(this.playersRowTotals);
+        this._fill_playersRowTotals();
     }
 
 
-    private _inititalize_playerRowTotals(){
-        this.playerRowTotals = [];
-        for (let i = 0;  i < this.players.length;  ++i){
-            this.playerRowTotals.push([]);
+    private _initialize_playersRowTotals() {
+        for (let i = 0; i < this.players.length; ++i) {
+            this._initialize_playerRowTotals(i);
         }
     }
 
 
-    ifTotalColumn_showTotal(columnID){
-        if (this.isTotalColumn(columnID)){
-            // return this.playerRowTotals[index][columnID]
+    private _initialize_playerRowTotals(playerIndex) {
+        this.playersRowTotals[playerIndex] = [];
+    }
+
+
+    ifTotalColumn_showTotal(columnID) {
+        if (this.isTotalColumn(columnID)) {
+            // return this.playersRowTotals[index][columnID]
         }
     }
 
 
-    validateAndUpdatePlayerTotals(playerIndex, columnIndex){
+    validateAndUpdatePlayerTotals(playerIndex, columnIndex) {
         this.validateEntry(this.players[playerIndex], columnIndex);
         this.updateRowTotals(playerIndex);
     }
 
 
-    validateEntry(player, column){
-        if (player.strokes[column] !== ''){
+    validateEntry(player, column) {
+        if (player.strokes[column] !== '') {
             if (isNaN(Number(player.strokes[column]))) {
                 player.strokes[column] = 0;
             }
@@ -87,9 +92,9 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     }
 
 
-    updateRowTotals(playerIndex){
-        this._inititalize_playerRowTotals();
-        this._fill_Totals();
+    updateRowTotals(playerIndex) {
+        this._initialize_playerRowTotals(playerIndex);
+        this._fill_Totals(playerIndex);
     }
 
 
@@ -151,14 +156,34 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     }
 
 
-    private _fill_Totals() {
-        let ranges = [[0, 8], [9, 17], [0, 17]];
-        for (let p in this.descriptiveData) {
-            ranges.forEach((range) => {
-                let tally = this._calculateTotalsInRange(range, this.descriptiveData[p]);
-                this.descriptiveDataTotals[p].push(tally);
-            });
-        }
+    private  _fill_playersRowTotals(){
+        this.playersRowTotals.forEach((playerRowTotals, index) => {
+            this._fill_Totals(index);
+        });
+    }
+
+
+    private _fill_Totals(playerIndex) {
+        let ranges = this._calculateRangesBasedOn_totalHoleCount();
+
+        ranges.forEach((range) => {
+            let tally = this._calculateTotalsInRange(range, this.players[playerIndex].strokes);
+            this.playersRowTotals[playerIndex].push(tally);
+        });
+
+    }
+
+
+    private _calculateRangesBasedOn_totalHoleCount() {
+        let ranges = [];
+        let outRanges = [0, Math.round((this.totalHoleCount / 2) - 1)];
+        ranges.push(outRanges);
+        let inRanges = [Math.round(this.totalHoleCount / 2), this.totalHoleCount - 1];
+        ranges.push(inRanges);
+        let totalRanges = [0, this.totalHoleCount - 1];
+        ranges.push(totalRanges);
+
+        return ranges;
     }
 
 
@@ -178,7 +203,6 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
         }
         return sum;
     }
-
 
 
     isLastPlayer(index) {

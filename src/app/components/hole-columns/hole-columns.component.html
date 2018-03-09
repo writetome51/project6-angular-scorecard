@@ -24,7 +24,9 @@
                class="scorecard-input  strokes-input"
                [(ngModel)]="player.strokes[(columnID) - 1]"
                (change)="validateAndUpdatePlayerTotals(i, columnID - 1)">
-        {{ifTotalColumn_showTotal(columnID - 1)}}
+        <span *ngIf="isTotalColumn(columnID)">
+            {{playersRowTotals[i][totalColumnIDs.indexOf(columnID)]}}
+        </span>
     </div>
 
 
