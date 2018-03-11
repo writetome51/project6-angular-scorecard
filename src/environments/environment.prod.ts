@@ -7,5 +7,8 @@ export const environment = {
         projectId: 'golf-scorecard-15298',
         storageBucket: 'golf-scorecard-15298.appspot.com',
         messagingSenderId: '180929117832'
-    }
+    },
+
+    gopher: 'assets/images/tenor.gif',
+    billMurray: 'assets/images/bill-murray.jpg'
 };

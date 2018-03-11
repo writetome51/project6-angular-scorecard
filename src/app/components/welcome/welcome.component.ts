@@ -3,6 +3,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {GameService} from '../../services/game.service';
 import {PlayerNumbersService} from '../../services/player-numbers.service';
 import {ActiveGameService} from '../../services/active-game.service';
+import {environment} from '../../../environments/environment';
 
 
 @Component({
@@ -12,6 +13,7 @@ import {ActiveGameService} from '../../services/active-game.service';
 
 export class WelcomeComponent implements OnInit {
 
+    billMurray = environment.billMurray;
     newPlayerName: string;
     signedUpPlayerNames: string[] = [];
     playerNumbers: string[];

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Player} from '../../interfaces/Player.interface';
+import {environment} from '../../../environments/environment';
+
 
 @Component({
     selector: 'scorecard',
@@ -7,6 +8,8 @@ import {Player} from '../../interfaces/Player.interface';
 })
 
 export class ScorecardComponent implements OnInit {
+
+    gopher = environment.gopher;
 
 
     constructor() {
