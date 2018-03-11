@@ -46,7 +46,7 @@ export class CourseService {
                 this.selectedCourse = courseObject.course;
                 this._clearAndSet_teeNames();
                 this._setDefaultValueFor_selectedTeeName();
-                this._loadAllDataForSelectedTee();
+                this.loadAllDataForSelectedTee();
                 this.set_totalHoleCount();
                 console.log(this.totalHoleCount);
             }
@@ -114,7 +114,7 @@ export class CourseService {
     }
 
 
-    private _loadAllDataForSelectedTee() {
+    loadAllDataForSelectedTee() {
         this._setCurrentTee();
         this._set_descriptiveData();
     }
@@ -247,7 +247,7 @@ export class CourseService {
         this.totalHoleCount = this.descriptiveData[keys[0]].length;
     }
 
-
+/*********
     private _calculateRangesBasedOn_totalHoleCount() {
         let ranges = [];
         let outRanges = [0, Math.round((this.courseService.totalHoleCount / 2) - 1)];
@@ -259,7 +259,7 @@ export class CourseService {
 
         return ranges;
     }
-
+***********/
 
 
 
