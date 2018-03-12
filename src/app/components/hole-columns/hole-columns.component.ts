@@ -40,6 +40,7 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
         this.playersService.getPlayers((response) => {
             this.players = Object.values(response);
+            console.log(this.players);
             this._calculateAllPlayerTotals();
         });
     }
@@ -53,7 +54,6 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
     private _calculateAllPlayerTotals() {
         this._initialize_playersRowTotals();
-        //  console.log(this.playersRowTotals);
         this._fill_playersRowTotals();
     }
 
@@ -80,7 +80,6 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     validateAndUpdatePlayerTotals(playerIndex, columnIndex) {
         this.validateEntry(this.players[playerIndex], columnIndex);
         this.updateRowTotals(playerIndex);
-        // console.log('updated.');
     }
 
 

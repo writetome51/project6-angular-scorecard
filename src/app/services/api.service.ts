@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Subscription} from 'rxjs/Subscription';
 import {Course} from '../interfaces/Course.interface';
+import {SpecificCourseResult} from '../interfaces/Course.interface copy';
 
 
 
@@ -26,7 +27,7 @@ export class ApiService {
     }
 
     getCourse(href, observer): Subscription{
-        return this._http.get(href).subscribe((response) => {
+        return this._http.get(href).subscribe((response: SpecificCourseResult) => {
             observer(response.course);
         });
     }

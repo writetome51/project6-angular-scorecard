@@ -54,7 +54,7 @@ import {TotalsCalculatorService} from './services/totals-calculator.service';
         AngularFireStorageModule,
         GameModule
     ],
-    providers: [ PlayersService, CourseService, ApiService, TotalsCalculatorService
+    providers: [ PlayersService, CourseService, ApiService, TotalsCalculatorService,
                 PlayerNumbersService, GameService, ActiveGameService],
     bootstrap: [AppComponent]
 })
