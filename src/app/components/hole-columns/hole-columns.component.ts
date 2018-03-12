@@ -78,6 +78,7 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     validateAndUpdatePlayerTotals(playerIndex, columnIndex) {
         this.validateEntry(this.players[playerIndex], columnIndex);
         this.updateRowTotals(playerIndex);
+       // console.log('updated.');
     }
 
 
@@ -157,16 +158,15 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
 
     private _fill_Totals(playerIndex) {
-        let ranges = this.courseService.totalTallyRanges;
-        console.log(ranges);
+        let ranges = [[0, 8], [9, 17], [0, 17]];
+      //  console.log(this.playersRowTotals[playerIndex]);
         ranges.forEach((range) => {
             let tally = this._calculateTotalsInRange(range, this.players[playerIndex].strokes);
+            console.log(tally);
             this.playersRowTotals[playerIndex].push(tally);
         });
 
     }
-
-
 
 
     private _calculateTotalsInRange(range: number[], array: number[]) {
@@ -181,7 +181,7 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
             if (isNaN(arrayToTally[i])) {
                 arrayToTally[i] = 0;
             }
-            sum += arrayToTally[i];
+            sum += Number(arrayToTally[i]);
         }
         return sum;
     }
@@ -191,6 +191,14 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
         let lastIndex = this.players.length - 1;
         return (lastIndex === index);
     }
+
+
+    private _calculateRangesBasedOn_totalHoleCount() {
+        let ranges = [[0, 8], [9, 17], [0, 17]];
+
+        return ranges;
+    }
+
 
 
 }
