@@ -4,6 +4,7 @@ import {PlayersService} from '../../services/players.service';
 import {ActiveGameService} from '../../services/active-game.service';
 import {CourseService} from '../../services/course.service';
 import {PlayerNumbersService} from '../../services/player-numbers.service';
+import {TotalsCalculatorService} from '../../services/totals-calculator.service';
 
 @Component({
     selector: 'hole-columns',
@@ -29,7 +30,8 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
 
     constructor(public courseService: CourseService,
-                private playersService: PlayersService) {
+                private playersService: PlayersService,
+                private _totalsCalc: TotalsCalculatorService) {
     }
 
 
@@ -51,7 +53,7 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
     private _calculateAllPlayerTotals() {
         this._initialize_playersRowTotals();
-      //  console.log(this.playersRowTotals);
+        //  console.log(this.playersRowTotals);
         this._fill_playersRowTotals();
     }
 
@@ -78,7 +80,7 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     validateAndUpdatePlayerTotals(playerIndex, columnIndex) {
         this.validateEntry(this.players[playerIndex], columnIndex);
         this.updateRowTotals(playerIndex);
-       // console.log('updated.');
+        // console.log('updated.');
     }
 
 
@@ -150,7 +152,7 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     }
 
 
-    private  _fill_playersRowTotals(){
+    private _fill_playersRowTotals() {
         this.playersRowTotals.forEach((playerRowTotals, index) => {
             this._fill_Totals(index);
         });
@@ -158,32 +160,8 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
 
     private _fill_Totals(playerIndex) {
-        let ranges = [[0, 8], [9, 17], [0, 17]];
-      //  console.log(this.playersRowTotals[playerIndex]);
-        ranges.forEach((range) => {
-            let tally = this._calculateTotalsInRange(range, this.players[playerIndex].strokes);
-            console.log(tally);
-            this.playersRowTotals[playerIndex].push(tally);
-        });
-
-    }
-
-
-    private _calculateTotalsInRange(range: number[], array: number[]) {
-        return this._getTally(array.slice(range[0], (range[1] + 1)));
-    }
-
-
-    private _getTally(arrayToTally) {
-        let sum = 0;
-
-        for (let i = 0; i < arrayToTally.length; ++i) {
-            if (isNaN(arrayToTally[i])) {
-                arrayToTally[i] = 0;
-            }
-            sum += Number(arrayToTally[i]);
-        }
-        return sum;
+        this.playersRowTotals[playerIndex] =
+            this._totalsCalc.getTotals(this.players[playerIndex].strokes);
     }
 
 
@@ -191,14 +169,6 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
         let lastIndex = this.players.length - 1;
         return (lastIndex === index);
     }
-
-
-    private _calculateRangesBasedOn_totalHoleCount() {
-        let ranges = [[0, 8], [9, 17], [0, 17]];
-
-        return ranges;
-    }
-
 
 
 }

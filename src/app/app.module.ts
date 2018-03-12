@@ -24,6 +24,7 @@ import {PlayerNumbersService} from './services/player-numbers.service';
 import {GameModule} from './game/game.module';
 import {ActiveGameService} from './services/active-game.service';
 import {ApiService} from './services/api.service';
+import {TotalsCalculatorService} from './services/totals-calculator.service';
 
 
 @NgModule({
@@ -53,7 +54,7 @@ import {ApiService} from './services/api.service';
         AngularFireStorageModule,
         GameModule
     ],
-    providers: [ PlayersService, CourseService, ApiService,
+    providers: [ PlayersService, CourseService, ApiService, TotalsCalculatorService
                 PlayerNumbersService, GameService, ActiveGameService],
     bootstrap: [AppComponent]
 })

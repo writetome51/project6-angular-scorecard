@@ -26,7 +26,9 @@ export class ApiService {
     }
 
     getCourse(href, observer): Subscription{
-        return this._http.get(href).subscribe(observer);
+        return this._http.get(href).subscribe((response) => {
+            observer(response.course);
+        });
     }
 
 

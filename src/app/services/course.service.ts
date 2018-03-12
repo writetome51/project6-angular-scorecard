@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {Observable} from 'rxjs/Observable';
 import {Course} from '../interfaces/Course.interface';
 import {ApiService} from './api.service';
+import {TotalsCalculatorService} from './totals-calculator.service';
 
 
 @Injectable()
@@ -28,10 +29,10 @@ export class CourseService {
         hcp: []
     };
     descriptiveDataTotals = {};
-    totalTallyRanges: Array<number[]> = [];
 
 
-    constructor(private _api: ApiService) {
+    constructor(private _api: ApiService,
+                private _totalsCalc: TotalsCalculatorService) {
         this._initialize_descriptiveDataTotals();
         this._loadAllData();
     }
@@ -41,8 +42,8 @@ export class CourseService {
         this._setSelectedCourse();
         this.courseSubscription = this._api.getCourse(
             this.selectedCourseHref,
-            (courseObject) => {
-                this.selectedCourse = courseObject.course;
+            (course) => {
+                this.selectedCourse = course;
                 this._clearAndSet_teeNames();
                 this._setDefaultValueFor_selectedTeeName();
                 this.loadAllDataForSelectedTee();
@@ -51,8 +52,8 @@ export class CourseService {
     }
 
 
-    private _initialize_descriptiveDataTotals(){
-        for (let p in this.descriptiveData){
+    private _initialize_descriptiveDataTotals() {
+        for (let p in this.descriptiveData) {
             this.descriptiveDataTotals[p] = [];
         }
     }
@@ -163,7 +164,7 @@ export class CourseService {
     }
 
 
-    private _fillAllDescriptiveData(){
+    private _fillAllDescriptiveData() {
         this._fill_descriptiveData();
         this._fill_descriptiveDataTotals();
     }
@@ -211,31 +212,11 @@ export class CourseService {
 
 
     private _fill_descriptiveDataTotals() {
-        let ranges = [[0, 8], [9, 17], [0, 17]];
         for (let p in this.descriptiveData) {
-            ranges.forEach((range) => {
-                let tally = this._calculateTotalsInRange(range, this.descriptiveData[p]);
-                this.descriptiveDataTotals[p].push(tally);
-            });
+            this.descriptiveDataTotals[p] = this._totalsCalc.getTotals(
+                this.descriptiveData[p]
+            );
         }
-    }
-
-
-    private _calculateTotalsInRange(range: number[], array: number[]) {
-        return this._getTally(array.slice(range[0], (range[1] + 1)));
-    }
-
-
-    private _getTally(arrayToTally) {
-        let sum = 0;
-
-        for (let i = 0; i < arrayToTally.length; ++i) {
-            if (isNaN(arrayToTally[i])) {
-                arrayToTally[i] = 0;
-            }
-            sum += arrayToTally[i];
-        }
-        return sum;
     }
 
 
