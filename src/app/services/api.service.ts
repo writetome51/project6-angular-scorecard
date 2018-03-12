@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Subscription} from 'rxjs/Subscription';
 import {Course} from '../interfaces/Course.interface';
-import {SpecificCourseResult} from '../interfaces/Course.interface copy';
+import {SpecificCourseResult} from '../interfaces/SpecificCourseResult.interface';
 
 
 
@@ -26,6 +26,7 @@ export class ApiService {
         });
     }
 
+
     getCourse(href, observer): Subscription{
         return this._http.get(href).subscribe((response: SpecificCourseResult) => {
             observer(response.course);
@@ -37,13 +38,20 @@ export class ApiService {
         return course.name;
     }
 
+
     getCourseHref(course: Course){
         return course.href;
     }
 
-    getTeename(tee){
-        return tee.tee_type;
+
+    getTeenames(tees){
+        let teeNames = [];
+        tees.forEach((tee) => {
+            teeNames.push(tee.tee_type);
+        });
+        return teeNames;
     }
+
 
     getTees(course: Course): object[]{
         return course.tee_types;

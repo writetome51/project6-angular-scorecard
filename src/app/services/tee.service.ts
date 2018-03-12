@@ -1,27 +1,16 @@
-import {Component, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Subscription} from 'rxjs/Subscription';
-import {Observable} from 'rxjs/Observable';
+import {Injectable} from '@angular/core';
 import {Course} from '../interfaces/Course.interface';
 import {ApiService} from './api.service';
 import {TotalsCalculatorService} from './totals-calculator.service';
-import {TeeService} from './tee.service';
 
 
 @Injectable()
 
-export class CourseService {
+export class TeeService {
 
-    courses: Course[] = [];
-    courseNames = [];
-    selectedCourse: Course;
-    selectedCourseHref: string;
-    coursesSubscription: Subscription;
-    courseSubscription: Subscription;
-    selectedCourseName = '';
-    selectedCourseIndex = 0;
     teeNames = [];
     selectedTeeName = '';
+    selectedTeeIndex = 0;
     descriptiveData = {
         yards: [],
         par: [],
@@ -31,74 +20,50 @@ export class CourseService {
 
 
     constructor(private _api: ApiService,
-                private _teeService: TeeService,
                 private _totalsCalc: TotalsCalculatorService) {
-
-        this._loadAllData();
+        this._initialize_descriptiveDataTotals();
     }
 
 
-    private _loadAllData() {
-        this.coursesSubscription = this._api.getCourses((response: Course[]) => {
-            this.courses = response;
-            this._clearAndSet_courseNames();
-            this._setDefaultValueFor_selectedCourseName();
-            this.loadAllDataForSelectedCourse();
-        });
-    }
-
-
-    public loadAllDataForSelectedCourse() {
-        this._setSelectedCourse();
-        this.courseSubscription = this._api.getCourse(
-            this.selectedCourseHref,
-            (course) => {
-                this.selectedCourse = course;
-                this._teeService.loadAllData(this.selectedCourse);
-            }
-        );
-    }
-
-
-    private _clearAndSet_courseNames() {
-        this.courseNames = [];
-        this._set_courseNames();
-    }
-
-
-    private _setDefaultValueFor_selectedCourseName() {
-        if (this.selectedCourseName === '') {
-            this.selectedCourseName = this.courseNames[0];
+    private _initialize_descriptiveDataTotals() {
+        for (let p in this.descriptiveData) {
+            this.descriptiveDataTotals[p] = [];
         }
     }
 
 
-    private _set_courseNames() {
-        this.courses.forEach((course) => {
-            this.courseNames.push(this._api.getCoursename(course));
-        });
+    loadAllData(selectedCourse){
+        this._clearAndSet_teeNames(selectedCourse);
+        this._setDefaultValueFor_selectedTeeName();
+        this.loadAllDataForSelectedTee();
     }
 
 
-    private _setSelectedCourse() {
-        this._set_selectedCourseIndex();
-        this._set_selectedCourse();
-        this._set_selectedCourseHref();
+    private _clearAndSet_teeNames(selectedCourse) {
+        this.teeNames = [];
+        this._set_teeNames(selectedCourse);
     }
 
 
-    private _set_selectedCourseIndex() {
-        this.selectedCourseIndex = this.courseNames.indexOf(this.selectedCourseName);
+    private _set_teeNames(selectedCourse) {
+        let tees = this._api.getTees(selectedCourse);
+        this.teeNames = this._api.getTeenames(tees);
     }
 
 
-    private _set_selectedCourse() {
-        this.selectedCourse = this.courses[this.selectedCourseIndex];
+    loadAllDataForSelectedTee() {
+        this._setCurrentTee();
+        this._set_descriptiveData();
     }
 
 
-    private _set_selectedCourseHref() {
-        this.selectedCourseHref = this._api.getCourseHref(this.selectedCourse);
+    private _setDefaultValueFor_selectedTeeName() {
+        this.selectedTeeName = this.teeNames[0];
+    }
+
+
+    private _setCurrentTee() {
+        this.selectedTeeIndex = this.teeNames.indexOf(this.selectedTeeName);
     }
 
 
