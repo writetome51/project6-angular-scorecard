@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Course} from '../interfaces/Course.interface';
 import {ApiService} from './api.service';
 import {TotalsCalculatorService} from './totals-calculator.service';
 
@@ -10,13 +9,13 @@ export class TeeService {
 
     teeNames = [];
     selectedTeeName = '';
-    selectedTeeIndex = 0;
     descriptiveData = {
         yards: [],
         par: [],
         hcp: []
     };
     descriptiveDataTotals = {};
+    dash = ' - ';
 
 
     constructor(private _api: ApiService,
@@ -25,17 +24,23 @@ export class TeeService {
     }
 
 
+    loadAllData(selectedCourse){
+        this._clearAndSet_teeNames(selectedCourse);
+        this._setDefaultValueFor_selectedTeeName();
+        this.set_descriptiveData(selectedCourse);
+    }
+
+
+    set_descriptiveData(selectedCourse) {
+        this._clearAllDescriptiveData();
+        this._fillAllDescriptiveData(selectedCourse);
+    }
+
+
     private _initialize_descriptiveDataTotals() {
         for (let p in this.descriptiveData) {
             this.descriptiveDataTotals[p] = [];
         }
-    }
-
-
-    loadAllData(selectedCourse){
-        this._clearAndSet_teeNames(selectedCourse);
-        this._setDefaultValueFor_selectedTeeName();
-        this.loadAllDataForSelectedTee();
     }
 
 
@@ -51,25 +56,8 @@ export class TeeService {
     }
 
 
-    loadAllDataForSelectedTee() {
-        this._setCurrentTee();
-        this._set_descriptiveData();
-    }
-
-
     private _setDefaultValueFor_selectedTeeName() {
         this.selectedTeeName = this.teeNames[0];
-    }
-
-
-    private _setCurrentTee() {
-        this.selectedTeeIndex = this.teeNames.indexOf(this.selectedTeeName);
-    }
-
-
-    private _set_descriptiveData() {
-        this._clearAllDescriptiveData();
-        this._fillAllDescriptiveData();
     }
 
 
@@ -81,8 +69,8 @@ export class TeeService {
     }
 
 
-    private _fillAllDescriptiveData() {
-        this._fill_descriptiveData();
+    private _fillAllDescriptiveData(selectedCourse) {
+        this._fill_descriptiveData(selectedCourse);
         this._fill_descriptiveDataTotals();
     }
 
@@ -94,11 +82,19 @@ export class TeeService {
     }
 
 
-    private _fill_descriptiveData() {
+    private _fill_descriptiveData(selectedCourse) {
         this._api.fill_descriptiveData(
-            this.descriptiveData, this.selectedCourse, this.selectedTeeName
+            this.descriptiveData, selectedCourse, this.selectedTeeName
         );
         this._makeSureEach_descriptiveDataRow_has18Items();
+    }
+
+
+    private _fill_descriptiveDataTotals() {
+        for (let p in this.descriptiveData) {
+            this.descriptiveDataTotals[p] =
+                this._totalsCalc.getTotals(this.descriptiveData[p]);
+        }
     }
 
 
@@ -112,7 +108,7 @@ export class TeeService {
         for (let p in this.descriptiveData) {
             this.descriptiveData[p].forEach((item, index) => {
                 if (!item) {
-                    this.descriptiveData[p][index] = ' - ';
+                    this.descriptiveData[p][index] = this.dash;
                 }
             });
         }
@@ -122,17 +118,8 @@ export class TeeService {
     private _appendDashesToRowsUntilEachHas18Items() {
         for (let p in this.descriptiveData) {
             while (this.descriptiveData[p].length < 18) {
-                this.descriptiveData[p].push(' - ');
+                this.descriptiveData[p].push(this.dash);
             }
-        }
-    }
-
-
-    private _fill_descriptiveDataTotals() {
-        for (let p in this.descriptiveData) {
-            this.descriptiveDataTotals[p] = this._totalsCalc.getTotals(
-                this.descriptiveData[p]
-            );
         }
     }
 
