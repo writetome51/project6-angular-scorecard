@@ -5,28 +5,25 @@ import {ApiService} from './api.service';
 @Injectable()
 export class DescriptiveDataService {
 
-    descriptiveData = {
-        yards: [],
-        par: [],
-        hcp: []
-    };
+    descriptiveData;
     descriptiveDataTotals = {};
     private _dash = ' - ';
 
 
     constructor(private _totalsCalc: TotalsCalculatorService, private _api: ApiService) {
-        this._initialize_descriptiveDataTotals();
     }
 
 
-    set_descriptiveData(selectedCourse, selectedTeename) {
+    get_descriptiveData(selectedCourse, selectedTeename, descriptiveData) {
+        this._initialize_descriptiveDataTotals(descriptiveData);
         this._clearAllDescriptiveData();
-        this._fillAllDescriptiveData();
+        this._fillAllDescriptiveData(selectedCourse, selectedTeename);
+        return [this.descriptiveData, this.descriptiveDataTotals];
     }
 
 
-    private _initialize_descriptiveDataTotals() {
-        for (let row in this.descriptiveData) {
+    private _initialize_descriptiveDataTotals(descriptiveData) {
+        for (let row in descriptiveData) {
             this.descriptiveDataTotals[row] = [];
         }
     }
@@ -40,8 +37,8 @@ export class DescriptiveDataService {
     }
 
 
-    private _fillAllDescriptiveData() {
-        this._fill_descriptiveData();
+    private _fillAllDescriptiveData(selectedCourse, selectedTeename) {
+        this._fill_descriptiveData(selectedCourse, selectedTeename);
         this._fill_descriptiveDataTotals();
     }
 
@@ -53,10 +50,9 @@ export class DescriptiveDataService {
     }
 
 
-    private _fill_descriptiveData() {
+    private _fill_descriptiveData(selectedCourse, selectedTeename) {
         this._api.fill_descriptiveData(
-            this.descriptiveData, this.selectedCourse, this.selectedTeeName
-        );
+            this.descriptiveData, selectedCourse, selectedTeename);
         this._makeSureEach_descriptiveDataRow_has18Items();
     }
 
