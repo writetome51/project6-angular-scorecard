@@ -160,7 +160,7 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
     private _fill_Totals(playerIndex) {
         this.playersRowTotals[playerIndex] =
-            this._totalsCalc.getTotals(this.players[playerIndex].strokes);
+            this._totalsCalc.getRowTotals(this.players[playerIndex].strokes);
     }
 
 
