@@ -48,9 +48,9 @@ import { DescriptiveDataComponent } from './components/descriptive-data/descript
         FormsModule,
         HttpClientModule,
         RouterModule.forRoot([
-            {path: '/', component: WelcomeComponent},
-            {path: '', redirectTo: '/', pathMatch: 'full'},
-            {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
+            {path: '', component: WelcomeComponent},
+          //  {path: '', redirectTo: '', pathMatch: 'full'},
+            {path: '**', redirectTo: '', pathMatch: 'full'}
         ]),
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule, // imports firebase/firestore, only needed for database features
