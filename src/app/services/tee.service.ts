@@ -13,7 +13,8 @@ export class TeeService {
     descriptiveData = {
         yards: [],
         par: [],
-        hcp: []
+        hcp: [],
+        hole_id: []
     };
     descriptiveDataTotals;
 

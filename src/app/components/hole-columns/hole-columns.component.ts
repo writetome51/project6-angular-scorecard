@@ -3,7 +3,6 @@ import {Player} from '../../interfaces/Player.interface';
 import {PlayersService} from '../../services/players.service';
 import {ActiveGameService} from '../../services/active-game.service';
 import {CourseService} from '../../services/course.service';
-import {PlayerNumbersService} from '../../services/player-numbers.service';
 import {TotalsCalculatorService} from '../../services/totals-calculator.service';
 
 @Component({
@@ -36,11 +35,10 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
 
     ngOnInit() {
-        this.descriptiveRows = Object.keys(this.courseService.descriptiveData);
+        this.descriptiveRows = Object.keys(this.courseService.teeService.descriptiveData);
 
         this.playersService.getPlayers((response) => {
-            this.players = Object.values(response);
-            console.log(this.players);
+            this.players = Object.values(response); // Object.values() works.
             this._calculateAllPlayerTotals();
         });
     }
@@ -67,13 +65,6 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
     private _initialize_playerRowTotals(playerIndex) {
         this.playersRowTotals[playerIndex] = [];
-    }
-
-
-    ifTotalColumn_showTotal(columnID) {
-        if (this.isTotalColumn(columnID)) {
-            // return this.playersRowTotals[index][columnID]
-        }
     }
 
 
@@ -135,18 +126,22 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
 
     figureOutWhatDataToShow(columnID, descriptiveRow) {
-        if (this.isNumberedColumn(columnID)) {
-            return this.showDescriptiveData(columnID, descriptiveRow);
-        }
-        else if (this.isTotalColumn(columnID)) {
-            columnID = this.totalColumnIDs.indexOf(columnID);
-            return this.courseService.descriptiveDataTotals[descriptiveRow][columnID];
+
+        // This conditional necessary to prevent fatal errors if descriptiveDataTotals is not set:
+        if (this.courseService.teeService.descriptiveDataTotals){
+            if (this.isNumberedColumn(columnID)) {
+                return this.showDescriptiveData(columnID, descriptiveRow);
+            }
+            else if (this.isTotalColumn(columnID)) {
+                columnID = this.totalColumnIDs.indexOf(columnID);
+                return this.courseService.teeService.descriptiveDataTotals[descriptiveRow][columnID];
+            }
         }
     }
 
 
     showDescriptiveData(columnID, descriptiveRow) {
-        let rowOfData = this.courseService.descriptiveData[descriptiveRow];
+        let rowOfData = this.courseService.teeService.descriptiveData[descriptiveRow];
         return rowOfData[(columnID - 1)];
     }
 

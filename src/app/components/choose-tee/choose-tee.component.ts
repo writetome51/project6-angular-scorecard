@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CourseService} from '../../services/course.service';
-import {TeeService} from '../../services/tee.service';
 import {DescriptiveDataService} from '../../services/descriptive-data.service';
 
 @Component({
@@ -9,9 +8,7 @@ import {DescriptiveDataService} from '../../services/descriptive-data.service';
 })
 export class ChooseTeeComponent implements OnInit, OnDestroy {
 
-    constructor(public courseService: CourseService,
-                public teeService: TeeService,
-                public descriptiveData: DescriptiveDataService) {
+    constructor(public courseService: CourseService) {
     }
 
     ngOnInit() {

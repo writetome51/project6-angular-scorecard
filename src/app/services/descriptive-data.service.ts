@@ -15,15 +15,16 @@ export class DescriptiveDataService {
 
 
     get_descriptiveData(selectedCourse, selectedTeename, descriptiveData) {
-        this._initialize_descriptiveDataTotals(descriptiveData);
+        this._initialize_descriptiveData_and_totals(descriptiveData);
         this._clearAllDescriptiveData();
         this._fillAllDescriptiveData(selectedCourse, selectedTeename);
         return [this.descriptiveData, this.descriptiveDataTotals];
     }
 
 
-    private _initialize_descriptiveDataTotals(descriptiveData) {
-        for (let row in descriptiveData) {
+    private _initialize_descriptiveData_and_totals(descriptiveData) {
+        this.descriptiveData = descriptiveData;
+        for (let row in this.descriptiveData) {
             this.descriptiveDataTotals[row] = [];
         }
     }

@@ -9,7 +9,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico"
+        "ted-knight.png"
       ],
       "index": "index.html",
       "main": "main.ts",

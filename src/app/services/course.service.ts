@@ -1,10 +1,7 @@
-import {Component, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
-import {Observable} from 'rxjs/Observable';
 import {Course} from '../interfaces/Course.interface';
 import {ApiService} from './api.service';
-import {TotalsCalculatorService} from './totals-calculator.service';
 import {TeeService} from './tee.service';
 
 
@@ -23,7 +20,7 @@ export class CourseService {
 
 
     constructor(private _api: ApiService,
-                private _teeService: TeeService) {
+                public teeService: TeeService) {
 
         this._loadAllData();
     }
@@ -35,7 +32,7 @@ export class CourseService {
             this.selectedCourseHref,
             (course) => {
                 this.selectedCourse = course;
-                this._teeService.loadAllData(this.selectedCourse);
+                this.teeService.loadAllData(this.selectedCourse);
             }
         );
     }
@@ -72,23 +69,8 @@ export class CourseService {
 
 
     private _setSelectedCourse() {
-        this._set_selectedCourseIndex();
-        this._set_selectedCourse();
-        this._set_selectedCourseHref();
-    }
-
-
-    private _set_selectedCourseIndex() {
         this.selectedCourseIndex = this.courseNames.indexOf(this.selectedCourseName);
-    }
-
-
-    private _set_selectedCourse() {
         this.selectedCourse = this.courses[this.selectedCourseIndex];
-    }
-
-
-    private _set_selectedCourseHref() {
         this.selectedCourseHref = this._api.getCourseHref(this.selectedCourse);
     }
 

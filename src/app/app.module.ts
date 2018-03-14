@@ -25,6 +25,9 @@ import {GameModule} from './game/game.module';
 import {ActiveGameService} from './services/active-game.service';
 import {ApiService} from './services/api.service';
 import {TotalsCalculatorService} from './services/totals-calculator.service';
+import {TeeService} from './services/tee.service';
+import {DescriptiveDataService} from './services/descriptive-data.service';
+import { DescriptiveDataComponent } from './descriptive-data/descriptive-data.component';
 
 
 @NgModule({
@@ -37,6 +40,7 @@ import {TotalsCalculatorService} from './services/totals-calculator.service';
         LabelColumnComponent,
         WelcomeComponent,
         HoleColumnsComponent,
+        DescriptiveDataComponent,
     ],
     imports: [
         BrowserModule,
@@ -54,8 +58,8 @@ import {TotalsCalculatorService} from './services/totals-calculator.service';
         AngularFireStorageModule,
         GameModule
     ],
-    providers: [ PlayersService, CourseService, ApiService, TotalsCalculatorService,
-                PlayerNumbersService, GameService, ActiveGameService],
+    providers: [ApiService, TotalsCalculatorService, PlayersService, DescriptiveDataService,
+                TeeService, CourseService, PlayerNumbersService, GameService, ActiveGameService ],
     bootstrap: [AppComponent]
 })
 
