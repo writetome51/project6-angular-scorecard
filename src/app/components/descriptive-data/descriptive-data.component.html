@@ -1,0 +1,20 @@
+<div *ngFor="let label of course.teeService.descriptiveData"
+     [class]="'cell label-cell' + (label + '-row')"
+        [id]="label + '-column-1'">
+
+    {{label}}
+
+    <div  *ngIf="label === 'yards'"   id="tee-name-options-cell">
+        <select  id="tee-name-options"
+                 [(ngModel)]="courseService.teeService.selectedTeeName"
+                 (change)="courseService.teeService.set_descriptiveData_and_totals()"
+                 name="select-tee">
+            <option *ngFor="let teeName of course.teeService.teeNames"
+                    [value]="teeName" name="tee-option">
+                {{teeName}}
+            </option>
+        </select>
+    </div>
+
+</div>
+

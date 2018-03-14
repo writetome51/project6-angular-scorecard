@@ -21,13 +21,13 @@ import { HoleColumnsComponent } from './components/hole-columns/hole-columns.com
 import {GameService} from './services/game.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {PlayerNumbersService} from './services/player-numbers.service';
-import {GameModule} from './game/game.module';
+import {RoutesModule} from './routes.module';
 import {ActiveGameService} from './services/active-game.service';
 import {ApiService} from './services/api.service';
 import {TotalsCalculatorService} from './services/totals-calculator.service';
 import {TeeService} from './services/tee.service';
 import {DescriptiveDataService} from './services/descriptive-data.service';
-import { DescriptiveDataComponent } from './descriptive-data/descriptive-data.component';
+import { DescriptiveDataComponent } from './components/descriptive-data/descriptive-data.component';
 
 
 @NgModule({
@@ -48,15 +48,15 @@ import { DescriptiveDataComponent } from './descriptive-data/descriptive-data.co
         FormsModule,
         HttpClientModule,
         RouterModule.forRoot([
-            {path: 'welcome', component: WelcomeComponent},
-            {path: '', redirectTo: 'welcome', pathMatch: 'full'},
+            {path: '/', component: WelcomeComponent},
+            {path: '', redirectTo: '/', pathMatch: 'full'},
             {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
         ]),
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule, // imports firebase/firestore, only needed for database features
         AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
         AngularFireStorageModule,
-        GameModule
+        RoutesModule
     ],
     providers: [ApiService, TotalsCalculatorService, PlayersService, DescriptiveDataService,
                 TeeService, CourseService, PlayerNumbersService, GameService, ActiveGameService ],

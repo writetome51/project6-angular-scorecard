@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {CourseService} from '../../services/course.service';
 
 @Component({
   selector: 'descriptive-data',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DescriptiveDataComponent implements OnInit {
 
-  constructor() { }
+  constructor(public course: CourseService) { }
 
   ngOnInit() {
   }

@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
-import {ScorecardComponent} from '../components/scorecard/scorecard.component';
+import {ScorecardComponent} from './components/scorecard/scorecard.component';
 
 @NgModule({
     imports: [
@@ -12,5 +12,6 @@ import {ScorecardComponent} from '../components/scorecard/scorecard.component';
     ],
     declarations: []
 })
-export class GameModule {
+
+export class RoutesModule {
 }
