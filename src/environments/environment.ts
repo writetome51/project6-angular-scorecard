@@ -14,6 +14,6 @@ export const environment = {
         messagingSenderId: '180929117832'
     },
 
-    gopher: '../assets/images/tenor.gif',
+    gopher: '../assets/images/gopher.gif',
     billMurray: '../assets/images/bill-murray.jpg'
 };

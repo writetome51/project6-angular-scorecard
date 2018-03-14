@@ -14,7 +14,11 @@ export class TeeService {
         yards: [],
         par: [],
         hcp: [],
-        hole_id: []
+    };
+    descriptiveDataLabelsForDisplay = {
+        yards: 'Tee',
+        par: 'Par',
+        hcp: 'Handicap',
     };
     descriptiveDataTotals;
 

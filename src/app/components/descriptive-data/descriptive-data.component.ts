@@ -7,9 +7,20 @@ import {CourseService} from '../../services/course.service';
 })
 export class DescriptiveDataComponent implements OnInit {
 
+    labels = [];
+
   constructor(public course: CourseService) { }
 
   ngOnInit() {
+      this.labels = Object.keys(this.course.teeService.descriptiveData);
+  }
+
+
+  chooseIDBasedOn(label){
+      if (label === 'yards'){
+          return 'tee-name-options-cell';
+      }
+      else{ return label + '-column-1'; }
   }
 
 }
