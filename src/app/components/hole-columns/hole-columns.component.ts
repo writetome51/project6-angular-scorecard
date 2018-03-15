@@ -35,7 +35,7 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
 
     ngOnInit() {
-        this.descriptiveRows = Object.keys(this.courseService.teeService.descriptiveData);
+        this.descriptiveRows = Object.keys(this.courseService.tee.metadata);
 
         this.playersService.getPlayers((response) => {
             this.players = Object.values(response); // Object.values() works.
@@ -127,21 +127,21 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
     figureOutWhatDataToShow(columnID, descriptiveRow) {
 
-        // This conditional necessary to prevent fatal errors if descriptiveDataTotals is not set:
-        if (this.courseService.teeService.descriptiveDataTotals){
+        // This conditional necessary to prevent fatal errors if metadataTotals is not set:
+        if (this.courseService.tee.metadataTotals){
             if (this.isNumberedColumn(columnID)) {
                 return this.showDescriptiveData(columnID, descriptiveRow);
             }
             else if (this.isTotalColumn(columnID)) {
                 columnID = this.totalColumnIDs.indexOf(columnID);
-                return this.courseService.teeService.descriptiveDataTotals[descriptiveRow][columnID];
+                return this.courseService.tee.metadataTotals[descriptiveRow][columnID];
             }
         }
     }
 
 
     showDescriptiveData(columnID, descriptiveRow) {
-        let rowOfData = this.courseService.teeService.descriptiveData[descriptiveRow];
+        let rowOfData = this.courseService.tee.metadata[descriptiveRow];
         return rowOfData[(columnID - 1)];
     }
 

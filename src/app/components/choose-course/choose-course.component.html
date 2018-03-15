@@ -3,9 +3,9 @@
         <div>
             <label>Choose a course</label>
             <select  id="course-name-options" name="course-name"
-                    [(ngModel)]="courseService.selectedCourseName"
+                    [(ngModel)]="courseService.selectedName"
                     (change)="courseService.loadAllDataForSelectedCourse()">
-                <option  *ngFor="let courseName of courseService.courseNames"
+                <option  *ngFor="let courseName of courseService.names"
                          [value]="courseName" name="course-option">
                     {{courseName}}
                 </option>

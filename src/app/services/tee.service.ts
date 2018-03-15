@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
-import {DescriptiveDataService} from './descriptive-data.service';
+import {MetadataService} from './metadata.service';
 
 
 @Injectable()
@@ -8,57 +8,57 @@ import {DescriptiveDataService} from './descriptive-data.service';
 export class TeeService {
 
     course;
-    teeNames = [];
-    selectedTeeName = '';
-    descriptiveData = {
+    names = [];
+    selectedName = '';
+    metadata = {
         yards: [],
         par: [],
         hcp: [],
     };
-    descriptiveDataLabelsForDisplay = {
+    metadataLabelsForDisplay = {
         yards: 'Tee',
         par: 'Par',
         hcp: 'Handicap',
     };
-    descriptiveDataTotals;
+    metadataTotals;
 
 
-    constructor(private _api: ApiService, public ddHelper: DescriptiveDataService) {
+    constructor(private _api: ApiService, public mdService: MetadataService) {
     }
 
 
     loadAllData(selectedCourse){
         this.course = selectedCourse;
-        this._clearAndSet_teeNames();
-        this._setDefaultValueFor_selectedTeeName();
-        this.set_descriptiveData_and_totals();
+        this._clearAndSet_names();
+        this._setDefaultValueFor_selectedName();
+        this.set_metadata_and_totals();
     }
 
 
-    set_descriptiveData_and_totals(){
+    set_metadata_and_totals(){
         let data_and_totals =
-            this.ddHelper.get_descriptiveData(
-                this.course, this.selectedTeeName, this.descriptiveData
+            this.mdService.get(
+                this.course, this.selectedName, this.metadata
             );
-        this.descriptiveData = data_and_totals[0];
-        this.descriptiveDataTotals = data_and_totals[1];
+        this.metadata = data_and_totals[0];
+        this.metadataTotals = data_and_totals[1];
     }
 
 
-    private _clearAndSet_teeNames() {
-        this.teeNames = [];
-        this._set_teeNames();
+    private _clearAndSet_names() {
+        this.names = [];
+        this._set_names();
     }
 
 
-    private _set_teeNames() {
+    private _set_names() {
         let tees = this._api.getTees(this.course);
-        this.teeNames = this._api.getTeenames(tees);
+        this.names = this._api.getTeenames(tees);
     }
 
 
-    private _setDefaultValueFor_selectedTeeName() {
-        this.selectedTeeName = this.teeNames[0];
+    private _setDefaultValueFor_selectedName() {
+        this.selectedName = this.names[0];
     }
 
 

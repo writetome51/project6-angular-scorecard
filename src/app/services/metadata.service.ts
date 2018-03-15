@@ -3,10 +3,10 @@ import {TotalsCalculatorService} from './totals-calculator.service';
 import {ApiService} from './api.service';
 
 @Injectable()
-export class DescriptiveDataService {
+export class MetadataService {
 
-    descriptiveData;
-    descriptiveDataTotals = {};
+    metadata;
+    metadataTotals = {};
     private _dash = ' - ';
 
 
@@ -14,24 +14,24 @@ export class DescriptiveDataService {
     }
 
 
-    get_descriptiveData(selectedCourse, selectedTeename, descriptiveData) {
-        this._initialize_descriptiveData_and_totals(descriptiveData);
+    get(selectedCourse, selectedTeename, descriptiveData) {
+        this._initialize_metadata_and_totals(descriptiveData);
         this._clearAllDescriptiveData();
         this._fillAllDescriptiveData(selectedCourse, selectedTeename);
-        return [this.descriptiveData, this.descriptiveDataTotals];
+        return [this.metadata, this.metadataTotals];
     }
 
 
-    private _initialize_descriptiveData_and_totals(descriptiveData) {
-        this.descriptiveData = descriptiveData;
-        for (let row in this.descriptiveData) {
-            this.descriptiveDataTotals[row] = [];
+    private _initialize_metadata_and_totals(descriptiveData) {
+        this.metadata = descriptiveData;
+        for (let row in this.metadata) {
+            this.metadataTotals[row] = [];
         }
     }
 
 
     private _clearAllDescriptiveData() {
-        let descriptiveDataSets = [this.descriptiveData, this.descriptiveDataTotals];
+        let descriptiveDataSets = [this.metadata, this.metadataTotals];
         descriptiveDataSets.forEach((dataSet) => {
             this._setObjectPropertiesToEmptyArrays(dataSet);
         });
@@ -52,16 +52,16 @@ export class DescriptiveDataService {
 
 
     private _fill_descriptiveData(selectedCourse, selectedTeename) {
-        this._api.fill_descriptiveData(
-            this.descriptiveData, selectedCourse, selectedTeename);
+        this._api.fill_metadata(
+            this.metadata, selectedCourse, selectedTeename);
         this._makeSureEach_descriptiveDataRow_has18Items();
     }
 
 
     private _fill_descriptiveDataTotals() {
-        for (let row in this.descriptiveData) {
-            this.descriptiveDataTotals[row] =
-                this._totalsCalc.getRowTotals(this.descriptiveData[row]);
+        for (let row in this.metadata) {
+            this.metadataTotals[row] =
+                this._totalsCalc.getRowTotals(this.metadata[row]);
         }
     }
 
@@ -73,10 +73,10 @@ export class DescriptiveDataService {
 
 
     private _ifAnyItemsAreEmpty_convertThemToDashes() {
-        for (let row in this.descriptiveData) {
-            this.descriptiveData[row].forEach((item, index) => {
+        for (let row in this.metadata) {
+            this.metadata[row].forEach((item, index) => {
                 if (!item) {
-                    this.descriptiveData[row][index] = this._dash;
+                    this.metadata[row][index] = this._dash;
                 }
             });
         }
@@ -84,9 +84,9 @@ export class DescriptiveDataService {
 
 
     private _appendDashesToRowsUntilEachHas18Items() {
-        for (let p in this.descriptiveData) {
-            while (this.descriptiveData[p].length < 18) {
-                this.descriptiveData[p].push(this._dash);
+        for (let p in this.metadata) {
+            while (this.metadata[p].length < 18) {
+                this.metadata[p].push(this._dash);
             }
         }
     }

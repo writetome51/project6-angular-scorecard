@@ -58,21 +58,21 @@ export class ApiService {
     }
 
 
-    fill_descriptiveData(descriptiveData, selectedCourse, selectedTeeName) {
+    fill_metadata(metadata, selectedCourse, selectedTeeName) {
         for (let hole = 0, thisHole; hole < selectedCourse.holes.length; ++hole) {
             thisHole = selectedCourse.holes[hole];
 
-            this.findCorrectTeeBoxAndGetDataFor(descriptiveData, thisHole, selectedTeeName);
+            this.findCorrectTeeBoxAndGetDataFor(metadata, thisHole, selectedTeeName);
         }
     }
 
 
-    findCorrectTeeBoxAndGetDataFor(descriptiveData, thisHole, selectedTeeName) {
+    findCorrectTeeBoxAndGetDataFor(metadata, thisHole, selectedTeeName) {
         for (let tee_box = 0, currentTee; tee_box < thisHole.tee_boxes.length; ++tee_box) {
             currentTee = thisHole.tee_boxes[tee_box];
             if (currentTee.tee_type === selectedTeeName) {
-                for (let p in descriptiveData) {
-                    descriptiveData[p].push(currentTee[p]);
+                for (let p in metadata) {
+                    metadata[p].push(currentTee[p]);
                 }
                 break;
             }

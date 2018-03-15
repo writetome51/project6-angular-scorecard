@@ -1,26 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CourseService} from '../../services/course.service';
 
 @Component({
-  selector: 'descriptive-data',
-  templateUrl: './descriptive-data.component.html',
+    selector: 'descriptive-data',
+    templateUrl: './descriptive-data.component.html',
 })
-export class DescriptiveDataComponent implements OnInit {
+export class DescriptiveDataComponent implements OnInit, OnDestroy {
 
     labels = [];
 
-  constructor(public course: CourseService) { }
+    constructor(public course: CourseService) {
+    }
 
-  ngOnInit() {
-      this.labels = Object.keys(this.course.teeService.descriptiveData);
-  }
+    ngOnInit() {
+        this.labels = Object.keys(this.course.tee.metadata);
+    }
+
+    ngOnDestroy() {
+        this.course.courseSubscription.unsubscribe();
+    }
 
 
-  chooseIDBasedOn(label){
-      if (label === 'yards'){
-          return 'tee-name-options-cell';
-      }
-      else{ return label + '-column-1'; }
-  }
+    chooseIDBasedOn(label) {
+        if (label === 'yards') {
+            return 'tee-name-options-cell';
+        }
+        else {
+            return label + '-column-1';
+        }
+    }
 
 }

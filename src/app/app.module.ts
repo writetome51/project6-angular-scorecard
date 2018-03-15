@@ -26,7 +26,7 @@ import {ActiveGameService} from './services/active-game.service';
 import {ApiService} from './services/api.service';
 import {TotalsCalculatorService} from './services/totals-calculator.service';
 import {TeeService} from './services/tee.service';
-import {DescriptiveDataService} from './services/descriptive-data.service';
+import {MetadataService} from './services/metadata.service';
 import { DescriptiveDataComponent } from './components/descriptive-data/descriptive-data.component';
 
 
@@ -58,7 +58,7 @@ import { DescriptiveDataComponent } from './components/descriptive-data/descript
         AngularFireStorageModule,
         RoutesModule
     ],
-    providers: [ApiService, TotalsCalculatorService, PlayersService, DescriptiveDataService,
+    providers: [ApiService, TotalsCalculatorService, PlayersService, MetadataService,
                 TeeService, CourseService, PlayerNumbersService, GameService, ActiveGameService ],
     bootstrap: [AppComponent]
 })

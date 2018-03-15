@@ -10,29 +10,29 @@ import {TeeService} from './tee.service';
 export class CourseService {
 
     courses: Course[] = [];
-    courseNames = [];
-    selectedCourse: Course;
-    selectedCourseHref: string;
+    names = [];
+    selected: Course;
+    selectedHref: string;
     coursesSubscription: Subscription;
     courseSubscription: Subscription;
-    selectedCourseName = '';
-    selectedCourseIndex = 0;
+    selectedName = '';
+    selectedIndex = 0;
 
 
     constructor(private _api: ApiService,
-                public teeService: TeeService) {
+                public tee: TeeService) {
 
         this._loadAllData();
     }
 
 
     public loadAllDataForSelectedCourse() {
-        this._setSelectedCourse();
+        this._setSelected();
         this.courseSubscription = this._api.getCourse(
-            this.selectedCourseHref,
+            this.selectedHref,
             (course) => {
-                this.selectedCourse = course;
-                this.teeService.loadAllData(this.selectedCourse);
+                this.selected = course;
+                this.tee.loadAllData(this.selected);
             }
         );
     }
@@ -41,37 +41,37 @@ export class CourseService {
     private _loadAllData() {
         this.coursesSubscription = this._api.getCourses((response: Course[]) => {
             this.courses = response;
-            this._clearAndSet_courseNames();
-            this._setDefaultValueFor_selectedCourseName();
+            this._clearAndSet_names();
+            this._setDefaultValueFor_selectedName();
             this.loadAllDataForSelectedCourse();
         });
     }
 
 
-    private _clearAndSet_courseNames() {
-        this.courseNames = [];
-        this._set_courseNames();
+    private _clearAndSet_names() {
+        this.names = [];
+        this._set_names();
     }
 
 
-    private _setDefaultValueFor_selectedCourseName() {
-        if (this.selectedCourseName === '') {
-            this.selectedCourseName = this.courseNames[0];
+    private _setDefaultValueFor_selectedName() {
+        if (this.selectedName === '') {
+            this.selectedName = this.names[0];
         }
     }
 
 
-    private _set_courseNames() {
+    private _set_names() {
         this.courses.forEach((course) => {
-            this.courseNames.push(this._api.getCoursename(course));
+            this.names.push(this._api.getCoursename(course));
         });
     }
 
 
-    private _setSelectedCourse() {
-        this.selectedCourseIndex = this.courseNames.indexOf(this.selectedCourseName);
-        this.selectedCourse = this.courses[this.selectedCourseIndex];
-        this.selectedCourseHref = this._api.getCourseHref(this.selectedCourse);
+    private _setSelected() {
+        this.selectedIndex = this.names.indexOf(this.selectedName);
+        this.selected = this.courses[this.selectedIndex];
+        this.selectedHref = this._api.getCourseHref(this.selected);
     }
 
 
