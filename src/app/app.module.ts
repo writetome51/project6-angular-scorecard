@@ -12,7 +12,6 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
 import {AppComponent} from './app.component';
 import {ChooseCourseComponent} from './components/choose-course/choose-course.component';
 import {ScorecardComponent} from './components/scorecard/scorecard.component';
-import {ChooseTeeComponent} from './components/choose-tee/choose-tee.component';
 import {PlayerNamesComponent} from './components/player-names/player-names.component';
 import {CourseService} from './services/course.service';
 import {PlayersService} from './services/players.service';
@@ -35,7 +34,6 @@ import { DescriptiveDataComponent } from './components/descriptive-data/descript
         AppComponent,
         ChooseCourseComponent,
         ScorecardComponent,
-        ChooseTeeComponent,
         PlayerNamesComponent,
         LabelColumnComponent,
         WelcomeComponent,

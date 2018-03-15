@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Player} from '../../interfaces/Player.interface';
 import {PlayersService} from '../../services/players.service';
-import {ActiveGameService} from '../../services/active-game.service';
 import {CourseService} from '../../services/course.service';
 import {TotalsCalculatorService} from '../../services/totals-calculator.service';
 
@@ -24,18 +23,18 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
         '16', '17', '18', this.inColumn, this.totalColumn
     ];
 
-    descriptiveRows: string[];
+    metadataRowNames: string[];
     playersRowTotals: Array<number[]> = [];
 
 
-    constructor(public courseService: CourseService,
+    constructor(public course: CourseService,
                 private playersService: PlayersService,
                 private _totalsCalc: TotalsCalculatorService) {
     }
 
 
     ngOnInit() {
-        this.descriptiveRows = Object.keys(this.courseService.tee.metadata);
+        this.metadataRowNames = Object.keys(this.course.tee.metadata);
 
         this.playersService.getPlayers((response) => {
             this.players = Object.values(response); // Object.values() works.
@@ -45,7 +44,7 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
 
     ngOnDestroy() {
-        this.courseService.courseSubscription.unsubscribe();
+        this.course.courseSubscription.unsubscribe();
         this.playersService.subscription.unsubscribe();
     }
 
@@ -128,20 +127,20 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     figureOutWhatDataToShow(columnID, descriptiveRow) {
 
         // This conditional necessary to prevent fatal errors if metadataTotals is not set:
-        if (this.courseService.tee.metadataTotals){
+        if (this.course.tee.metadataTotals){
             if (this.isNumberedColumn(columnID)) {
                 return this.showDescriptiveData(columnID, descriptiveRow);
             }
             else if (this.isTotalColumn(columnID)) {
                 columnID = this.totalColumnIDs.indexOf(columnID);
-                return this.courseService.tee.metadataTotals[descriptiveRow][columnID];
+                return this.course.tee.metadataTotals[descriptiveRow][columnID];
             }
         }
     }
 
 
     showDescriptiveData(columnID, descriptiveRow) {
-        let rowOfData = this.courseService.tee.metadata[descriptiveRow];
+        let rowOfData = this.course.tee.metadata[descriptiveRow];
         return rowOfData[(columnID - 1)];
     }
 

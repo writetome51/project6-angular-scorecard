@@ -1,6 +1,6 @@
 <div *ngFor="let label of labels"
      [class]="'cell label-cell ' + (label + '-row')"
-     [id]="chooseIDBasedOn(label)">
+     [id]="label + '-column-1'">
 
     {{course.tee.metadataLabelsForDisplay[label]}}
 

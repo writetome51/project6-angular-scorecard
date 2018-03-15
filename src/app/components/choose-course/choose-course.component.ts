@@ -10,21 +10,16 @@ import {Subscription} from 'rxjs/Subscription';
 
 export class ChooseCourseComponent implements OnInit, OnDestroy {
 
-
-    subscription: Subscription;
-
-
-    constructor(public courseService: CourseService,
+    constructor(public course: CourseService,
                 private _activeGame: ActiveGameService) {
     }
 
 
     ngOnInit() {
-
     }
 
     ngOnDestroy() {
-        this.courseService.coursesSubscription.unsubscribe();
+        this.course.coursesSubscription.unsubscribe();
     }
 
 

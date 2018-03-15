@@ -9,7 +9,7 @@ import {TeeService} from './tee.service';
 
 export class CourseService {
 
-    courses: Course[] = [];
+    selections: Course[] = [];
     names = [];
     selected: Course;
     selectedHref: string;
@@ -40,7 +40,7 @@ export class CourseService {
 
     private _loadAllData() {
         this.coursesSubscription = this._api.getCourses((response: Course[]) => {
-            this.courses = response;
+            this.selections = response;
             this._clearAndSet_names();
             this._setDefaultValueFor_selectedName();
             this.loadAllDataForSelectedCourse();
@@ -62,7 +62,7 @@ export class CourseService {
 
 
     private _set_names() {
-        this.courses.forEach((course) => {
+        this.selections.forEach((course) => {
             this.names.push(this._api.getCoursename(course));
         });
     }
@@ -70,7 +70,7 @@ export class CourseService {
 
     private _setSelected() {
         this.selectedIndex = this.names.indexOf(this.selectedName);
-        this.selected = this.courses[this.selectedIndex];
+        this.selected = this.selections[this.selectedIndex];
         this.selectedHref = this._api.getCourseHref(this.selected);
     }
 

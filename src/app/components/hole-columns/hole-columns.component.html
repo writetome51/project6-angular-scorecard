@@ -8,10 +8,10 @@
         {{columnID | uppercase}}
     </div>
 
-    <div *ngFor="let descriptiveRow of descriptiveRows"
-         [class]="'cell ' + descriptiveRow + '-row'"
-         [id]="descriptiveRow + '-cell-' + columnID" >
-        {{figureOutWhatDataToShow(columnID, descriptiveRow)}}
+    <div *ngFor="let rowName of metadataRowNames"
+         [class]="'cell ' + rowName + '-row'"
+         [id]="rowName + '-cell-' + columnID" >
+        {{figureOutWhatDataToShow(columnID, rowName)}}
     </div>
 
 

@@ -21,13 +21,4 @@ export class DescriptiveDataComponent implements OnInit, OnDestroy {
     }
 
 
-    chooseIDBasedOn(label) {
-        if (label === 'yards') {
-            return 'tee-name-options-cell';
-        }
-        else {
-            return label + '-column-1';
-        }
-    }
-
 }
