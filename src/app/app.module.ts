@@ -27,6 +27,7 @@ import {TotalsCalculatorService} from './services/totals-calculator.service';
 import {TeeService} from './services/tee.service';
 import {MetadataService} from './services/metadata.service';
 import { DescriptiveDataComponent } from './components/descriptive-data/descriptive-data.component';
+import { PlayerStrokesForHoleComponent } from './components/player-strokes-for-hole/player-strokes-for-hole.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { DescriptiveDataComponent } from './components/descriptive-data/descript
         WelcomeComponent,
         HoleColumnsComponent,
         DescriptiveDataComponent,
+        PlayerStrokesForHoleComponent,
     ],
     imports: [
         BrowserModule,

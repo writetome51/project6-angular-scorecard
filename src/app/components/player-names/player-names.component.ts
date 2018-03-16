@@ -13,7 +13,6 @@ export class PlayerNamesComponent implements OnInit {
     players: object;
     playerNumbers: string[];
     playerNames: string[] = [];
-    private _playersStillAvailable: string[];
     playersAddedLate = [];
 
 

@@ -1,5 +1,5 @@
 <!--  This div represents a single column     -->
-<div *ngFor="let columnID of columnIDs; let i = index"
+<div *ngFor="let columnID of columnIDs"
      class="card-column"  [class.total-column]="isTotalColumn(columnID)"
      [id]="getColumnIDForHTML(columnID)">
 
@@ -14,20 +14,6 @@
         {{figureOutWhatDataToShow(columnID, rowName)}}
     </div>
 
-
-    <div *ngFor="let player of players; let i=index"
-         [class]="'cell ' + 'player' + (i+1) + '-row'"
-         [class.strokes-input-cell]="isNumberedColumn(columnID)"
-         [class.bottom-row]="isLastPlayer(i)"
-         [id]="getPlayerCellID('player' + (i+1))">
-        <input *ngIf="isNumberedColumn(columnID)" type="text"
-               class="scorecard-input  strokes-input"
-               [(ngModel)]="player.strokes[(columnID) - 1]"
-               (change)="validateAndUpdatePlayerTotals(i, columnID - 1)">
-        <span *ngIf="isTotalColumn(columnID)">
-            {{playersRowTotals[i][totalColumnIDs.indexOf(columnID)]}}
-        </span>
-    </div>
-
+    <player-strokes-for-hole  [columnID]="columnID"></player-strokes-for-hole>
 
 </div>

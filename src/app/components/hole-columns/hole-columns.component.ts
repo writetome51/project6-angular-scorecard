@@ -10,7 +10,7 @@ import {TotalsCalculatorService} from '../../services/totals-calculator.service'
 })
 export class HoleColumnsComponent implements OnInit, OnDestroy {
 
-    players: Player[] = [];
+
     outColumn = 'out';
     inColumn = 'in';
     totalColumn = 'total';
@@ -24,67 +24,21 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     ];
 
     metadataRowNames: string[];
-    playersRowTotals: Array<number[]> = [];
 
 
     constructor(public course: CourseService,
-                private playersService: PlayersService,
-                private _totalsCalc: TotalsCalculatorService) {
+                private playersService: PlayersService) {
     }
 
 
     ngOnInit() {
         this.metadataRowNames = Object.keys(this.course.tee.metadata);
-
-        this.playersService.getPlayers((response) => {
-            this.players = Object.values(response); // Object.values() works.
-            this._calculateAllPlayerTotals();
-        });
     }
 
 
     ngOnDestroy() {
         this.course.courseSubscription.unsubscribe();
         this.playersService.subscription.unsubscribe();
-    }
-
-
-    private _calculateAllPlayerTotals() {
-        this._initialize_playersRowTotals();
-        this._fill_playersRowTotals();
-    }
-
-
-    private _initialize_playersRowTotals() {
-        for (let i = 0; i < this.players.length; ++i) {
-            this._initialize_playerRowTotals(i);
-        }
-    }
-
-
-    private _initialize_playerRowTotals(playerIndex) {
-        this.playersRowTotals[playerIndex] = [];
-    }
-
-
-    validateAndUpdatePlayerTotals(playerIndex, columnIndex) {
-        this.validateEntry(this.players[playerIndex], columnIndex);
-        this.updateRowTotals(playerIndex);
-    }
-
-
-    validateEntry(player, column) {
-        if (player.strokes[column] !== '') {
-            if (isNaN(Number(player.strokes[column]))) {
-                player.strokes[column] = 0;
-            }
-        }
-    }
-
-
-    updateRowTotals(playerIndex) {
-        this._initialize_playerRowTotals(playerIndex);
-        this._fill_Totals(playerIndex);
     }
 
 
@@ -124,42 +78,29 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
     }
 
 
-    figureOutWhatDataToShow(columnID, descriptiveRow) {
+    figureOutWhatDataToShow(columnID, rowName) {
 
         // This conditional necessary to prevent fatal errors if metadataTotals is not set:
         if (this.course.tee.metadataTotals){
             if (this.isNumberedColumn(columnID)) {
-                return this.showDescriptiveData(columnID, descriptiveRow);
+                return this.showMetadata(columnID, rowName);
             }
             else if (this.isTotalColumn(columnID)) {
                 columnID = this.totalColumnIDs.indexOf(columnID);
-                return this.course.tee.metadataTotals[descriptiveRow][columnID];
+                return this.course.tee.metadataTotals[rowName][columnID];
             }
         }
     }
 
 
-    showDescriptiveData(columnID, descriptiveRow) {
-        let rowOfData = this.course.tee.metadata[descriptiveRow];
+    showMetadata(columnID, rowName) {
+        let rowOfData = this.course.tee.metadata[rowName];
         return rowOfData[(columnID - 1)];
     }
 
 
-    private _fill_playersRowTotals() {
-        this.playersRowTotals.forEach((playerRowTotals, index) => {
-            this._fill_Totals(index);
-        });
-    }
-
-
-    private _fill_Totals(playerIndex) {
-        this.playersRowTotals[playerIndex] =
-            this._totalsCalc.getRowTotals(this.players[playerIndex].strokes);
-    }
-
-
     isLastPlayer(index) {
-        let lastIndex = this.players.length - 1;
+        let lastIndex = this.playersService.players.length - 1;
         return (lastIndex === index);
     }
 
