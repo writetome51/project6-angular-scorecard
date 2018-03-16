@@ -45,6 +45,12 @@ export class PlayersService {
     }
 
 
+    isLastPlayer(index) {
+        let lastIndex = this.players.length - 1;
+        return (lastIndex === index);
+    }
+
+
     private _calculateAllPlayerTotals() {
         this._initialize_playersRowTotals();
         this._fill_playersRowTotals();

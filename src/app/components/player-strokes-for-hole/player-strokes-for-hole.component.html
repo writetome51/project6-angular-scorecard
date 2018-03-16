@@ -1,7 +1,7 @@
-<div *ngFor="let player of players; let i=index"
+<div *ngFor="let player of playersService.players; let i=index"
      [class]="'cell ' + 'player' + (i+1) + '-row'"
      [class.strokes-input-cell]="isNumberedColumn(columnID)"
-     [class.bottom-row]="isLastPlayer(i)"
+     [class.bottom-row]="playersService.isLastPlayer(i)"
      [id]="getPlayerCellID('player' + (i+1))">
     <input *ngIf="isNumberedColumn(columnID)" type="text"
            class="scorecard-input  strokes-input"
@@ -9,5 +9,5 @@
            (change)="validateAndUpdatePlayerTotals(i, columnID - 1)">
     <span *ngIf="isTotalColumn(columnID)">
             {{playersRowTotals[i][totalColumnIDs.indexOf(columnID)]}}
-        </span>
+    </span>
 </div>
