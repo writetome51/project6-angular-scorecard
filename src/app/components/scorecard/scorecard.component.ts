@@ -10,6 +10,7 @@ import {environment} from '../../../environments/environment';
 export class ScorecardComponent implements OnInit {
 
     gopher = environment.gopher;
+    rodney = environment.rodney;
 
 
     constructor() {

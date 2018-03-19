@@ -14,6 +14,8 @@ import {environment} from '../../../environments/environment';
 export class WelcomeComponent implements OnInit {
 
     billMurray = environment.billMurray;
+    ted1 = environment.tedKnight1;
+    ted2 = environment.tedKnight2;
     newPlayerName: string;
     signedUpPlayerNames: string[] = [];
     playerNumbers: string[];

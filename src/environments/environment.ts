@@ -16,5 +16,8 @@ export const environment = {
     },
 
     gopher: '../assets/images/gopher.gif',
-    billMurray: '../assets/images/bill-murray.jpg'
+    billMurray: '../assets/images/bill-murray.jpg',
+    tedKnight1: '../assets/images/ted-knight-1.jpg',
+    tedKnight2: '../assets/images/ted-knight-2.jpg',
+    rodney: '../assets/images/rodney-1.png'
 };

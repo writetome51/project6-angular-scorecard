@@ -1,41 +1,49 @@
 
 <div>
+    <div id="ted2">
+        <img [src]="ted2">
+    </div>
+    <div id="ted1">
+        <img [src]="ted1">
+    </div>
+    <div id="welcome-main" class="center-block">
 
-    <div class="center-block">
+        <div  class="center-block">
+            <h2 class="center-block">Start New Game?</h2>
+            <form class="center-block">
+                <div *ngIf="lessThanFourPlayersSignedUp()">
+                    <input class="welcome-page-input form-control center-block"
+                           type="text" required [name]="getPlayerPlaceholder()"
+                           [placeholder]="getPlayerPlaceholder()"
+                           [(ngModel)]="newPlayerName">
+                    <input type="submit" class="welcome-page-button"
+                           value="Add Player" (click)="addPlayerName()">
+                </div>
 
-        <div  *ngIf="lessThanFourPlayersSignedUp()" >
-            <h2>Start New Game?</h2>
-            <form>
-                <input class="welcome-page-input form-control center-block"
-                       type="text" required [name]="getPlayerPlaceholder()"
-                       [placeholder]="getPlayerPlaceholder()"
-                       [(ngModel)]="newPlayerName">
-                <input type="submit" class="welcome-page-button"
-                       value="Add Player" (click)="addPlayerName()">
+                <button *ngIf="atLeastOnePlayerSignedUp()" class="welcome-page-button center-block"
+                        id="begin-button"
+                        (click)="createNewGame()"  [routerLink]="['/game']">Begin</button>
             </form>
         </div>
 
-        <button *ngIf="atLeastOnePlayerSignedUp()" class="welcome-page-button"
-                id="begin-button"
-                (click)="createNewGame()"  [routerLink]="['/game']">Begin</button>
-    </div>
 
-    <div *ngIf="lessThanFourPlayersSignedUp()" class="center-block">
-        <h2>Or, Resume Game?</h2>
-        <form>
-            <label>Choose Game </label>
-            <select name="choose-game" [(ngModel)]='chosenGame'>
-                <option *ngFor="let gameID of gameIDs" name="choose-game-option"
-                        [value]="gameID">
-                    {{gameID}}
-                </option>
-            </select>
-            <button (click)="resumeGame()"  [routerLink]="['/game']">Resume</button>
-        </form>
-    </div>
 
-    <div id="images-container" class="center-block">
-        <img [src]="billMurray">
+        <div *ngIf="lessThanFourPlayersSignedUp()" class="center-block">
+            <h2 class="center-block">Or, Resume Game?</h2>
+            <form class="center-block">
+                <label>Choose Game </label>
+                <select name="choose-game" [(ngModel)]='chosenGame'>
+                    <option *ngFor="let gameID of gameIDs" name="choose-game-option"
+                            [value]="gameID">
+                        {{gameID}}
+                    </option>
+                </select>
+                <button (click)="resumeGame()"  [routerLink]="['/game']">Resume</button>
+            </form>
+        </div>
+        <div id="images-container" class="center-block">
+            <img  [src]="billMurray" >
+        </div>
     </div>
 
 </div>

@@ -93,12 +93,19 @@
 
 #label-column div{width:100%;}
 
-#images-container{width:870px; margin:auto; margin-top:15px; padding:auto;}
+#images-container{margin:auto; margin-top:15px; padding:auto; position:relative; left:4px;}
 
-#images-container img {display: inline; width:48%; margin:auto; margin-left: 10px;}
+#images-container img {display: inline; width:48%; margin:auto;}
 
-#begin-button{font-weight: bold;}
+#begin-button{font-weight: bold; margin-bottom: 30px;}
 
 #choose-course-and-suspend-game div{
     display: inline; border:none; margin-right: 20px;
 }
+
+#welcome-main{
+    margin-left:auto; margin-right: auto; position:relative;
+}
+
+#ted2{float:left;}
+#ted1{float:right; position: relative;}
