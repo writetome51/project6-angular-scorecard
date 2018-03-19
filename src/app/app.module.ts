@@ -49,8 +49,8 @@ import {ColumnHelperService} from './services/column-helper.service';
         FormsModule,
         HttpClientModule,
         RouterModule.forRoot([
-            {path: '', component: WelcomeComponent},
-            {path: '**', redirectTo: '', pathMatch: 'full'}
+            {path: 'home', component: WelcomeComponent},
+            {path: '**', redirectTo: 'home', pathMatch: 'full'}
         ]),
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule, // imports firebase/firestore, only needed for database features
