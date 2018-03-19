@@ -8,6 +8,6 @@
            [(ngModel)]="player.strokes[(columnID) - 1]"
            (change)="validateAndUpdatePlayerTotals(i, columnID - 1)">
     <span *ngIf="column.isTotalColumn(columnID)">
-            {{players.playersRowTotals[i][column.totalIDs.indexOf(columnID)]}}
+            {{players.rowTotalsSets[i][column.totalIDs.indexOf(columnID)]}}
     </span>
 </div>

@@ -1,5 +1,5 @@
 <!--  This div represents a single column     -->
-<div *ngFor="let columnID of column.columnIDs"
+<div *ngFor="let columnID of column.IDs"
      class="card-column"  [class.total-column]="column.isTotalColumn(columnID)"
      [id]="getColumnIDForHTML(columnID)">
 

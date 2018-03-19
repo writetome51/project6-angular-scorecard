@@ -11,7 +11,7 @@ import {TotalsCalculatorService} from './totals-calculator.service';
 export class PlayersService {
 
     roster: Player[] = [];
-    playersRowTotals: Array<number[]> = [];
+    rowTotalsSets: Array<number[]> = [];
     private _gameObservable: Observable<any>;
     subscription: Subscription;
 
@@ -41,7 +41,7 @@ export class PlayersService {
 
     updateRowTotals(playerIndex) {
         this._initialize_playerRowTotals(playerIndex);
-        this._fill_Totals(playerIndex);
+        this._fill_rowTotals(playerIndex);
     }
 
 
@@ -52,12 +52,12 @@ export class PlayersService {
 
 
     private _calculateAllPlayerTotals() {
-        this._initialize_playersRowTotals();
-        this._fill_playersRowTotals();
+        this._initialize_rowTotalsSets();
+        this._fill_rowTotalsSets();
     }
 
 
-    private _initialize_playersRowTotals() {
+    private _initialize_rowTotalsSets() {
         for (let i = 0; i < this.roster.length; ++i) {
             this._initialize_playerRowTotals(i);
         }
@@ -65,19 +65,19 @@ export class PlayersService {
 
 
     private _initialize_playerRowTotals(playerIndex) {
-        this.playersRowTotals[playerIndex] = [];
+        this.rowTotalsSets[playerIndex] = [];
     }
 
 
-    private _fill_playersRowTotals() {
-        this.playersRowTotals.forEach((playerRowTotals, index) => {
-            this._fill_Totals(index);
+    private _fill_rowTotalsSets() {
+        this.rowTotalsSets.forEach((rowTotals, rowIndex) => {
+            this._fill_rowTotals(rowIndex);
         });
     }
 
 
-    private _fill_Totals(playerIndex) {
-        this.playersRowTotals[playerIndex] =
+    private _fill_rowTotals(playerIndex) {
+        this.rowTotalsSets[playerIndex] =
             this._totalsCalc.getRowTotals(this.roster[playerIndex].strokes);
     }
 
