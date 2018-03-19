@@ -10,7 +10,7 @@ import {TotalsCalculatorService} from './totals-calculator.service';
 
 export class PlayersService {
 
-    players: Player[] = [];
+    roster: Player[] = [];
     playersRowTotals: Array<number[]> = [];
     private _gameObservable: Observable<any>;
     subscription: Subscription;
@@ -21,7 +21,7 @@ export class PlayersService {
                 private _totalsCalc: TotalsCalculatorService) {
 
         this.getPlayers((response) => {
-            this.players = Object.values(response); // Object.values() works.
+            this.roster = Object.values(response); // Object.values() works.
             this._calculateAllPlayerTotals();
         });
 
@@ -46,7 +46,7 @@ export class PlayersService {
 
 
     isLastPlayer(index) {
-        let lastIndex = this.players.length - 1;
+        let lastIndex = this.roster.length - 1;
         return (lastIndex === index);
     }
 
@@ -58,7 +58,7 @@ export class PlayersService {
 
 
     private _initialize_playersRowTotals() {
-        for (let i = 0; i < this.players.length; ++i) {
+        for (let i = 0; i < this.roster.length; ++i) {
             this._initialize_playerRowTotals(i);
         }
     }
@@ -78,7 +78,7 @@ export class PlayersService {
 
     private _fill_Totals(playerIndex) {
         this.playersRowTotals[playerIndex] =
-            this._totalsCalc.getRowTotals(this.players[playerIndex].strokes);
+            this._totalsCalc.getRowTotals(this.roster[playerIndex].strokes);
     }
 
 

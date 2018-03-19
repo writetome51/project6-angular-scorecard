@@ -1,6 +1,6 @@
 <!--  This div represents a single column     -->
-<div *ngFor="let columnID of columnIDs"
-     class="card-column"  [class.total-column]="isTotalColumn(columnID)"
+<div *ngFor="let columnID of column.columnIDs"
+     class="card-column"  [class.total-column]="column.isTotalColumn(columnID)"
      [id]="getColumnIDForHTML(columnID)">
 
     <div class="cell hole-row"

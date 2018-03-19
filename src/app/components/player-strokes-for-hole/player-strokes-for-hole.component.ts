@@ -11,8 +11,10 @@ export class PlayerStrokesForHoleComponent implements OnInit {
     @Input() columnID: string;
 
 
-    constructor(public playersService: PlayersService,
-                public columnHelper: ColumnHelperService) {
+    constructor(public players: PlayersService,
+                public column: ColumnHelperService) {
+
+        this.columnID = '0';
     }
 
     ngOnInit() {
@@ -20,8 +22,8 @@ export class PlayerStrokesForHoleComponent implements OnInit {
 
 
     validateAndUpdatePlayerTotals(playerIndex, columnIndex) {
-        this._validateEntry(this.playersService.players[playerIndex], columnIndex);
-        this.playersService.updateRowTotals(playerIndex);
+        this._validateEntry(this.players.roster[playerIndex], columnIndex);
+        this.players.updateRowTotals(playerIndex);
     }
 
 
@@ -36,7 +38,7 @@ export class PlayerStrokesForHoleComponent implements OnInit {
 
     getPlayerCellID(playerNumber, columnID) {
         let midSection: string;
-        if (this.columnHelper.isTotalColumn(columnID)) {
+        if (this.column.isTotalColumn(columnID)) {
             midSection = '-cell-';
         }
         else {

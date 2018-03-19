@@ -15,8 +15,8 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
 
     constructor(public course: CourseService,
-                private playersService: PlayersService,
-                public columnHelper: ColumnHelperService) {
+                private players: PlayersService,
+                public column: ColumnHelperService) {
     }
 
 
@@ -27,7 +27,7 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.course.courseSubscription.unsubscribe();
-        this.playersService.subscription.unsubscribe();
+        this.players.subscription.unsubscribe();
     }
 
 
@@ -47,18 +47,18 @@ export class HoleColumnsComponent implements OnInit, OnDestroy {
 
         // This conditional necessary to prevent fatal errors if metadataTotals is not set:
         if (this.course.tee.metadataTotals){
-            if (this.columnHelper.isNumberedColumn(columnID)) {
-                return this.showMetadata(columnID, rowName);
+            if (this.column.isNumberedColumn(columnID)) {
+                return this._showMetadata(columnID, rowName);
             }
-            else if (this.columnHelper.isTotalColumn(columnID)) {
-                columnID = this.columnHelper.totalColumnIDs.indexOf(columnID);
+            else if (this.column.isTotalColumn(columnID)) {
+                columnID = this.column.totalIDs.indexOf(columnID);
                 return this.course.tee.metadataTotals[rowName][columnID];
             }
         }
     }
 
 
-    showMetadata(columnID, rowName) {
+    private _showMetadata(columnID, rowName) {
         let rowOfData = this.course.tee.metadata[rowName];
         return rowOfData[(columnID - 1)];
     }

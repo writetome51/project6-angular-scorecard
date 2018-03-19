@@ -28,6 +28,7 @@ import {TeeService} from './services/tee.service';
 import {MetadataService} from './services/metadata.service';
 import { DescriptiveDataComponent } from './components/descriptive-data/descriptive-data.component';
 import { PlayerStrokesForHoleComponent } from './components/player-strokes-for-hole/player-strokes-for-hole.component';
+import {ColumnHelperService} from './services/column-helper.service';
 
 
 @NgModule({
@@ -49,7 +50,6 @@ import { PlayerStrokesForHoleComponent } from './components/player-strokes-for-h
         HttpClientModule,
         RouterModule.forRoot([
             {path: '', component: WelcomeComponent},
-          //  {path: '', redirectTo: '', pathMatch: 'full'},
             {path: '**', redirectTo: '', pathMatch: 'full'}
         ]),
         AngularFireModule.initializeApp(environment.firebase),
@@ -59,7 +59,8 @@ import { PlayerStrokesForHoleComponent } from './components/player-strokes-for-h
         RoutesModule
     ],
     providers: [ApiService, TotalsCalculatorService, PlayersService, MetadataService,
-                TeeService, CourseService, PlayerNumbersService, GameService, ActiveGameService ],
+                TeeService, CourseService, PlayerNumbersService, GameService,
+        ActiveGameService, ColumnHelperService ],
     bootstrap: [AppComponent]
 })
 
