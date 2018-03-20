@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PlayersService} from '../../services/players.service';
+import {ArrayHelperService} from '../../services/array-helper.service';
 
 @Component({
     selector: 'player-names',
@@ -11,31 +12,24 @@ export class PlayerNamesComponent implements OnInit, OnDestroy {
     playersAddedLate = [];
 
 
-    constructor(public players: PlayersService) {
+    constructor(public players: PlayersService, private _array: ArrayHelperService) {
     }
 
     ngOnInit() {
         this.players.set();
     }
 
-    ngOnDestroy(){
+    ngOnDestroy() {
         this.players.unset();
     }
 
 
-    savePlayerToGame(){
-        this._removeEmptyNames();
-        this.players.addMore(this.playersAddedLate);
-        this.playersAddedLate = [];
-    }
-
-    private _removeEmptyNames(){
-        this.playersAddedLate.forEach((player, index) => {
-            player.trim();
-            if (player === ''){
-                this.playersAddedLate.remove;
-            }
-        });
+    savePlayerToGame(index) {
+        this.playersAddedLate[index] = this.playersAddedLate[index].trim();
+        if (this.playersAddedLate[index] !== ''){
+            this.players.addAnother(this.playersAddedLate[index]);
+            this.playersAddedLate[index] = '';
+        }
     }
 
 

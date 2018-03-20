@@ -28,6 +28,7 @@ import {MetadataService} from './services/metadata.service';
 import { DescriptiveDataComponent } from './components/descriptive-data/descriptive-data.component';
 import { PlayerStrokesForHoleComponent } from './components/player-strokes-for-hole/player-strokes-for-hole.component';
 import {ColumnHelperService} from './services/column-helper.service';
+import {ArrayHelperService} from './services/array-helper.service';
 
 
 @NgModule({
@@ -59,7 +60,7 @@ import {ColumnHelperService} from './services/column-helper.service';
     ],
     providers: [ApiService, TotalsCalculatorService, PlayersService, MetadataService,
                 TeeService, CourseService, GameService,
-        ActiveGameService, ColumnHelperService ],
+        ActiveGameService, ColumnHelperService, ArrayHelperService ],
     bootstrap: [AppComponent]
 })
 

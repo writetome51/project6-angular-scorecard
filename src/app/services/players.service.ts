@@ -45,8 +45,8 @@ export class PlayersService {
     }
 
 
-    addMore(playerNames) {
-        this._game.addMorePlayers(playerNames,  this.names.length + 1);
+    addAnother(player) {
+        this._game.addMorePlayers([player],  this.names.length + 1);
       //  this.set();
     }
 

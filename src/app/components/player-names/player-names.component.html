@@ -13,7 +13,7 @@
      [class]="'cell label-cell player-name-input-cell ' + playerStillAvailable + '-row'"
      [id]="playerStillAvailable  + '-input-cell'">
     <input type="text"
-       class="scorecard-input player-name-input"
-       [placeholder]="playerStillAvailable + ' name'"
-       [(ngModel)]="playersAddedLate[i]"  (blur)="savePlayerToGame()">
+           class="scorecard-input player-name-input"
+           [placeholder]="playerStillAvailable + ' name'"
+           [(ngModel)]="playersAddedLate[i]" (blur)="savePlayerToGame(i)">
 </div>
