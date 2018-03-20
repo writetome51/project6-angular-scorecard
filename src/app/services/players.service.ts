@@ -10,32 +10,44 @@ import {TotalsCalculatorService} from './totals-calculator.service';
 
 export class PlayersService {
 
+    numbers = [
+        'player1', 'player2', 'player3', 'player4'
+    ];
     roster: Player[] = [];
+    names: string[];
     rowTotalsSets: Array<number[]> = [];
-    private _gameObservable: Observable<any>;
+    // magic variable  playersStillAvailable: string[];
     subscription: Subscription;
+    private _gameObservable: Observable<any>;
 
 
     constructor(private _game: GameService,
                 private _activeGame: ActiveGameService,
                 private _totalsCalc: TotalsCalculatorService) {
 
-        this.getPlayers((response) => {
+    }
+
+
+    set(){
+        this._getPlayers((response) => {
             this.roster = Object.values(response); // Object.values() works.
             this._calculateAllPlayerTotals();
+            this._setPlayerNames();
         });
-
     }
 
 
-    getPlayers(observer) {
-        this._gameObservable = this._game.get(this._activeGame.get());
-        this.subscription = this._gameObservable.subscribe(observer);
+    unset(){
+        this.roster = [];
+        this.names = [];
+        this.rowTotalsSets = [];
+        this.subscription.unsubscribe();
     }
 
 
-    addMorePlayers(playerNames, startingNumber) {
-        this._game.addMorePlayers(playerNames, startingNumber);
+    addMore(playerNames) {
+        this._game.addMorePlayers(playerNames,  this.names.length + 1);
+      //  this.set();
     }
 
 
@@ -48,6 +60,28 @@ export class PlayersService {
     isLastPlayer(index) {
         let lastIndex = this.roster.length - 1;
         return (lastIndex === index);
+    }
+
+
+    get playersStillAvailable(): string[] {
+        if (this.names){
+            let i = this.names.length;
+            return this.numbers.slice(i);
+        }
+    }
+
+
+    private _getPlayers(observer) {
+        this._gameObservable = this._game.get(this._activeGame.get());
+        this.subscription = this._gameObservable.subscribe(observer);
+    }
+
+
+    private _setPlayerNames(){
+        this.names = [];
+        this.roster.forEach((player) => {
+            this.names.push(player.name);
+        });
     }
 
 

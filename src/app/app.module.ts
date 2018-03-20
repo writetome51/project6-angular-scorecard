@@ -19,7 +19,6 @@ import { LabelColumnComponent } from './components/label-column/label-column.com
 import { HoleColumnsComponent } from './components/hole-columns/hole-columns.component';
 import {GameService} from './services/game.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {PlayerNumbersService} from './services/player-numbers.service';
 import {RoutesModule} from './routes.module';
 import {ActiveGameService} from './services/active-game.service';
 import {ApiService} from './services/api.service';
@@ -59,7 +58,7 @@ import {ColumnHelperService} from './services/column-helper.service';
         RoutesModule
     ],
     providers: [ApiService, TotalsCalculatorService, PlayersService, MetadataService,
-                TeeService, CourseService, PlayerNumbersService, GameService,
+                TeeService, CourseService, GameService,
         ActiveGameService, ColumnHelperService ],
     bootstrap: [AppComponent]
 })

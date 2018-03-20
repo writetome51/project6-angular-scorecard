@@ -19,13 +19,8 @@ export class GameService {
     }
 
 
-    getAll(observer){
-        this._getAllAsObservableWithMetadata().subscribe(observer);
-    }
-
-
-    private _getAllAsObservableWithMetadata(): Observable<any> {
-        return this._db.collection('games').snapshotChanges();
+    getAll(observer): Subscription{
+        return this._getAllAsObservableWithMetadata().subscribe(observer);
     }
 
 
@@ -41,6 +36,21 @@ export class GameService {
         this._db.collection('games').doc(gameId).set(players);
     }
 
+
+    addMorePlayers(playerNames, startingPlayerNumber) {
+        let newPlayers = this._preparePlayerObjects(playerNames, startingPlayerNumber);
+        this._db.collection('games')
+            .doc(this._activeGame.get()).update(newPlayers);
+        //  get a reference to the firestore document in games collection.
+        //  gameReference.update(game);
+    }
+
+
+    private _getAllAsObservableWithMetadata(): Observable<any> {
+        return this._db.collection('games').snapshotChanges();
+    }
+
+
     private _preparePlayerObjects(playerNames: string[], startingPlayerNumber): object{
         let players = {};
 
@@ -50,15 +60,6 @@ export class GameService {
             ++startingPlayerNumber;
         }
         return players;
-    }
-
-
-    addMorePlayers(playerNames, startingPlayerNumber) {
-        let newPlayers = this._preparePlayerObjects(playerNames, startingPlayerNumber);
-        this._db.collection('games')
-            .doc(this._activeGame.get()).update(newPlayers);
-        //  get a reference to the firestore document in games collection.
-        //  gameReference.update(game);
     }
 
 

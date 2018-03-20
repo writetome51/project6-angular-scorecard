@@ -1,7 +1,7 @@
 
-<div *ngFor="let playerName of playerNames; let i = index"
-     [class]="'cell label-cell player-name-input-cell ' + playerNumbers[i]  + '-row'"
-     [id]="playerNumbers[i]  + '-input-cell'">
+<div *ngFor="let playerName of players.names; let i = index"
+     [class]="'cell label-cell player-name-input-cell ' + players.numbers[i]  + '-row'"
+     [id]="players.numbers[i]  + '-input-cell'">
 
     <div class="cell">
         {{playerName}}
@@ -9,7 +9,7 @@
 </div>
 
 <div
-    *ngFor="let playerStillAvailable of playersStillAvailable; let i = index"
+    *ngFor="let playerStillAvailable of players.playersStillAvailable; let i = index"
      [class]="'cell label-cell player-name-input-cell ' + playerStillAvailable + '-row'"
      [id]="playerStillAvailable  + '-input-cell'">
     <input type="text"

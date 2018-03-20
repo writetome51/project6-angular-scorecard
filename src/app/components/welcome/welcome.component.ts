@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {GameService} from '../../services/game.service';
-import {PlayerNumbersService} from '../../services/player-numbers.service';
 import {ActiveGameService} from '../../services/active-game.service';
 import {environment} from '../../../environments/environment';
+import {PlayersService} from '../../services/players.service';
+import {Subscription} from 'rxjs/Subscription';
 
 
 @Component({
@@ -11,7 +12,7 @@ import {environment} from '../../../environments/environment';
     templateUrl: 'welcome.component.html'
 })
 
-export class WelcomeComponent implements OnInit {
+export class WelcomeComponent implements OnInit, OnDestroy {
 
     billMurray = environment.billMurray;
     ted1 = environment.tedKnight1;
@@ -21,23 +22,28 @@ export class WelcomeComponent implements OnInit {
     playerNumbers: string[];
     gameIDs: string[] = [];
     chosenGame = '';
+    gamesSubscription: Subscription;
 
 
     constructor(private _angularFireAuth: AngularFireAuth,
                 private _gameService: GameService,
                 private _activeGame: ActiveGameService,
-                playerNumbersService: PlayerNumbersService) {
+                players: PlayersService) {
 
-        this.playerNumbers = playerNumbersService.self;
+        this.playerNumbers = players.numbers;
     }
 
 
     ngOnInit() {
-        this._gameService.getAll((games) => {
-            this._setGameIDs(games);
+        this.gamesSubscription  = this._gameService.getAll((games) => {
+            this._set_gameIDs(games);
             this._setDefaultFor_chosenGame();
         });
 
+    }
+
+    ngOnDestroy(){
+        this.gamesSubscription.unsubscribe();
     }
 
 
@@ -81,7 +87,7 @@ export class WelcomeComponent implements OnInit {
     }
 
 
-    private _setGameIDs(games) {
+    private _set_gameIDs(games) {
         games.forEach((game) => {
             let gameID = this._gameService.getGameID(game);
             this.gameIDs.push(gameID);
